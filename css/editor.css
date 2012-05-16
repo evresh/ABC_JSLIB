@@ -1,0 +1,48 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+.clearFloat {
+    clear: both;
+    font-size: 0px;
+    line-height: 0px;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    border: none;
+    zoom: 1;
+}
+.topBar {
+    height: 30px;
+    border-bottom: 1px solid #ccc;
+}
+.saveChanges {
+    float: right;
+    margin-right: 15px;
+    margin-top: 3px;
+}
+.testPage iframe {
+    border: 0px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    background: #fff;
+}
+.elementOutline {
+    position: absolute;
+    background: #5D83C0;
+    z-index: 10000;
+    display: none;
+    width: 2px;
+    height: 2px;
+}
+.bottomOutline {
+    -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
+    -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
+    box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
+}
+.rightOutline {
+    -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
+    -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
+    box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
+}
