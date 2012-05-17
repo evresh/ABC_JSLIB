@@ -4,6 +4,7 @@ var TestPageView = Backbone.View.extend({
     },
     render: function() {
         var iframe = $('<iframe>')
+            .addClass('testPage')
             .attr('src', this.model.get('pageUrl'))
             .appendTo(this.$el);
 
@@ -29,6 +30,16 @@ var TestPageView = Backbone.View.extend({
         this._onWindowResize();
 
         return this;
+    },
+    getLastClickEvent: function() {
+        return this._lastClickEvent;
+    },
+    getIframe: function() {
+        return this.$('iframe');
+    },
+    getIframeDocument: function() {
+        var iframe = this.getIframe();
+        return $(iframe[0].contentDocument || iframe[0].contentWindow.document);
     },
     _onWindowResize: function() {
         this.$('iframe').height($(window).height() - $(this.options.excludeHeightSelector).outerHeight());
@@ -75,8 +86,12 @@ var TestPageView = Backbone.View.extend({
         }
     },
     _mousedown: function(e) {
+        this._lastClickEvent = e;
         this.model.set('isSelected', !this.model.get('isSelected'));
         if (!this.model.get('isSelected'))
             this._mouseover(e);
+
+        e.preventDefault();
+        e.stopPropagation();
     }
 });

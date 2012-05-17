@@ -1,6 +1,7 @@
 body {
     padding: 0px;
     margin: 0px;
+    font: 62.5% DroidSansRegular,Arial,Helvetica,sans-serif;
 }
 .clearFloat {
     clear: both;
@@ -21,7 +22,7 @@ body {
     margin-right: 15px;
     margin-top: 3px;
 }
-.testPage iframe {
+iframe.testPage {
     border: 0px;
     width: 100%;
     margin: 0px;
@@ -45,4 +46,60 @@ body {
     -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
     -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
     box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
+}
+.editorMenu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #fff;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    -moz-box-shadow: 0 5px 30px #505050;
+    -webkit-box-shadow: 0 5px 30px #505050;
+    box-shadow: 0 5px 30px #505050;
+    z-index: 10000;
+    font-size: 12px;
+    min-width: 160px;
+    border: 2px solid #5D83C0;
+}
+.editorMenu .menuHeader {
+    padding: 8px;
+    background-color: #5D83C0;
+    color: #fff;
+    position: relative;
+    /*cursor: move;*/
+    text-shadow: 0 -1px 0px #17243A;
+}
+.editorMenu .targetTag {
+    float: left;
+    padding-right: 8px;
+}
+.editorMenu .closeButton {
+    float: right;
+    cursor: pointer;
+    margin-left: 4px;
+    margin-top: 3px;
+}
+.editorMenu ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+.editorMenu li {
+    padding: 8px;
+    transition-duration: 200ms;
+    -moz-transition-duration: 200ms;
+    -webkit-transition-duration: 200ms;
+    -o-transition-duration: 200ms;
+    cursor: pointer;
+    border-bottom: 1px dotted #DDD;
+    white-space: nowrap;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.editorMenu li:hover {
+    background-color: #F0F3F9;
+    color: #000;
+    border-bottom: 1px dotted transparent;
 }

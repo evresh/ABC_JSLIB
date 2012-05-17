@@ -3,24 +3,43 @@
 <html>
 <head>
     <title>Website Optimizer Editor</title>
-    <link href="css/editor.css" rel="stylesheet" />
+    <link href="Css/editor.css" rel="stylesheet" />
 </head>
 <body>
     <div class="topBar">
         <input type="button" value="Save changes" class="saveChanges" />
         <div class="clearFloat"></div>
     </div>
-    <div class="testPage"></div>
+    <div class="testPageContainer"></div>
+    <div class="editorMenuContainer"></div>
 
-    <script type="text/javascript" src="js/libs/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="js/libs/underscore.js"></script>
-    <script type="text/javascript" src="js/libs/backbone.js"></script>
+    <script id="editorMenuTemplate" type="text/template">
+        <div class="menuHeader">
+            <span class="targetTag">
+                <nobr><%=description%></nobr>
+                <i><%=name%></i>
+            </span>
+            <span class="closeButton">
+                <img title="Close" src="Img/close.png">
+            </span>
+            <div class="clearFloat"></div>
+        </div>
+        <ul></ul>
+    </script>
 
-    <script type="text/javascript" src="js/models/TestPage.js"></script>
-    <script type="text/javascript" src="js/models/Editor.js"></script>
+    <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="Js/Libs/underscore.js"></script>
+    <script type="text/javascript" src="Js/Libs/backbone.js"></script>
 
-    <script type="text/javascript" src="js/views/TestPageView.js"></script>
-    <script type="text/javascript" src="js/views/EditorView.js"></script>
+    <script type="text/javascript" src="Js/Models/TestPage.js"></script>
+    <script type="text/javascript" src="Js/Models/Editor.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenu.js"></script>
+    <script type="text/javascript" src="Js/Models/Operations/ElementOperation.js"></script>
+
+    <script type="text/javascript" src="Js/Views/TestPageView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
+    <script type="text/javascript" src="Js/Views/Operations/ElementOperationView.js"></script>
 
     <script type="text/javascript">
         $(function() {
