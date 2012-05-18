@@ -4,8 +4,8 @@ var EditorView = Backbone.View.extend({
     },
     initialize: function() {
         this._testView = new TestPageView({
-            model: this.model.get('testPage'),
-            excludeHeightSelector: '.topBar'
+            el: this.$('.testPageContainer'),
+            model: this.model.get('testPage')
         });
         this._menuView = new EditorMenuView({
             el: this.$('.editorMenu'),
@@ -15,7 +15,7 @@ var EditorView = Backbone.View.extend({
         this.model.on('change:menu', this._menuChanged, this);
     },
     render: function() {
-        this._testView.render().$el.appendTo(this.$('.testPageContainer'));
+        this._testView.render();
 
         return this;
     },

@@ -8,6 +8,19 @@ var TestPageView = Backbone.View.extend({
             .attr('src', this.model.get('pageUrl'))
             .appendTo(this.$el);
 
+        this._onWindowResize();
+
+        var loadingElements = $('<div>')
+            .html('Please wait while the page is loaded...')
+            .addClass('loadingMessage')
+            .appendTo('body')
+            .center()
+            .add(
+                $('<div>')
+                    .addClass('disabledBackground')
+                    .appendTo(this.$el)
+            );
+
         iframe.load(_.bind(function(e) {
             this._iframeContent = $(iframe[0].contentDocument || iframe[0].contentWindow.document).find('body');
 
@@ -24,10 +37,15 @@ var TestPageView = Backbone.View.extend({
 
             this._iframeContent
                 .mouseover(_.bind(this._mouseover, this))
-                .mousedown(_.bind(this._mousedown, this));
-        }, this));
+                .mousedown(_.bind(this._mousedown, this))
+                .click(function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                });
 
-        this._onWindowResize();
+            loadingElements.fadeOut(150);
+        }, this));
 
         return this;
     },
@@ -42,7 +60,7 @@ var TestPageView = Backbone.View.extend({
         return $(iframe[0].contentDocument || iframe[0].contentWindow.document);
     },
     _onWindowResize: function() {
-        this.$('iframe').height($(window).height() - $(this.options.excludeHeightSelector).outerHeight());
+        this.$('iframe').height($(window).height() - this.getIframe().offset().top);
 
         return this;
     },

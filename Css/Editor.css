@@ -22,6 +22,36 @@ body {
     margin-right: 15px;
     margin-top: 3px;
 }
+.loadingMessage {
+    background: #fff;
+    padding: 24px;
+    color: #000;
+    border: 2px solid #5D83C0;
+    z-index: 1000;
+    width: 450px;
+    text-align: center;
+    -webkit-box-shadow: 0 0 60px rgba(50, 50, 50, 0.6);
+    -moz-box-shadow: 0 0 60px rgba(50, 50, 50, 0.6);
+    box-shadow: 0 0 60px rgba(50, 50, 50, 0.6);
+    overflow: hidden;
+    font-size: 16px;
+}
+.disabledBackground {
+    background: #000;
+    opacity: 0.3;
+    -moz-opacity: 0.30;
+    filter: alpha(opacity = 0.30);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    position: absolute;
+    z-index: 999;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.testPageContainer {
+    position: relative;
+}
 iframe.testPage {
     border: 0px;
     width: 100%;
