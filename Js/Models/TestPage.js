@@ -1,9 +1,9 @@
 var TestPage = Backbone.Model.extend({
     defaults: {
-        isSelected: false,
-        target: null
+        pageUrl: '',
+        targetEvent: false
     },
-    initialize: function() {
-
+    selectTarget: function(target) {
+        this.set('targetEvent', { target: target });
     }
 })

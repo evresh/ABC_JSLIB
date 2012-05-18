@@ -1,7 +1,7 @@
 var TestPageView = Backbone.View.extend({
     initialize: function() {
         $(window).resize(_.bind(this._onWindowResize, this));
-        this.model.on('change:isSelected', this._selectedFlagChanged, this);
+        this.model.on('change:targetEvent', this._targetChanged, this);
     },
     render: function() {
         var iframe = $('<iframe>')
@@ -45,9 +45,6 @@ var TestPageView = Backbone.View.extend({
 
         return this;
     },
-    getLastClickEvent: function() {
-        return this._lastClickEvent;
-    },
     getIframe: function() {
         return this.$('iframe');
     },
@@ -63,63 +60,64 @@ var TestPageView = Backbone.View.extend({
     _mouseover: function(e) {
         var target = $(e.target);
         var model = this.model;
-        if (!target.hasClass('elementOutline') && !model.get('isSelected') && (!model.get('target') || model.get('target')[0] != target[0])) {
-            model.set('target', target);
-
-            var offset = target.offset();
-            var border = 2;
-            var width = target.outerWidth();
-            var height = target.outerHeight();
-
-            var body = this.getIframeDocument().find('body');
-
-            body.find('.elementOutline').show();
-
-            body.find('.leftOutline')
-                .css({
-                    left: offset.left - border,
-                    top: offset.top,
-                    height: height
-                })
-            .end()
-            .find('.rightOutline')
-                .css({
-                    left: offset.left + width,
-                    top: offset.top,
-                    height: height
-                })
-            .end()
-            .find('.topOutline')
-                .css({
-                    left: offset.left - border,
-                    top: offset.top,
-                    width: 2 * border + width
-                })
-            .end()
-            .find('.bottomOutline')
-                .css({
-                    left: offset.left - border,
-                    top: offset.top + height,
-                    width: 2 * border + width
-                })
-            .end();
-        }
+        if (!target.hasClass('elementOutline') && !model.get('targetEvent'))
+            this._selectElement(target);
     },
     _mousedown: function(e) {
-        this._lastClickEvent = e;
-        this.model.set('isSelected', !this.model.get('isSelected'));
+        this.model.set('targetEvent', this.model.get('targetEvent') ? null : e);
 
         e.preventDefault();
         e.stopPropagation();
     },
-    _selectedFlagChanged: function() {
+    _selectElement: function(target) {
+        var offset = target.offset();
+        var border = 2;
+        var width = target.outerWidth();
+        var height = target.outerHeight();
+
+        var body = this.getIframeDocument().find('body');
+
+        body.find('.elementOutline').show();
+
+        body.find('.leftOutline')
+            .css({
+                left: offset.left - border,
+                top: offset.top,
+                height: height
+            })
+        .end()
+        .find('.rightOutline')
+            .css({
+                left: offset.left + width,
+                top: offset.top,
+                height: height
+            })
+        .end()
+        .find('.topOutline')
+            .css({
+                left: offset.left - border,
+                top: offset.top,
+                width: 2 * border + width
+            })
+        .end()
+        .find('.bottomOutline')
+            .css({
+                left: offset.left - border,
+                top: offset.top + height,
+                width: 2 * border + width
+            })
+        .end();
+    },
+    _targetChanged: function() {
         var doc = this.getIframeDocument(), body = doc.find('body');
-        if (this.model.get('isSelected')) {
-            var el = this.model.get('target'),
+        if (this.model.get('targetEvent')) {
+            var el = $(this.model.get('targetEvent').target),
                 offset = el.offset(),
                 docH = doc.height(),
-                docW = doc.width();
+                docW = doc.width(),
                 height = el.outerHeight();
+
+            this._selectElement(el);
 
             body.find('.elementOutlineBackground,.elementGlassBackground').show();
 

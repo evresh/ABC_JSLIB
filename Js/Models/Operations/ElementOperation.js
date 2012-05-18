@@ -1,7 +1,6 @@
 var ElementOperation = Backbone.Model.extend({
     defaults: {
-        target: null,
-        name: ''
+        target: null
     },
     isAllowed: function() {
         return true;

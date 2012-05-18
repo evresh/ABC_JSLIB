@@ -1,40 +1,34 @@
 var EditorMenuView = Backbone.View.extend({
-    className: 'editorMenu',
     events: {
-        'click .closeButton': 'close'
+        'click .closeButton': '_close'
     },
     initialize: function() {
-        this._operationViews = [];
+        this.model.on('change:targetEvent', this._targetChanged, this);
     },
     render: function() {
-        var tagName = this.model.get('target')[0].tagName.toLowerCase();
-        this.$el.hide().html(_.template($('#editorMenuTemplate').html(), {
-            name: '&lt;' + tagName + '&gt;',
-            description: this._getTagDescription(tagName)
-        }));
-
-        this.model.get('operations').each(_.bind(function(operation) {
-            var view = new ElementOperationView({ model: operation });
+        this.model.get('items').each(_.bind(function(item) {
+            var view = new EditorMenuItemView({ model: item });
             view.render().$el.appendTo(this.$el.find('ul'));
-            this._operationViews.push(view);
         }, this));
 
         return this;
     },
-    open: function() {
-        this.$el.fadeIn(150);
-        this._attachToTarget();
-    },
-    remove: function() {
-        $.each(this._operationViews, function() { this.remove(); });
-        this._operationViews = null;
-        this.model = null;
+    _targetChanged: function() {
+        var targetEvent = this.model.get('targetEvent');
+        if (targetEvent) {
+            var tagName = targetEvent.target.tagName.toLowerCase();
+            this.$el
+                .find('.targetTagDescription').html(this._getTagDescription(tagName)).end()
+                .find('.targetTagName').html('&lt;' + tagName + '&gt;').end();
 
-        this.$el.remove();
+            this.$el.hide().fadeIn(150);
+            this._attachToTarget();
+        } else {
+            this.$el.fadeOut(150);
+        }
     },
-    close: function() {
-        this.$el.fadeOut(150, _.bind(this.remove, this));
-        this.model.set('isRemoved', true);
+    _close: function() {
+        this.model.close();
     },
     _attachToTarget: function() {
         /*
@@ -49,11 +43,11 @@ var EditorMenuView = Backbone.View.extend({
         }
         */
         var top, left, menu = this.$el,
-        elem = this.model.get('target'),
+        elem = $(this.model.get('targetEvent').target),
         frame = this.options.iframe,
         frameDoc = this.options.iframeDocument,
-        x = parseInt(this.options.event.pageX, 10) || 0 - window.pageXOffset,
-        y = parseInt(this.options.event.pageY, 10) || 0 - window.pageYOffset,
+        x = parseInt(this.model.get('targetEvent').pageX || 0, 10) - window.pageXOffset,
+        y = parseInt(this.model.get('targetEvent').pageY || 0, 10) - window.pageYOffset,
         margin = 8,
         flag = false,
         eoW = elem.outerWidth(),

@@ -11,7 +11,20 @@
         <div class="clearFloat"></div>
     </div>
     <div class="testPageContainer"></div>
-    <div class="editorMenuContainer"></div>
+
+    <div class="editorMenu" style="display: none;">
+        <div class="menuHeader">
+            <span class="targetTag">
+                <nobr class="targetTagDescription"></nobr>
+                <i class="targetTagName"></i>
+            </span>
+            <span class="closeButton">
+                <img title="Close" src="Img/close.png">
+            </span>
+            <div class="clearFloat"></div>
+        </div>
+        <ul></ul>
+    </div>
 
     <script id="frameTargetElements" type="text/template">
         <div class="elementOutline leftOutline"></div>
@@ -25,20 +38,6 @@
         <div class="elementGlassBackground"></div>
     </script>
 
-    <script id="editorMenuTemplate" type="text/template">
-        <div class="menuHeader">
-            <span class="targetTag">
-                <nobr><%=description%></nobr>
-                <i><%=name%></i>
-            </span>
-            <span class="closeButton">
-                <img title="Close" src="Img/close.png">
-            </span>
-            <div class="clearFloat"></div>
-        </div>
-        <ul></ul>
-    </script>
-
     <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="Js/Libs/underscore.js"></script>
     <script type="text/javascript" src="Js/Libs/backbone.js"></script>
@@ -47,12 +46,14 @@
     <script type="text/javascript" src="Js/Models/TestPage.js"></script>
     <script type="text/javascript" src="Js/Models/Editor.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenu.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/OperationMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/SelectParentMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/Operations/ElementOperation.js"></script>
 
     <script type="text/javascript" src="Js/Views/TestPageView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
-    <script type="text/javascript" src="Js/Views/Operations/ElementOperationView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorMenuItemView.js"></script>
 
     <script type="text/javascript">
         $(function() {

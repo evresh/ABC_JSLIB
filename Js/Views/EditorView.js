@@ -9,33 +9,21 @@ var EditorView = Backbone.View.extend({
         });
         this._menuView = new EditorMenuView({
             el: this.$('.editorMenu'),
-            model: this.model
+            model: this.model.get('menu')
         });
-
-        this.model.on('change:menu', this._menuChanged, this);
     },
     render: function() {
         this._testView.render();
+
+        this._menuView.options = $.extend(this._menuView.options, {
+            iframe: this._testView.getIframe(),
+            iframeDocument: this._testView.getIframeDocument()
+        });
+        this._menuView.render();
 
         return this;
     },
     _save: function() {
         this.model.save();
-    },
-    _menuChanged: function() {
-        var menu = this.model.get('menu');
-        if (menu) {
-            this._menuView = new EditorMenuView({
-                model: menu,
-                event: this._testView.getLastClickEvent(),
-                iframe: this._testView.getIframe(),
-                iframeDocument: this._testView.getIframeDocument()
-            });
-            this._menuView.render().$el.appendTo(this.$('.editorMenuContainer'));
-            this._menuView.open();
-        } else {
-            this._menuView.close();
-            this._menuView = null;
-        }
     }
 })

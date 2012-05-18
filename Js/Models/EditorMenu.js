@@ -1,29 +1,38 @@
 var EditorMenu = Backbone.Model.extend({
     defaults: {
-        target: null,
-        operations: null,
-        isRemoved: false
+        targetEvent: false
     },
     initialize: function() {
-        var target = this.get('target');
-        var operations = [
-             new ElementOperation({ name: 'Change Image', target: target })
-            ,new ElementOperation({ name: 'Edit Image', target: target })
-            ,new ElementOperation({ name: 'Change Background Image', target: target })
-            ,new ElementOperation({ name: 'Edit Background Image', target: target })
-            ,new ElementOperation({ name: 'Change URL', target: target })
-            ,new ElementOperation({ name: 'Change Text', target: target })
-            ,new ElementOperation({ name: 'Edit', target: target })
-            ,new ElementOperation({ name: 'Edit HTML', target: target })
-            ,new ElementOperation({ name: 'Rearrange', target: target })
-            ,new ElementOperation({ name: 'Move', target: target })
-            ,new ElementOperation({ name: 'Resize', target: target })
-            ,new ElementOperation({ name: 'Change CSS', target: target })
-            ,new ElementOperation({ name: 'Select Parent', target: target })
-            //,new ElementOperation({ name: 'Track Clicks', target: target })
-            //,new ElementOperation({ name: 'Track Form Submits', target: target })
-        ];
+        this.set('items', new Backbone.Collection([
+            new SelectParentMenuItem({ name: 'Select Parent' })
+            ,new OperationMenuItem({ name: 'Edit HTML', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Edit', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Change CSS', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Change Text', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Change Image', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Edit Image', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Change Background Image', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Edit Background Image', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Rearrange', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Move', operationType: ElementOperation })
+            ,new OperationMenuItem({ name: 'Resize', operationType: ElementOperation })
+            //,new OperationMenuItem({ name: 'Change URL', operationType: ElementOperation })
+            //,new OperationMenuItem({ name: 'Track Clicks', operationType: ElementOperation })
+            //,new OperationMenuItem({ name: 'Track Form Submits', operationType: ElementOperation })
+        ]));
 
-        this.set('operations', new Backbone.Collection(_.filter(operations, function(o) { return o.isAllowed(); })));
+        this.on('change:targetEvent', this._updateItems, this);
+    },
+    close: function() {
+        this.set('targetEvent', false);
+        this.trigger('close');
+    },
+    _updateItems: function() {
+        var targetEvent = this.get('targetEvent');
+        if (targetEvent) {
+            this.get('items').each(function(item) {
+                item.update($(targetEvent.target));
+            });
+        }
     }
 })
