@@ -1,6 +1,7 @@
 var TestPageView = Backbone.View.extend({
     initialize: function() {
         $(window).resize(_.bind(this._onWindowResize, this));
+        this.model.on('change:isSelected', this._selectedFlagChanged, this);
     },
     render: function() {
         var iframe = $('<iframe>')
@@ -17,26 +18,21 @@ var TestPageView = Backbone.View.extend({
             .center()
             .add(
                 $('<div>')
-                    .addClass('disabledBackground')
+                    .addClass('loadingBackground')
                     .appendTo(this.$el)
             );
 
         iframe.load(_.bind(function(e) {
-            this._iframeContent = $(iframe[0].contentDocument || iframe[0].contentWindow.document).find('body');
+            var body = this.getIframeDocument().find('body');
 
             $('<link>').attr({
                 href: 'css/editor.css',
                 rel: 'stylesheet'
-            }).prependTo(this._iframeContent);
+            }).prependTo(body);
 
-            this._iframeContent
-                .append($('<div>').addClass('elementOutline').addClass('leftOutline'))
-                .append($('<div>').addClass('elementOutline').addClass('rightOutline'))
-                .append($('<div>').addClass('elementOutline').addClass('topOutline'))
-                .append($('<div>').addClass('elementOutline').addClass('bottomOutline'));
+            body.append($('<div>').html($('#frameTargetElements').html()));
 
-            this._iframeContent
-                .mouseover(_.bind(this._mouseover, this))
+            body.mouseover(_.bind(this._mouseover, this))
                 .mousedown(_.bind(this._mousedown, this))
                 .click(function(e) {
                     e.preventDefault();
@@ -75,41 +71,99 @@ var TestPageView = Backbone.View.extend({
             var width = target.outerWidth();
             var height = target.outerHeight();
 
-            this._iframeContent.find('.elementOutline').show();
+            var body = this.getIframeDocument().find('body');
 
-            this._iframeContent.find('.leftOutline')
+            body.find('.elementOutline').show();
+
+            body.find('.leftOutline')
                 .css({
                     left: offset.left - border,
                     top: offset.top,
                     height: height
-                });
-            this._iframeContent.find('.rightOutline')
+                })
+            .end()
+            .find('.rightOutline')
                 .css({
                     left: offset.left + width,
                     top: offset.top,
                     height: height
-                });
-            this._iframeContent.find('.topOutline')
+                })
+            .end()
+            .find('.topOutline')
                 .css({
                     left: offset.left - border,
                     top: offset.top,
                     width: 2 * border + width
-                });
-            this._iframeContent.find('.bottomOutline')
+                })
+            .end()
+            .find('.bottomOutline')
                 .css({
                     left: offset.left - border,
                     top: offset.top + height,
                     width: 2 * border + width
-                });
+                })
+            .end();
         }
     },
     _mousedown: function(e) {
         this._lastClickEvent = e;
         this.model.set('isSelected', !this.model.get('isSelected'));
-        if (!this.model.get('isSelected'))
-            this._mouseover(e);
 
         e.preventDefault();
         e.stopPropagation();
+    },
+    _selectedFlagChanged: function() {
+        var doc = this.getIframeDocument(), body = doc.find('body');
+        if (this.model.get('isSelected')) {
+            var el = this.model.get('target'),
+                offset = el.offset(),
+                docH = doc.height(),
+                docW = doc.width();
+                height = el.outerHeight();
+
+            body.find('.elementOutlineBackground,.elementGlassBackground').show();
+
+            body.find('.topOutlineBackground')
+                .css({
+                    top: 0,
+                    left: 0,
+                    height: offset.top,
+                    width: docW
+                })
+            .end()
+            .find('.leftOutlineBackground')
+                .css({
+                    top: offset.top,
+                    left: 0,
+                    height: height,
+                    width: offset.left
+                })
+            .end()
+            .find('.bottomOutlineBackground')
+                .css({
+                    top: offset.top + height,
+                    left: 0,
+                    width: docW,
+                    height: (docH - offset.top - height)
+                })
+            .end()
+            .find('.rightOutlineBackground')
+                .css({
+                    top: offset.top,
+                    left: offset.left + el.outerWidth(),
+                    height: height,
+                    width: (docW - offset.left - el.outerWidth())
+                })
+            .end()
+            .find('.elementGlassBackground')
+                .css({
+                    top: offset.top,
+                    left: offset.left,
+                    height: el.outerHeight(),
+                    width: el.outerWidth()
+                });
+        } else {
+            body.find('.elementOutlineBackground,.elementGlassBackground').hide();
+        }
     }
 });

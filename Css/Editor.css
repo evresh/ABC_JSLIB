@@ -36,7 +36,7 @@ body {
     overflow: hidden;
     font-size: 16px;
 }
-.disabledBackground {
+.loadingBackground {
     background: #000;
     opacity: 0.3;
     -moz-opacity: 0.30;
@@ -66,6 +66,24 @@ iframe.testPage {
     display: none;
     width: 2px;
     height: 2px;
+}
+.elementOutlineBackground {
+    background: #000;
+    opacity: 0.30;
+    -moz-opacity: 0.30;
+    filter: alpha(opacity=0.30);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+}
+.elementGlassBackground {
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10000;
 }
 .bottomOutline {
     -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
