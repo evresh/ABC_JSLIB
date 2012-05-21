@@ -1,7 +1,7 @@
 var TestPageView = Backbone.View.extend({
     initialize: function() {
         $(window).resize(_.bind(this._onWindowResize, this));
-        this.model.on('change:targetEvent', this._targetChanged, this);
+        this.model.on('change:targetData', this._targetChanged, this);
     },
     render: function() {
         var iframe = $('<iframe>')
@@ -23,7 +23,7 @@ var TestPageView = Backbone.View.extend({
             );
 
         iframe.load(_.bind(function(e) {
-            var body = this.getIframeDocument().find('body');
+            var body = this._getIframeDocument().find('body');
 
             $('<link>').attr({
                 href: 'css/editor.css',
@@ -45,26 +45,26 @@ var TestPageView = Backbone.View.extend({
 
         return this;
     },
-    getIframe: function() {
+    _getIframe: function() {
         return this.$('iframe');
     },
-    getIframeDocument: function() {
-        var iframe = this.getIframe();
+    _getIframeDocument: function() {
+        var iframe = this._getIframe();
         return $(iframe[0].contentDocument || iframe[0].contentWindow.document);
     },
     _onWindowResize: function() {
-        this.$('iframe').height($(window).height() - this.getIframe().offset().top);
+        this.$('iframe').height($(window).height() - this._getIframe().offset().top);
 
         return this;
     },
     _mouseover: function(e) {
         var target = $(e.target);
         var model = this.model;
-        if (!target.hasClass('elementOutline') && !model.get('targetEvent'))
+        if (!target.hasClass('elementOutline') && !model.get('targetData'))
             this._selectElement(target);
     },
     _mousedown: function(e) {
-        this.model.set('targetEvent', this.model.get('targetEvent') ? null : e);
+        this.model.set('targetData', this.model.get('targetData') ? null : e);
 
         e.preventDefault();
         e.stopPropagation();
@@ -75,7 +75,7 @@ var TestPageView = Backbone.View.extend({
         var width = target.outerWidth();
         var height = target.outerHeight();
 
-        var body = this.getIframeDocument().find('body');
+        var body = this._getIframeDocument().find('body');
 
         body.find('.elementOutline').show();
 
@@ -109,9 +109,9 @@ var TestPageView = Backbone.View.extend({
         .end();
     },
     _targetChanged: function() {
-        var doc = this.getIframeDocument(), body = doc.find('body');
-        if (this.model.get('targetEvent')) {
-            var el = $(this.model.get('targetEvent').target),
+        var doc = this._getIframeDocument(), body = doc.find('body');
+        if (this.model.get('targetData')) {
+            var el = $(this.model.get('targetData').target),
                 offset = el.offset(),
                 docH = doc.height(),
                 docW = doc.width(),

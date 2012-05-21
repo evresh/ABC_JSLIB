@@ -11,17 +11,21 @@ var EditorView = Backbone.View.extend({
             el: this.$('.editorMenu'),
             model: this.model.get('menu')
         });
+        this.model.on('change:currentOperation', this._currentOperationChanged, this);
     },
     render: function() {
         this._testView.render();
-
-        this._menuView.options = $.extend(this._menuView.options, {
-            iframe: this._testView.getIframe(),
-            iframeDocument: this._testView.getIframeDocument()
-        });
         this._menuView.render();
 
         return this;
+    },
+    _currentOperationChanged: function() {
+        var operation = this.model.get('currentOperation');
+        if (operation) {
+            var subType = operation.get('subType');
+            if (subType)
+                new (window[subType + 'View'])({ model: operation }).render();
+        }
     },
     _save: function() {
         this.model.save();

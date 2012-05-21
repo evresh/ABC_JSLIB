@@ -95,7 +95,7 @@ iframe.testPage {
     -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
     box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
 }
-.editorMenu {
+.editorOverlay {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -111,7 +111,7 @@ iframe.testPage {
     min-width: 160px;
     border: 2px solid #5D83C0;
 }
-.editorMenu .menuHeader {
+.editorOverlay .overlayTitle {
     padding: 8px;
     background-color: #5D83C0;
     color: #fff;
@@ -119,17 +119,17 @@ iframe.testPage {
     /*cursor: move;*/
     text-shadow: 0 -1px 0px #17243A;
 }
-.editorMenu .targetTag {
+.overlayTitle .titleText {
     float: left;
     padding-right: 8px;
 }
-.editorMenu .closeButton {
+.overlayTitle .closeButton {
     float: right;
     cursor: pointer;
     margin-left: 4px;
     margin-top: 3px;
 }
-.editorMenu ul {
+ul.editorMenu {
     padding: 0px;
     margin: 0px;
     list-style: none;
@@ -150,4 +150,7 @@ iframe.testPage {
     background-color: #F0F3F9;
     color: #000;
     border-bottom: 1px dotted transparent;
+}
+.editorOverlay .CodeMirror-scroll {
+    width: 500px;
 }

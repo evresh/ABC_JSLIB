@@ -1,7 +1,7 @@
 var EditorMenuItemView = Backbone.View.extend({
     tagName: 'li',
     events: {
-        'click': '_performAction'
+        'click': '_perform'
     },
     initialize: function() {
         this.model.on('change:isVisible', this._visibilityChanged, this);
@@ -14,7 +14,7 @@ var EditorMenuItemView = Backbone.View.extend({
     _visibilityChanged: function() {
         this.$el.toggle(this.model.get('isVisible'));
     },
-    _performAction: function() {
-        this.model.complete();
+    _perform: function(e) {
+        this.model.perform();
     }
 })

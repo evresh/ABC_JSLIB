@@ -1,117 +1,37 @@
 var EditorMenuView = Backbone.View.extend({
-    events: {
-        'click .closeButton': '_close'
-    },
     initialize: function() {
-        this.model.on('change:targetEvent', this._targetChanged, this);
+        this.model.on('change:targetData', this._targetChanged, this);
+        this.model.get('items').on('perform', this._itemPerformed, this);
+        this.overlay = new EditorOverlayView();
+        this.overlay.on('close', this._close, this);
     },
     render: function() {
+        this.overlay.render();
+        var menu = $('<ul>').addClass('editorMenu');
         this.model.get('items').each(_.bind(function(item) {
             var view = new EditorMenuItemView({ model: item });
-            view.render().$el.appendTo(this.$el.find('ul'));
+            view.render().$el.appendTo(menu);
         }, this));
+        this.overlay.setContent(menu);
 
         return this;
     },
     _targetChanged: function() {
-        var targetEvent = this.model.get('targetEvent');
-        if (targetEvent) {
-            var tagName = targetEvent.target.tagName.toLowerCase();
-            this.$el
-                .find('.targetTagDescription').html(this._getTagDescription(tagName)).end()
-                .find('.targetTagName').html('&lt;' + tagName + '&gt;').end();
-
-            this.$el.hide().fadeIn(150);
-            this._attachToTarget();
-        } else {
-            this.$el.fadeOut(150);
+        var targetData = this.model.get('targetData');
+        if (targetData) {
+            var tagName = targetData.target.tagName.toLowerCase();
+            this.overlay
+                .setTitle('<nobr>' + this._getTagDescription(tagName) + '</nobr>&nbsp;<i>&lt;' + tagName + '&gt;</i>')
+                .show(targetData);
+        } else if (this.overlay.$el.is(':visible')) {
+            this.overlay.close();
         }
+    },
+    _itemPerformed: function() {
+        this.overlay.close();
     },
     _close: function() {
         this.model.close();
-    },
-    _attachToTarget: function() {
-        /*
-        if (!elem) {
-            this.centerInClient();
-            return this;
-        }
-        var rearrange = false;
-        if (VWO.el.currentOp == 'rearrange') {
-            elem = elem.parent();
-            rearrange = true;
-        }
-        */
-        var top, left, menu = this.$el,
-        elem = $(this.model.get('targetEvent').target),
-        frame = this.options.iframe,
-        frameDoc = this.options.iframeDocument,
-        x = parseInt(this.model.get('targetEvent').pageX || 0, 10) - window.pageXOffset,
-        y = parseInt(this.model.get('targetEvent').pageY || 0, 10) - window.pageYOffset,
-        margin = 8,
-        flag = false,
-        eoW = elem.outerWidth(),
-        eoH = elem.outerHeight(),
-        eO = elem.offset(),
-        eoL = eO.left,
-        eoT = eO.top,
-        fO = frame.offset(),
-        foL = fO.left,
-        foT = fO.top,
-        foH = frame.outerHeight(),
-        foW = frame.outerWidth(),
-        moW = menu.outerWidth(),
-        moH = menu.outerHeight(),
-        tagName = elem.get(0).tagName;
-        if ((x != 0 || y != 0 || tagName != 'HEAD') && tagName != 'BODY') {
-            var adjustLeft = foL - (frame[0].contentWindow.pageXOffset || frameDoc[0].body.scrollLeft),
-            adjustTop = foT - (frame[0].contentWindow.pageYOffset || frameDoc[0].body.scrollTop);
-            var rspace = foW + foL - eoL - eoW;
-            var lspace = foW - eoW - rspace;
-            if (rspace > lspace) {
-                left = eoL + eoW + margin + adjustLeft + 0/*VWO.dragX*/;
-                //if (rearrange) left = left + 0.75 * margin;
-            }
-            else {
-                left = eoL - moW - margin + adjustLeft + 0 /*VWO.dragX*/;
-                //if (rearrange) left = left - 0.75 * margin;
-            }
-            if (eoW > 0.95 * foW || (moW > rspace && moW > lspace)) flag = true;
-            top = eoT + adjustTop + 0/*VWO.dragY*/;
-            if (flag) {
-                var tspace = eoT - (frame[0].contentWindow.pageYOffset || frameDoc[0].body.scrollTop),
-                bspace = foH - tspace - eoH;
-                if (bspace > tspace)
-                    top += eoH + margin;
-                else
-                    top = eoT + adjustTop - moH - margin;
-            }
-            //if (rearrange) top = top - 0.75 * margin;
-            if (top + moH + margin > foH + foT)
-                top = foH + foT - moH - margin;
-            else if (top < foT + margin)
-                top = foT + margin;
-            if (left < foL)
-                left = foL + margin;
-            if (left + moW + margin > foW)
-                left = foW - moW - margin;
-        }
-        else
-            flag = true;
-        if (flag) {
-            left = x + foL + margin;
-            if (top + moH > foH + foT) {
-                top = foH + foT - moH;
-            }
-            if (top < foT + margin)
-                top = foT + margin;
-            if (left + moW > foW + foL)
-                left = foW + foL - moW;
-        }
-        if (! ((left > eoL + eoW) || (left + moW < eoL)) && (/*VWO.dragX*/0 == 0) && (/*VWO.dragY*/0 == 0) && (top + moH + margin > foH + foT))
-            top = top + margin;
-        menu.get(0).style.left = left + 'px';
-        menu.get(0).style.top = top + 'px';
     },
     _getTagDescription: function(tagName) {
         return {
