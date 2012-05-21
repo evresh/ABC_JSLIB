@@ -21,9 +21,9 @@ var Editor = Backbone.Model.extend({
     _menuClosed: function() {
         this.get('testPage').set('targetEvent', false);
     },
-    _menuItemCompleted: function(item) {
+    _menuItemCompleted: function(item, params) {
         if (item instanceof SelectParentMenuItem) {
-            this.get('testPage').selectTarget(item.get('target').parent().get(0));
+            this.get('testPage').selectTarget(params);
         }
     }
 })

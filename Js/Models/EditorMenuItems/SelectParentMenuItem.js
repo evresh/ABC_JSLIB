@@ -10,6 +10,6 @@ var SelectParentMenuItem = Backbone.Model.extend({
             && target.parent()[0].tagName.toLowerCase() != 'body');
     },
     complete: function() {
-        this.trigger('complete', this);
+        this.trigger('complete', this, this.get('target').parent());
     }
 })
