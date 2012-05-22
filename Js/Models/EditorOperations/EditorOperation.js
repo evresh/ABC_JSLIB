@@ -1,8 +1,15 @@
+var EditorOperationStatus = {
+    none: 0,
+    cancelled: 2,
+    completed: 3
+}
 var EditorOperation = Backbone.Model.extend({
     defaults: {
         type: '',
         initialState: null,
-        changedState: null
+        changedState: null,
+        status: EditorOperationStatus.none,
+        isOpen: false
     },
     initialize: function() {
         this.set('initialState', this._getInitialState());
@@ -17,14 +24,15 @@ var EditorOperation = Backbone.Model.extend({
         alert('Not implemented yet');
     },
     apply: function(state) {
-        if (!_.isEqual(state, this.get('initialState'))) {
+        if (this._innerApply(state))
             this.set('changedState', state);
-            this._innerApply(state);
-        }
+    },
+    complete: function() {
+        this.set('status', EditorOperationStatus.completed);
     },
     cancel: function() {
         this.unset('changedState');
         this._innerApply(this.get('initialState'));
-        this.trigger('cancel');
+        this.set('status', EditorOperationStatus.cancelled);
     }
 });

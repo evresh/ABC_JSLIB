@@ -36,6 +36,17 @@
         <div class="elementGlassBackground"></div>
     </script>
 
+    <script id="editHtmlOverlay" type="text/template">
+        <div class="mirrorContainer"></div>
+        <div class="overlayFooter">
+            <div class="rightAligned">
+                <button class="overlayButton cancelButton">Cancel</button>
+                <button class="overlayButton doneButton">Done</button>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+    </script>
+
     <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="Js/Libs/underscore.js"></script>
     <script type="text/javascript" src="Js/Libs/backbone.js"></script>
@@ -61,6 +72,8 @@
     <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/EditHTMLView.js"></script>
+
+    <script type="text/javascript" src="Js/Tools/Debug.js"></script>
 
     <script type="text/javascript">
         $(function() {

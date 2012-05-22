@@ -13,6 +13,9 @@ body {
     border: none;
     zoom: 1;
 }
+.rightAligned {
+    float: right;
+}
 .topBar {
     height: 30px;
     border-bottom: 1px solid #ccc;
@@ -128,6 +131,47 @@ iframe.testPage {
     cursor: pointer;
     margin-left: 4px;
     margin-top: 3px;
+}
+.editorOverlay .overlayFooter {
+    padding: 8px;
+}
+.editorOverlay .overlayButton {
+    display: inline-block;
+    line-height: normal;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    color: #000;
+    cursor: pointer;
+    padding: 4px 8px;
+    border: 1px solid #BBB;
+    border-top-color: #CCC;
+    border-bottom-color: #A0A0A0;
+    background: #F9F9F9;
+    background: -webkit-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -moz-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -o-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -ms-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f9f9f9', endColorstr = '#e3e3e3', GradientType = 0);
+    text-shadow: 0 1px 0px #fff;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    cursor: pointer;
+    margin-right: 4px;
+}
+.editorOverlay .doneButton {
+    background: #7091C7;
+    background: -moz-linear-gradient(top, #7091C7 0%, #316AC6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7091C7), color-stop(100%, #316AC6));
+    background: -webkit-linear-gradient(top, #7091C7 0%, #316AC6 100%);
+    background: -o-linear-gradient(top, #7091C7 0%, #316AC6 100%);
+    background: -ms-linear-gradient(top, #7091C7 0%, #316AC6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7091c7', endColorstr = '#316ac6', GradientType = 0);
+    color: #fff;
+    border-color: #5D83C0;
+    text-shadow: 0 -1px 0px #17243A;
 }
 ul.editorMenu {
     padding: 0px;

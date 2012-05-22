@@ -25,15 +25,21 @@ var Editor = Backbone.Model.extend({
             } else if (performedItem instanceof OperationMenuItem) {
                 var operation = performedItem.get('operation');
                 this.set('currentOperation', operation);
-                operation.on('cancel', this._operationCancelled, this);
+                operation.on('change:isOpen', this._operationVisibilityChanged, this);
+                operation.set('isOpen', true);
             }
         } else {
             this.get('testPage').unset('targetData');
         }
     },
-    _operationCancelled: function() {
-        this.get('currentOperation').off('cancel', this._operationCancelled, this);
-        this.unset('currentOperation');
-        this.get('testPage').unset('targetData');
+    _operationVisibilityChanged: function() {
+        var operation = this.get('currentOperation');
+        if (!operation.get('isOpen')) {
+            if (operation.get('status') == EditorOperationStatus.completed)
+                alert('Operation successfully completed!');
+            operation.off('change:status', this._operationVisibilityChanged, this);
+            this.unset('currentOperation');
+            this.get('testPage').unset('targetData');
+        }
     }
 })
