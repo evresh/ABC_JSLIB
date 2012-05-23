@@ -10,6 +10,8 @@ var Editor = Backbone.Model.extend({
 
         this.set('menu', new EditorMenu());
         this.get('menu').on('close', this._menuClosed, this);
+
+        this.set('completedOperations', new Backbone.Collection());
     },
     save: function() {
         alert('Not implemented yet');
@@ -24,20 +26,29 @@ var Editor = Backbone.Model.extend({
                 this.get('testPage').selectTarget(performedItem.get('parentTarget'));
             } else if (performedItem instanceof OperationMenuItem) {
                 var operation = performedItem.get('operation');
-                this.set('currentOperation', operation);
-                operation.on('change:isOpen', this._operationVisibilityChanged, this);
-                operation.set('isOpen', true);
+                var completedOperation = this.get('completedOperations').find(function(o) {
+                    return o.get('target')[0] == operation.get('target')[0]
+                        && o.get('type') == operation.get('type');
+                });
+                if (completedOperation)
+                    operation = completedOperation;
+                this.set('currentOperation', completedOperation || operation);
+                operation.on('change:isEditing', this._onOperationEditing, this);
+                operation.set('lastAction', EditorOperationAction.none);
+                operation.set('isEditing', true);
             }
         } else {
             this.get('testPage').unset('targetData');
         }
     },
-    _operationVisibilityChanged: function() {
+    _onOperationEditing: function() {
         var operation = this.get('currentOperation');
-        if (!operation.get('isOpen')) {
-            if (operation.get('status') == EditorOperationStatus.completed)
-                alert('Operation successfully completed!');
-            operation.off('change:status', this._operationVisibilityChanged, this);
+        if (!operation.get('isEditing')) {
+            if (operation.get('lastAction') == EditorOperationAction.complete) {
+                if (!this.get('completedOperations').get(operation.get('id')))
+                    this.get('completedOperations').add(operation);
+            }
+            operation.off('change:isEditing', this._onOperationEditing, this);
             this.unset('currentOperation');
             this.get('testPage').unset('targetData');
         }

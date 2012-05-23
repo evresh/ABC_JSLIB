@@ -8,8 +8,8 @@ var EditHTMLView = Backbone.View.extend({
         this._overlay.on('close', this._close, this);
 
         this.model
-            .on('change:status', this._changeVisibility, this)
-            .on('change:isOpen', this._changeVisibility, this);
+            .on('change:lastAction', this._changeVisibility, this)
+            .on('change:isEditing', this._changeVisibility, this);
     },
     render: function() {
         var _this = this;
@@ -32,25 +32,27 @@ var EditHTMLView = Backbone.View.extend({
             onFocus: function() {
             }
         });
+
+        return this;
     },
     _close: function() {
-        if (this.model.get('status') == EditorOperationStatus.none)
+        if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
-        this.model.set('isOpen', false);
+        this.model.set('isEditing', false);
     },
     _changeVisibility: function() {
         var isOverlayVisible = this._overlay.$el.is(':visible');
-        if (this.model.get('isOpen')) {
-            switch (this.model.get('status')) {
-                case EditorOperationStatus.completed:
-                case EditorOperationStatus.cancelled:
+        if (this.model.get('isEditing')) {
+            switch (this.model.get('lastAction')) {
+                case EditorOperationAction.complete:
+                case EditorOperationAction.cancel:
                     if (isOverlayVisible)
                         this._overlay.close();
                     break;
-                case EditorOperationStatus.none:
+                case EditorOperationAction.none:
                     if (!isOverlayVisible)
                         this._overlay.show({ target: this.model.get('target') });
-                        this._mirror.setValue(this.model.get('changedState') || this.model.get('initialState'));
+                        this._mirror.setValue(this.model.getCurrentHTML());
                         this._mirror.focus();
                     break;
             }
