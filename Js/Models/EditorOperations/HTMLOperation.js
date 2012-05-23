@@ -1,15 +1,20 @@
 var HTMLOperation = EditorOperation.extend({
     getCurrentHTML: function() {
         var state = this.get('changedState') || this.get('previousState') || this.get('initialState');
-        var html = '';
-        state.each(function() {
-            if (this.tagName == 'SCRIPT' || $(this).closest('body').length)
-                html += $(this).outerHTML();
-        });
-        return html;
+        return state.outerHTML();
     },
     _getInitialState: function() {
         return this.get('target');
+    },
+    _beforeEdit: function() {
+        if (this.get('changedState')) {
+            var state = this.get('changedState');
+            state.each(function() {
+                if (!(this.tagName == 'SCRIPT' || $(this).closest('body').length))
+                    state = state.not($(this));
+            });
+            this.set('changedState', state);
+        }
     },
     _applyChanges: function(html) {
         var previousState = this.get('previousState') || this.get('initialState');

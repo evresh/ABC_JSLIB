@@ -24,9 +24,12 @@ var EditorOperation = Backbone.Model.extend({
     _getInitialState: function() {
         return null;
     },
+    _beforeEdit: function() {},
     _onEditing: function() {
-        if (this.get('isEditing'))
+        if (this.get('isEditing')) {
+            this._beforeEdit();
             this.set('previousState', this.get('changedState'));
+        }
     },
     _applyChanges: function(data) {
         alert('Not implemented yet');
