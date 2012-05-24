@@ -1,12 +1,13 @@
 var EditorMenu = Backbone.Model.extend({
     defaults: {
         targetData: false,
-        performedItem: null
+        performedItem: null,
+        isVisible: false
     },
     initialize: function() {
         this.set('items', new Backbone.Collection([
             new SelectParentMenuItem({ name: 'Select Parent' })
-            ,new OperationMenuItem({ name: 'Edit HTML', type: HTMLOperation, subType: 'EditHTML' })
+            ,new OperationMenuItem({ name: 'Edit HTML', type: HTMLOperation, variant: 'EditHTML' })
             ,new OperationMenuItem({ name: 'Edit', type: EditorOperation })
             ,new OperationMenuItem({ name: 'Change CSS', type: EditorOperation })
             ,new OperationMenuItem({ name: 'Change Text', type: EditorOperation })
@@ -23,25 +24,25 @@ var EditorMenu = Backbone.Model.extend({
         ]));
 
         this.on('change:targetData', this._updateItems, this);
+        this.on('change:isVisible', this._visibilityChanged, this);
         this.get('items').on('perform', this._itemPerformed, this);
     },
-    close: function() {
-        if (this.get('targetData')) {
-            var performedItem = this.get('performedItem');
+    _visibilityChanged: function() {
+        if (this.get('isVisible'))
+            this.unset('performedItem');
+        else
             this.unset('targetData');
-            this.trigger('close', performedItem);
-        }
     },
     _itemPerformed: function(item) {
         this.set('performedItem', item);
+        this.set('isVisible', false);
     },
     _updateItems: function() {
         var targetData = this.get('targetData');
         if (targetData) {
             this.get('items').each(function(item) {
-                item.update($(targetData.target));
+                item.set('target', $(targetData.target));
             });
         }
-        this.unset('performedItem');
     }
 })

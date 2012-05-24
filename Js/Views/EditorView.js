@@ -22,9 +22,9 @@ var EditorView = Backbone.View.extend({
     _currentOperationChanged: function() {
         var operation = this.model.get('currentOperation');
         if (operation && !operation.view) {
-            var subType = operation.get('subType');
-            if (subType)
-                operation.view = new (window[subType + 'View'])({ model: operation }).render();
+            var variant = operation.get('variant');
+            if (variant)
+                variant.view = new (window[variant + 'View'])({ model: operation }).render();
         }
     },
     _save: function() {

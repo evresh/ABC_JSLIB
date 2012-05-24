@@ -7,7 +7,7 @@ var EditorOperationAction = {
 var EditorOperation = Backbone.Model.extend({
     defaults: {
         id: new Date().getTime(),
-        type: '',
+        variant: '',
         initialState: null,
         changedState: null,
         previousState: null,
