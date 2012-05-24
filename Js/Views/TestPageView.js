@@ -9,6 +9,14 @@ var TestPageView = Backbone.View.extend({
             .attr('src', this.model.get('pageUrl'))
             .appendTo(this.$el);
 
+        iframe.getDocument = function() {
+            return $(iframe[0].contentDocument || iframe[0].contentWindow.document);
+        }
+
+        this.getFrame = function() {
+            return iframe;
+        }
+
         this._onWindowResize();
 
         var loadingElements = $('<div>')
@@ -23,7 +31,7 @@ var TestPageView = Backbone.View.extend({
             );
 
         iframe.load(_.bind(function(e) {
-            var body = this._getIframeDocument().find('body');
+            var body = iframe.getDocument().find('body');
 
             $('<link>').attr({
                 href: 'css/editor.css',
@@ -45,15 +53,8 @@ var TestPageView = Backbone.View.extend({
 
         return this;
     },
-    _getIframe: function() {
-        return this.$('iframe');
-    },
-    _getIframeDocument: function() {
-        var iframe = this._getIframe();
-        return $(iframe[0].contentDocument || iframe[0].contentWindow.document);
-    },
     _onWindowResize: function() {
-        this.$('iframe').height($(window).height() - this._getIframe().offset().top);
+        this.getFrame().height($(window).height() - this.getFrame().offset().top);
 
         return this;
     },
@@ -75,7 +76,7 @@ var TestPageView = Backbone.View.extend({
         var width = target.outerWidth();
         var height = target.outerHeight();
 
-        var body = this._getIframeDocument().find('body');
+        var body = this.getFrame().getDocument().find('body');
 
         body.find('.elementOutline').show();
 
@@ -109,7 +110,7 @@ var TestPageView = Backbone.View.extend({
         .end();
     },
     _targetChanged: function() {
-        var doc = this._getIframeDocument(), body = doc.find('body');
+        var doc = this.getFrame().getDocument(), body = doc.find('body');
         if (this.model.get('targetData')) {
             var el = $(this.model.get('targetData').target),
                 offset = el.offset(),

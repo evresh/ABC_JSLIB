@@ -32,20 +32,20 @@ var HTMLOperation = EditorOperation.extend({
         } else if (this._stripWhite(target.outerHTML(), parentTag) != cleanedHtml) {
             html = this._formatContent(html, parentTag);
             try {
-                var frameDoc = $('iframe')[0].contentDocument || $('iframe')[0].contentWindow.document;
-                var s = document.createElement(parent.get(0).tagName);
+                var doc = target[0].ownerDocument;
+                var s = doc.createElement(parent.get(0).tagName);
                 s.innerHTML = html;
                 var hasScripts = false;
                 for (var i = 0; i < s.childNodes.length; i++) {
                     if (s.childNodes[i].tagName === 'SCRIPT') {
                         hasScripts = true;
-                        var script = frameDoc.createElement('script'),
+                        var script = doc.createElement('script'),
                         elem = s.childNodes[i],
-                        head = frameDoc.getElementsByTagName("head")[0] || frameDoc.documentElement,
+                        head = doc.getElementsByTagName("head")[0] || doc.documentElement,
                         data = (elem.text || elem.textContent || elem.innerHTML || '');
                         script.type = 'text/javascript'
                         try {
-                            script.appendChild(frameDoc.createTextNode(data));
+                            script.appendChild(doc.createTextNode(data));
                         } catch(e) {
                             script.text = data;
                         }
@@ -55,7 +55,7 @@ var HTMLOperation = EditorOperation.extend({
                 }
                 var newTarget = $(s.innerHTML);
                 if (hasScripts) {
-                    var buffer = $('<div>').hide().appendTo($(frameDoc).find('body'));
+                    var buffer = $('<div>').hide().appendTo($(doc).find('body'));
                     var brokenScripts = false;
                     try {
                         buffer.append(newTarget);

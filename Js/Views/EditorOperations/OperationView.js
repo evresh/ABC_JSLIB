@@ -26,6 +26,7 @@ var OperationView = Backbone.View.extend({
         var variant = this.model.get('variant');
         var templateId = variant.substr(0, 1).toLowerCase() + variant.substr(1) + 'Operation';
         var content = $('<div>').html($('#' + templateId).html());
+        this._overlay.options.frame = this.options.frame;
         this._overlay.render().setContent(content);
         this.setElement(content);
         this._afterRender();

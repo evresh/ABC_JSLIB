@@ -1,30 +1,31 @@
 var EditorMenuView = Backbone.View.extend({
     initialize: function() {
         this.model.on('change:isVisible', this._visibilityChanged, this);
-        this.overlay = new EditorOverlayView();
-        this.overlay.on('close', this._close, this);
+        this._overlay = new EditorOverlayView();
+        this._overlay.on('close', this._close, this);
     },
     render: function() {
-        this.overlay.render();
+        this._overlay.options.frame = this.options.frame;
+        this._overlay.render();
         var menu = $('<ul>').addClass('editorMenu');
         this.model.get('items').each(_.bind(function(item) {
             var view = new EditorMenuItemView({ model: item });
             view.render().$el.appendTo(menu);
         }, this));
-        this.overlay.setContent(menu);
+        this._overlay.setContent(menu);
 
         return this;
     },
     _visibilityChanged: function() {
-        var isOverlayVisible = this.overlay.$el.is(':visible');
+        var isOverlayVisible = this._overlay.$el.is(':visible');
         if (this.model.get('isVisible')) {
             var targetData = this.model.get('targetData');
             var tagName = targetData.target.tagName.toLowerCase();
-            this.overlay
+            this._overlay
                 .setTitle('<nobr>' + this._getTagDescription(tagName) + '</nobr>&nbsp;<i>&lt;' + tagName + '&gt;</i>')
                 .show(targetData);
         } else if (isOverlayVisible) {
-            this.overlay.close();
+            this._overlay.close();
         }
     },
     _close: function() {

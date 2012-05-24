@@ -32,8 +32,8 @@ var EditorOverlayView = Backbone.View.extend({
     _attachToTarget: function(targetData) {
         var top, left, menu = this.$el,
         elem = $(targetData.target),
-        frame = $('iframe'),
-        frameDoc = frame[0].contentDocument || frame[0].contentWindow.document,
+        frame = this.options.frame,
+        frameDoc = frame.getDocument()[0],
         x = parseInt(targetData.pageX || 0, 10) - window.pageXOffset,
         y = parseInt(targetData.pageY || 0, 10) - window.pageYOffset,
         margin = 8,

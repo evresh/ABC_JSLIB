@@ -16,6 +16,7 @@ var EditorView = Backbone.View.extend({
     },
     render: function() {
         this._testView.render();
+        this._menuView.options.frame = this._testView.getFrame();
         this._menuView.render();
 
         return this;
@@ -27,7 +28,10 @@ var EditorView = Backbone.View.extend({
             var viewName = variant + 'View';
             var view = this._operationViews[viewName];
             if (!view)
-                this._operationViews[viewName] = new (window[viewName])({ model: operation }).render();
+                this._operationViews[viewName] = new (window[viewName])({
+                    model: operation,
+                    frame: this._testView.getFrame()
+                }).render();
             else
                 view.setModel(operation);
         }
