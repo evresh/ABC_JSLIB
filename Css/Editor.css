@@ -198,3 +198,9 @@ ul.editorMenu {
 .editorOverlay .CodeMirror-scroll {
     width: 500px;
 }
+.editorOverlay .editContainer,
+.editorOverlay #tiny_tbl,
+.editorOverlay #tiny_ifr {
+    width: 500px;
+    height: 244px;
+}

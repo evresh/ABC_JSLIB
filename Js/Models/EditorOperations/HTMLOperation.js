@@ -126,6 +126,7 @@ var HTMLOperation = EditorOperation.extend({
                 s.replaceChild(n, s.childNodes[i]);
             }
         }
+        s.innerHTML = s.innerHTML.replace(/<br mce_bogus="1">/g, "");
         return s.innerHTML;
     }
 })

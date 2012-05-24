@@ -5,6 +5,8 @@
     <title>Website Optimizer Editor</title>
     <link href="Css/Editor.css" rel="stylesheet" />
     <link href="Css/codemirror.css" rel="stylesheet" />
+    <!--link href="Css/tiny_mce/ui.css" rel="stylesheet" />
+    <link href="Css/tiny_mce/window.css" rel="stylesheet" /-->
 </head>
 <body>
     <div class="topBar">
@@ -36,8 +38,21 @@
         <div class="elementGlassBackground"></div>
     </script>
 
-    <script id="editHtmlOverlay" type="text/template">
+    <script id="editHTMLOperation" type="text/template">
         <div class="mirrorContainer"></div>
+        <div class="overlayFooter">
+            <div class="rightAligned">
+                <button class="overlayButton cancelButton">Cancel</button>
+                <button class="overlayButton doneButton">Done</button>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+    </script>
+
+    <script id="editOperation" type="text/template">
+        <div class="editContainer">
+            <textarea id="editOp"></textarea>
+        </div>
         <div class="overlayFooter">
             <div class="rightAligned">
                 <button class="overlayButton cancelButton">Cancel</button>
@@ -57,6 +72,7 @@
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-javascript.js"></script>
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-css.js"></script>
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-htmlmixed.js"></script>
+    <script type="text/javascript" src="tiny_mce/tiny_mce_src.js"></script>
 
     <script type="text/javascript" src="Js/Models/TestPage.js"></script>
     <script type="text/javascript" src="Js/Models/Editor.js"></script>
@@ -72,7 +88,9 @@
     <script type="text/javascript" src="Js/Views/EditorView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/OperationView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/EditHTMLView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/EditView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
 

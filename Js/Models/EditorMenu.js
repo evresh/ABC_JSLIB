@@ -8,7 +8,7 @@ var EditorMenu = Backbone.Model.extend({
         this.set('items', new Backbone.Collection([
             new SelectParentMenuItem({ name: 'Select Parent' })
             ,new OperationMenuItem({ name: 'Edit HTML', type: HTMLOperation, variant: 'EditHTML' })
-            ,new OperationMenuItem({ name: 'Edit', type: EditorOperation })
+            ,new OperationMenuItem({ name: 'Edit', type: HTMLOperation, variant: 'Edit' })
             ,new OperationMenuItem({ name: 'Change CSS', type: EditorOperation })
             ,new OperationMenuItem({ name: 'Change Text', type: EditorOperation })
             ,new OperationMenuItem({ name: 'Change Image', type: EditorOperation })

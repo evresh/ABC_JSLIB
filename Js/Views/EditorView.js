@@ -11,6 +11,7 @@ var EditorView = Backbone.View.extend({
             el: this.$('.editorMenu'),
             model: this.model.get('menu')
         });
+        this._operationViews = {};
         this.model.on('change:currentOperation', this._currentOperationChanged, this);
     },
     render: function() {
@@ -21,10 +22,14 @@ var EditorView = Backbone.View.extend({
     },
     _currentOperationChanged: function() {
         var operation = this.model.get('currentOperation');
-        if (operation && !operation.view) {
-            var variant = operation.get('variant');
-            if (variant)
-                variant.view = new (window[variant + 'View'])({ model: operation }).render();
+        var variant;
+        if (operation && (variant = operation.get('variant'))) {
+            var viewName = variant + 'View';
+            var view = this._operationViews[viewName];
+            if (!view)
+                this._operationViews[viewName] = new (window[viewName])({ model: operation }).render();
+            else
+                view.setModel(operation);
         }
     },
     _save: function() {
