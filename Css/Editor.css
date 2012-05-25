@@ -207,3 +207,7 @@ ul.editorMenu {
     width: 500px;
     height: 244px;
 }
+.editorOverlay .mceEditor a.mce_code,
+.editorOverlay .mceEditor a.mce_preview {
+    display: none;
+}
