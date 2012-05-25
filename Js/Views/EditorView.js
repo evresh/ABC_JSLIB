@@ -26,14 +26,17 @@ var EditorView = Backbone.View.extend({
         if (operation) {
             var type = operation.get('type');
             var viewName = type.substr(0, 1).toUpperCase() + type.substr(1) + 'View';
-            var view = this._operationViews[viewName];
-            if (!view)
-                view = this._operationViews[viewName] = new (window[viewName])({
-                    model: operation,
-                    frame: this._testView.getFrame()
-                }).render();
-            else
-                view.setModel(operation);
+            var viewCtor = window[viewName];
+            if (viewCtor) {
+                var view = this._operationViews[viewName];
+                if (!view)
+                    view = this._operationViews[viewName] = new (viewCtor)({
+                        model: operation,
+                        frame: this._testView.getFrame()
+                    }).render();
+                else
+                    view.setModel(operation);
+            }
         }
     },
     _save: function() {

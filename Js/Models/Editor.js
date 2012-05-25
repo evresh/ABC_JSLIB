@@ -49,7 +49,7 @@ var Editor = Backbone.Model.extend({
     },
     _onOperationEditing: function() {
         var operation = this.get('currentOperation');
-        if (!operation.get('isEditing')) {
+        if (operation && !operation.get('isEditing')) {
             if (operation.get('lastAction') == EditorOperationAction.complete) {
                 var overwrittenOperation = this.get('completedOperations').find(function(o) {
                     return o == operation || operation.isOverriding(o);

@@ -6,7 +6,7 @@ var EditorOperations = (function() {
     var operations = {
         editHTML: 'HTMLOperation',
         edit: 'HTMLOperation',
-        remove: notImplementedYet,
+        remove: 'RemoveOperation',
         visibility: notImplementedYet,
         changeCSS: notImplementedYet,
         changeText: notImplementedYet,
