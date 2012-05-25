@@ -29,15 +29,11 @@ var Editor = Backbone.Model.extend({
                     this.get('testPage').selectTarget(performedItem.get('target').parent());
                 } else if (performedItem instanceof OperationMenuItem) {
                     var operation = this.get('completedOperations').find(function(o) {
-                        return o.get('target')[0] == performedItem.get('target')[0]
-                            && o.get('variant') == performedItem.get('variant');
+                        return o.get('type') == performedItem.get('type')
+                            && o.get('target')[0] == performedItem.get('target')[0];
                     });
-                    if (!operation) {
-                        operation = new (performedItem.get('type'))({
-                            target: performedItem.get('target'),
-                            variant: performedItem.get('variant')
-                        });
-                    }
+                    if (!operation)
+                        operation = EditorOperations.create(performedItem.get('type'), performedItem.get('target'));
                     this.set('currentOperation', operation);
                     operation.on('change:isEditing', this._onOperationEditing, this);
                     operation.set('lastAction', EditorOperationAction.none);
@@ -52,8 +48,12 @@ var Editor = Backbone.Model.extend({
         var operation = this.get('currentOperation');
         if (!operation.get('isEditing')) {
             if (operation.get('lastAction') == EditorOperationAction.complete) {
-                if (!this.get('completedOperations').get(operation.get('id')))
-                    this.get('completedOperations').add(operation);
+                var overwrittenOperation = this.get('completedOperations').find(function(o) {
+                    return o == operation || operation.isOverriding(o);
+                });
+                if (overwrittenOperation)
+                    this.get('completedOperations').remove(overwrittenOperation);
+                this.get('completedOperations').add(operation);
             }
             operation.off('change:isEditing', this._onOperationEditing, this);
             this.unset('currentOperation');

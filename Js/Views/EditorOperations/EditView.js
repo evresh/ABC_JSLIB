@@ -1,8 +1,21 @@
 var EditView = OperationView.extend({
+    events: function() {
+        return $.extend({}, OperationView.prototype.events, {
+            'click .editHTMLButton': '_editHTML'
+        });
+    },
     _afterRender: function() {
         this._overlay.setTitle('Edit');
 
         var _this = this;
+
+        var styles = this.options.frame.getDocument()[0].styleSheets;
+        var css = [];
+        $.each(styles, function() {
+            if (!!this.href)
+                css.push(this.href);
+        });
+
         tinymce.settings = {
             mode: 'none',
             theme: 'advanced',
@@ -26,7 +39,7 @@ var EditView = OperationView.extend({
             verify_html: true,
             entities: '38,amp,34,quot,60,lt,62,gt',
             //document_base_url: this.frame.vwo_document_real_url,
-            //content_css: css,
+            content_css: css.join(','),
             valid_children: '+body[style|tbody|thead|tr|label|td|dd|li|p|ol|ul|hr]',
             valid_elements: '*[*]',
             setup: function(editor) {
@@ -49,5 +62,8 @@ var EditView = OperationView.extend({
             this._editor.setContent(this.model.getCurrentHTML());
             this._editor.focus();
         }
+    },
+    _editHTML: function() {
+        this.model.set('type', 'editHTML');
     }
 })

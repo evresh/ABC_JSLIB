@@ -128,5 +128,9 @@ var HTMLOperation = EditorOperation.extend({
         }
         s.innerHTML = s.innerHTML.replace(/<br mce_bogus="1">/g, "");
         return s.innerHTML;
+    },
+    isOverriding: function(operation) {
+        return this.get('type') == operation.get('type')
+            && operation.get('target')[0] == (this.get('previousState') || this.get('initialState'))[0];
     }
 })

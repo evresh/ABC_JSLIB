@@ -1,7 +1,7 @@
 var EditorOverlayView = Backbone.View.extend({
     className: 'editorOverlay',
     events: {
-        'click .closeButton': 'close'
+        'click .closeButton': '_innerClose'
     },
     render: function() {
         this.$el
@@ -23,11 +23,15 @@ var EditorOverlayView = Backbone.View.extend({
         this.$el.fadeIn(150);
         this._attachToTarget(targetData);
     },
-    close: function() {
+    _innerClose: function(e, skipEvent) {
         var _this = this;
-        this.$el.fadeOut(150, function(){
-            _this.trigger('close');
+        return this.$el.fadeOut(150, function(){
+            if (!skipEvent)
+                _this.trigger('close');
         });
+    },
+    close: function(skipEvent) {
+        this._innerClose(null, skipEvent);
     },
     _attachToTarget: function(targetData) {
         var top, left, menu = this.$el,

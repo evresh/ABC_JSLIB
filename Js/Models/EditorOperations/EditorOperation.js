@@ -6,8 +6,7 @@ var EditorOperationAction = {
 }
 var EditorOperation = Backbone.Model.extend({
     defaults: {
-        id: new Date().getTime(),
-        variant: '',
+        type: '',
         initialState: null,
         changedState: null,
         previousState: null,
@@ -18,9 +17,6 @@ var EditorOperation = Backbone.Model.extend({
         this.set('initialState', this._getInitialState());
         this.on('change:isEditing', this._onEditing, this);
     },
-    isAllowed: function() {
-        return true;
-    },
     _getInitialState: function() {
         return null;
     },
@@ -29,6 +25,13 @@ var EditorOperation = Backbone.Model.extend({
         if (this.get('isEditing')) {
             this._beforeEdit();
             this.set('previousState', this.get('changedState'));
+        }
+    },
+    validate: function(attrs) {
+        if (('type' in attrs) && attrs.type != this.get('type')
+            && !EditorOperations.isValidTypeForOperation(this, attrs.type)) {
+                Debug.trace('EditorOperation.validate() -> invalid type');
+                return false;
         }
     },
     _applyChanges: function(data) {
@@ -58,5 +61,8 @@ var EditorOperation = Backbone.Model.extend({
         this.unset('changedState');
         this.unset('previousState');
         this.set('lastAction', EditorOperationAction.remove);
+    },
+    isOverriding: function(operation) {
+        return false;
     }
 });

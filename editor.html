@@ -5,8 +5,6 @@
     <title>Website Optimizer Editor</title>
     <link href="Css/Editor.css" rel="stylesheet" />
     <link href="Css/codemirror.css" rel="stylesheet" />
-    <!--link href="Css/tiny_mce/ui.css" rel="stylesheet" />
-    <link href="Css/tiny_mce/window.css" rel="stylesheet" /-->
 </head>
 <body>
     <div class="topBar">
@@ -54,6 +52,9 @@
             <textarea id="editOp"></textarea>
         </div>
         <div class="overlayFooter">
+            <div class="leftAligned">
+                <button class="overlayButton editHTMLButton">Edit HTML</button>
+            </div>
             <div class="rightAligned">
                 <button class="overlayButton cancelButton">Cancel</button>
                 <button class="overlayButton doneButton">Done</button>
@@ -82,6 +83,7 @@
     <script type="text/javascript" src="Js/Models/EditorMenuItems/SelectParentMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/HTMLOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperations.js"></script>
 
     <script type="text/javascript" src="Js/Views/EditorOverlayView.js"></script>
     <script type="text/javascript" src="Js/Views/TestPageView.js"></script>

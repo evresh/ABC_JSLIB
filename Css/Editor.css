@@ -16,6 +16,9 @@ body {
 .rightAligned {
     float: right;
 }
+.leftAligned {
+    float: left;
+}
 .topBar {
     height: 30px;
     border-bottom: 1px solid #ccc;

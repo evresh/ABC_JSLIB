@@ -5,7 +5,7 @@ var OperationView = Backbone.View.extend({
     },
     initialize: function() {
         this._overlay = new EditorOverlayView();
-        this._overlay.on('close', this._close, this);
+        this._overlay.on('close', this._overlayClosed, this);
 
         if (this.model)
             this.setModel(this.model);
@@ -23,8 +23,7 @@ var OperationView = Backbone.View.extend({
             .on('change:isEditing', this._changeVisibility, this);
     },
     render: function() {
-        var variant = this.model.get('variant');
-        var templateId = variant.substr(0, 1).toLowerCase() + variant.substr(1) + 'Operation';
+        var templateId = this.model.get('type') + 'Operation';
         var content = $('<div>').html($('#' + templateId).html());
         this._overlay.options.frame = this.options.frame;
         this._overlay.render().setContent(content);
@@ -33,9 +32,16 @@ var OperationView = Backbone.View.extend({
 
         return this;
     },
+    show: function() {
+        this._overlay.show({ target: this.model.get('target') });
+        this._reset();
+    },
+    close: function(skipEvent) {
+        return this._overlay.close(skipEvent);
+    },
     _afterRender: function() { },
     _reset: function() { },
-    _close: function() {
+    _overlayClosed: function() {
         if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
         this.model.set('isEditing', false);
@@ -50,10 +56,8 @@ var OperationView = Backbone.View.extend({
                         this._overlay.close();
                     break;
                 case EditorOperationAction.none:
-                    if (!isOverlayVisible) {
-                        this._overlay.show({ target: this.model.get('target') });
-                        this._reset();
-                    }
+                    if (!isOverlayVisible)
+                        this.show();
                     break;
             }
         } else if (isOverlayVisible) {
