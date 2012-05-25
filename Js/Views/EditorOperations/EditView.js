@@ -64,6 +64,6 @@ var EditView = OperationView.extend({
         }
     },
     _editHTML: function() {
-        this.model.set('type', 'editHTML');
+        this.model.switchTo('editHTML');
     }
 })

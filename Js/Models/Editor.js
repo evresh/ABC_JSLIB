@@ -21,6 +21,12 @@ var Editor = Backbone.Model.extend({
         this.get('menu').set('targetData', targetData);
         this.get('menu').set('isVisible', !!targetData);
     },
+    _setCurrentOperation: function(operation) {
+        this.set('currentOperation', operation);
+        operation.on('change:isEditing', this._onOperationEditing, this);
+        operation.set('lastAction', EditorOperationAction.none);
+        operation.set('isEditing', true);
+    },
     _menuVisibilityChanged: function() {
         if (!this.get('menu').get('isVisible')) {
             var performedItem = this.get('menu').get('performedItem');
@@ -34,10 +40,7 @@ var Editor = Backbone.Model.extend({
                     });
                     if (!operation)
                         operation = EditorOperations.create(performedItem.get('type'), performedItem.get('target'));
-                    this.set('currentOperation', operation);
-                    operation.on('change:isEditing', this._onOperationEditing, this);
-                    operation.set('lastAction', EditorOperationAction.none);
-                    operation.set('isEditing', true);
+                    this._setCurrentOperation(operation);
                 }
             } else {
                 this.get('testPage').unset('targetData');
@@ -57,7 +60,13 @@ var Editor = Backbone.Model.extend({
             }
             operation.off('change:isEditing', this._onOperationEditing, this);
             this.unset('currentOperation');
-            this.get('testPage').unset('targetData');
+
+            var operationToSwitch = operation.get('switchedTo');
+            if (operation.get('lastAction') == EditorOperationAction.cancel && operationToSwitch) {
+                this._setCurrentOperation(operationToSwitch);
+            } else {
+                this.get('testPage').unset('targetData');
+            }
         }
     }
 })

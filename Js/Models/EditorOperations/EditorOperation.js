@@ -6,12 +6,14 @@ var EditorOperationAction = {
 }
 var EditorOperation = Backbone.Model.extend({
     defaults: {
+        isNew: true,
         type: '',
         initialState: null,
         changedState: null,
         previousState: null,
         lastAction: EditorOperationAction.none,
-        isEditing: false
+        isEditing: false,
+        switchedTo: null
     },
     initialize: function() {
         this.set('initialState', this._getInitialState());
@@ -24,14 +26,9 @@ var EditorOperation = Backbone.Model.extend({
     _onEditing: function() {
         if (this.get('isEditing')) {
             this._beforeEdit();
-            this.set('previousState', this.get('changedState'));
-        }
-    },
-    validate: function(attrs) {
-        if (('type' in attrs) && attrs.type != this.get('type')
-            && !EditorOperations.isValidTypeForOperation(this, attrs.type)) {
-                Debug.trace('EditorOperation.validate() -> invalid type');
-                return false;
+            if (!this.get('isNew'))
+                this.set('previousState', this.get('changedState'));
+            this.unset('switchedTo');
         }
     },
     _applyChanges: function(data) {
@@ -49,10 +46,11 @@ var EditorOperation = Backbone.Model.extend({
             this.set('changedState', newState);
     },
     complete: function() {
+        this.set('isNew', false);
         this.set('lastAction', EditorOperationAction.complete);
     },
-    cancel: function() {
-        this._discardChanges();
+    cancel: function(skipDOMChange) {
+        this._discardChanges(skipDOMChange);
         this.set('changedState', this.get('previousState'));
         this.set('lastAction', EditorOperationAction.cancel);
     },
@@ -64,5 +62,16 @@ var EditorOperation = Backbone.Model.extend({
     },
     isOverriding: function(operation) {
         return false;
+    },
+    switchTo: function(newType) {
+        if (EditorOperations.isValidTypeForOperation(this, newType)) {
+            var newOperation = EditorOperations.create(newType, this.get('target'));
+            newOperation.set('initialState', this.get('previousState') || this.get('initialState'));
+            newOperation.set('changedState', this.get('changedState'));
+            this.set('switchedTo', newOperation);
+            this.cancel(true);
+        } else {
+            Debug.trace('EditorOperationAction.switchTo() -> invalid operation type');
+        }
     }
 });

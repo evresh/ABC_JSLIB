@@ -74,17 +74,18 @@ var HTMLOperation = EditorOperation.extend({
             }
         }
     },
-    _discardChanges: function() {
+    _discardChanges: function(skipDOMChange) {
         if (this.get('changedState'))
-            this._changeTarget(this.get('changedState'), this.get('previousState') || this.get('initialState'));
+            this._changeTarget(this.get('changedState'), this.get('previousState') || this.get('initialState'), skipDOMChange);
     },
     _deleteChanges: function() {
         if (this.get('changedState'))
             this._changeTarget(this.get('changedState'), this.get('initialState'));
     },
-    _changeTarget: function(target, newTarget) {
+    _changeTarget: function(target, newTarget, skipDOMChange) {
         if (target[0] != newTarget[0]) {
-            target.replaceWith(newTarget);
+            if (!skipDOMChange)
+                target.replaceWith(newTarget);
             this.set('target', newTarget);
         }
         return newTarget;
