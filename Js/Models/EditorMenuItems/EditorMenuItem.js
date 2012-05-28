@@ -4,10 +4,7 @@ var EditorMenuItem = Backbone.Model.extend({
         target: null,
         isVisible: false
     },
-    initialize: function() {
-        this.on('change:target', this._targetChanged, this);
-    },
-    _targetChanged: function() { },
+    update: function() { },
     perform: function() {
         this.trigger('perform', this);
     }

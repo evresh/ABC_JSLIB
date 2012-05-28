@@ -5,6 +5,7 @@ var EditorMenuItemView = Backbone.View.extend({
     },
     initialize: function() {
         this.model.on('change:isVisible', this._visibilityChanged, this);
+        this.model.on('change:name', this.render, this);
     },
     render: function() {
         this.$el.html(this.model.get('name'));

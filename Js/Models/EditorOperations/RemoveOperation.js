@@ -13,11 +13,8 @@ var RemoveOperation = EditorOperation.extend({
         this.get('target').hide();
         return this.get('target').css('display');
     },
-    _discardChanges: function() {
+    _deleteChanges: function() {
         if (this.get('changedState'))
             this.get('target').css('display', this.get('initialState'));
-    },
-    _deleteChanges: function() {
-        this._discardChanges();
     }
 });

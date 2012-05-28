@@ -10,6 +10,7 @@ var EditorMenu = Backbone.Model.extend({
             ,new OperationMenuItem({ name: 'Edit HTML', type: 'editHTML' })
             ,new OperationMenuItem({ name: 'Edit', type: 'edit' })
             ,new OperationMenuItem({ name: 'Remove', type: 'remove' })
+            ,new VisibilityOperationMenuItem()
             ,new OperationMenuItem({ name: 'Change CSS', type: 'changeCSS' })
             ,new OperationMenuItem({ name: 'Change Text', type: 'changeText' })
             ,new OperationMenuItem({ name: 'Change Image', type: 'changeImage' })
@@ -43,6 +44,7 @@ var EditorMenu = Backbone.Model.extend({
         if (targetData) {
             this.get('items').each(function(item) {
                 item.set('target', $(targetData.target));
+                item.update();
             });
         }
     }

@@ -211,3 +211,16 @@ ul.editorMenu {
 .editorOverlay .mceEditor a.mce_preview {
     display: none;
 }
+.hiddenByOptimizer {
+    visibility: visible !important;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: alpha(opacity = 0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+.hiddenByOptimizer:hover {
+    opacity: 0.2;
+    -moz-opacity: 0.2;
+    filter: alpha(opacity = 20);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+}
