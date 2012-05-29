@@ -8,7 +8,7 @@ var EditorOperations = (function() {
         edit: 'HTMLOperation',
         remove: 'RemoveOperation',
         visibility: 'VisibilityOperation',
-        changeCSS: notImplementedYet,
+        changeCSS: 'ChangeCSSOperation',
         changeText: notImplementedYet,
         changeImage: notImplementedYet,
         editImage: notImplementedYet,

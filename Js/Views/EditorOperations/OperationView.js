@@ -12,15 +12,11 @@ var OperationView = Backbone.View.extend({
     },
     setModel: function(model) {
         if (this.model) {
-            this.model
-                .off('change:lastAction', this._changeVisibility, this)
-                .off('change:isEditing', this._changeVisibility, this);
+            this.model.off('change:isEditing', this._changeVisibility, this);
         }
 
         this.model = model;
-        this.model
-            .on('change:lastAction', this._changeVisibility, this)
-            .on('change:isEditing', this._changeVisibility, this);
+        this.model.on('change:isEditing', this._changeVisibility, this);
     },
     render: function() {
         var templateId = this.model.get('type') + 'Operation';
@@ -49,17 +45,8 @@ var OperationView = Backbone.View.extend({
     _changeVisibility: function() {
         var isOverlayVisible = this._overlay.$el.is(':visible');
         if (this.model.get('isEditing')) {
-            switch (this.model.get('lastAction')) {
-                case EditorOperationAction.complete:
-                case EditorOperationAction.cancel:
-                    if (isOverlayVisible)
-                        this._overlay.close();
-                    break;
-                case EditorOperationAction.none:
-                    if (!isOverlayVisible)
-                        this.show();
-                    break;
-            }
+            if (!isOverlayVisible)
+                this.show();
         } else if (isOverlayVisible) {
             this._overlay.close();
         }

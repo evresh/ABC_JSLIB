@@ -21,7 +21,7 @@ var EditorOverlayView = Backbone.View.extend({
     },
     show: function(targetData) {
         this.$el.fadeIn(150);
-        this._attachToTarget(targetData);
+        this.attachToTarget(targetData);
     },
     _innerClose: function(e, skipEvent) {
         var _this = this;
@@ -33,13 +33,16 @@ var EditorOverlayView = Backbone.View.extend({
     close: function(skipEvent) {
         this._innerClose(null, skipEvent);
     },
-    _attachToTarget: function(targetData) {
+    attachToTarget: function(targetData) {
+        if (targetData)
+            this._targetData = targetData;
+
         var top, left, menu = this.$el,
-        elem = $(targetData.target),
+        elem = $(this._targetData.target),
         frame = this.options.frame,
         frameDoc = frame.getDocument()[0],
-        x = parseInt(targetData.pageX || 0, 10) - window.pageXOffset,
-        y = parseInt(targetData.pageY || 0, 10) - window.pageYOffset,
+        x = parseInt(this._targetData.pageX || 0, 10) - window.pageXOffset,
+        y = parseInt(this._targetData.pageY || 0, 10) - window.pageYOffset,
         margin = 8,
         flag = false,
         eoW = elem.outerWidth(),

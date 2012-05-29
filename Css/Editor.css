@@ -13,6 +13,7 @@ body {
     border: none;
     zoom: 1;
 }
+.invisible { display: none!important; }
 .rightAligned {
     float: right;
 }
@@ -223,4 +224,80 @@ ul.editorMenu {
     -moz-opacity: 0.2;
     filter: alpha(opacity = 20);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+}
+.editorOverlay .cssList {
+    width: 320px;
+    padding: 8px;
+    padding-bottom: 0px;
+}
+.editorOverlay .cssGroup {
+    margin-top: 8px;
+}
+.editorOverlay .cssGroup:first-child {
+    margin-top: 0px;
+}
+.editorOverlay .cssGroupTitle {
+    cursor: pointer;
+    background: url('/Img/arrow_right.png') no-repeat -7px -3px;
+    padding-left: 12px;
+}
+.editorOverlay .openCssGroup .cssGroupTitle {
+    background: url('/Img/arrow_down.png') no-repeat -5px -3px;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.editorOverlay .cssGroupItems { display: none; }
+.editorOverlay .cssGroup .styleItem {
+    margin: 1px 0 1px 12px;
+}
+.editorOverlay .cssGroup .styleItem * {
+    vertical-align: middle;
+}
+.editorOverlay .styleItem .styleName {
+    width: 135px;
+    display: inline-block;
+    height: 17px;
+    line-height: 17px;
+}
+.editorOverlay .styleItem .styleValue {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 110px;
+    cursor: pointer;
+    padding-left: 2px;
+    height: 17px;
+    line-height: 17px;
+}
+.editorOverlay .styleButtons a {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 1px;
+}
+.editorOverlay .styleItem .editStyleButton {
+    background-image: url('/Img/edit.png');
+    display: none;
+}
+.editorOverlay .styleItem .saveStyleButton {
+    background-image: url('/Img/save.png');
+    background-size: 10px;
+}
+.editorOverlay .styleItem .cancelStyleButton {
+    background-image: url('/Img/cancel.png');
+    background-size: 10px;
+}
+.editorOverlay .styleItem:hover .editStyleButton {
+    display: inline-block;
+}
+.editorOverlay .styleItem input {
+    border: 1px #CECECE solid;
+    width: 110px;
+    padding: 0px;
+    font-size: 12px;
+    outline: 0;
+    margin: 0px;
 }
