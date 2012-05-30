@@ -434,19 +434,11 @@ var ChangeCSSOperation = Backbone.Model.extend({
         var items = this.get('items');
         this.get('tempItems').each(function(item) {
             var sourceItem = item.get('source');
-            switch (item.get('lastAction')) {
-                case EditorOperationAction.complete:
-                    if (sourceItem) {
-                        sourceItem.set('changedState', item.get('changedState'));
-                        sourceItem.complete();
-                    }
-                    break;
-                case EditorOperationAction.remove:
-                    if (!sourceItem && item.get('group') == 'Custom') {
-                        items.remove(item);
-                    }
-                    break;
-            }
+            var changedState = item.get('changedState');
+            if (sourceItem && !_.isNull(changedState))
+                sourceItem.set('changedState', changedState);
+            if (!sourceItem && item.get('lastAction') == EditorOperationAction.remove && item.get('group') == 'Custom')
+                items.remove(item);
         });
 
         this.set('lastAction', EditorOperationAction.complete);
@@ -454,11 +446,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     cancel: function() {
         this.get('tempItems').each(function(item) {
-            if (item.get('source')) {
-                item.remove();
-            } else {
-                item.cancel();
-            }
+            item.remove();
         });
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);
