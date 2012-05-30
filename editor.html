@@ -3,8 +3,9 @@
 <html>
 <head>
     <title>Website Optimizer Editor</title>
-    <link href="Css/Editor.css" rel="stylesheet" />
     <link href="Css/codemirror.css" rel="stylesheet" />
+    <link href="Css/jPicker.css" rel="stylesheet" />
+    <link href="Css/Editor.css" rel="stylesheet" />
 </head>
 <body>
     <div class="topBar">
@@ -89,8 +90,23 @@
                 <a class="cancelStyleButton" title="Cancel"></a>
             </div>
             <span class="styleName"><%=name%></span>
-            <span class="styleValue"><%=value%></span>
-            <input type="text" value="<%=value%>" />
+            <span class="styleValue"></span>
+            <input type="text" />
+            <div class="clearFloat"></div>
+        </div>
+    </script>
+
+    <script id="colorItem" type="text/template">
+        <div class="styleItem">
+            <div class="rightAligned styleButtons">
+                <a class="editStyleButton" title="Edit CSS"></a>
+            </div>
+            <span class="styleName"><%=name%></span>
+            <span class="styleValue">
+                <span class="styleColor"></span>
+                <span class="colorValue"></span>
+            </span>
+            <span class="picker"></span>
             <div class="clearFloat"></div>
         </div>
     </script>
@@ -106,6 +122,7 @@
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-css.js"></script>
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-htmlmixed.js"></script>
     <script type="text/javascript" src="tiny_mce/tiny_mce_src.js"></script>
+    <script type="text/javascript" src="Js/Libs/jPicker.js"></script>
 
     <script type="text/javascript" src="Js/Models/TestPage.js"></script>
     <script type="text/javascript" src="Js/Models/Editor.js"></script>
@@ -119,6 +136,7 @@
     <script type="text/javascript" src="Js/Models/EditorOperations/RemoveOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/VisibilityOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/StyleItemOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ColorItemOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ChangeCSSOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperations.js"></script>
 
@@ -131,9 +149,11 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/EditHTMLView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/EditView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/StyleItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ColorItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
+    <script type="text/javascript" src="Js/Tools/Tools.js"></script>
 
     <script type="text/javascript">
         $(function() {

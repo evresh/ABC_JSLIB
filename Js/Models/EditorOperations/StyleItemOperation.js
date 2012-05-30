@@ -15,7 +15,7 @@ var StyleItemOperation = EditorOperation.extend({
     },
     _deleteChanges: function() {
         if (this.get('changedState'))
-            this.get('target').css('display', this.get('initialState'));
+            this.get('target').css(this.get('property'), this.get('initialState'));
     },
     getValue: function() {
         return this.get('changedState') || this.get('previousState') || this.get('initialState');

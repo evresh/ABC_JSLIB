@@ -8,6 +8,7 @@ var EditorOperation = Backbone.Model.extend({
     defaults: {
         isNew: true,
         type: '',
+        target: null,
         initialState: null,
         changedState: null,
         previousState: null,
@@ -16,7 +17,8 @@ var EditorOperation = Backbone.Model.extend({
         switchedTo: null
     },
     initialize: function() {
-        this.set('initialState', this._getInitialState());
+        if (!this.get('initialState'))
+            this.set('initialState', this._getInitialState());
         this.on('change:isEditing', this._onEditing, this);
     },
     _getInitialState: function() {

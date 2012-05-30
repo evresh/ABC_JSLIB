@@ -1,12 +1,15 @@
 var ChangeCSSView = OperationView.extend({
-    events: {
-        'click .cssGroupTitle': '_groupSelected'
+    events: function() {
+        return $.extend({}, OperationView.prototype.events, {
+            'click .cssGroupTitle': '_groupSelected'
+        });
     },
     _afterRender: function() {
         this._overlay.setTitle('Change CSS');
     },
     _reset: function() {
-        this.model.get('items').each(_.bind(function(item) {
+        this.$('.cssList').empty();
+        this.model.get('tempItems').each(_.bind(function(item) {
             var group = item.get('group');
             var selector = group.substr(0, 1).toLowerCase() + group.substr(1) + 'CssGroup';
             if (!this.$('.' + selector).length) {
@@ -16,7 +19,8 @@ var ChangeCSSView = OperationView.extend({
                 }))
                 .appendTo(this.$('.cssList'));
             }
-            new StyleItemView({ model: item }).render().$el.appendTo(this.$('.' + selector).find('.cssGroupItems'));
+            var itemViewCtor = item instanceof ColorItemOperation ? ColorItemView : StyleItemView;
+            new (itemViewCtor)({ model: item }).render().$el.appendTo(this.$('.' + selector).find('.cssGroupItems'));
         }, this));
 
         this.$('.cssGroupTitle:eq(0)').click();
@@ -28,6 +32,6 @@ var ChangeCSSView = OperationView.extend({
             el.closest('.cssGroup').addClass('openCssGroup').find('.cssGroupItems').slideDown(250);
         }
         this.model.resetEdit();
-        this._overlay.attachToTarget();
+        //this._overlay.attachToTarget();
     }
 });

@@ -4,7 +4,7 @@ var StyleItemView = Backbone.View.extend({
         'click .editStyleButton': '_edit',
         'click .saveStyleButton': '_save',
         'click .cancelStyleButton': '_cancel',
-        'keypress input': '_onInput'
+        'keyup input': '_onInput'
     },
     initialize: function() {
         this.model.on('change:isEditing', this._onEditing, this);
@@ -21,28 +21,33 @@ var StyleItemView = Backbone.View.extend({
     _edit: function() {
         this.model.set('isEditing', true);
     },
-    _onEditing: function(model) {
+    _onEditing: function() {
         var isEditing = this.model.get('isEditing');
         this.$('.styleValue,.editStyleButton').toggleClass('invisible', isEditing);
         this.$('input,.saveStyleButton,.cancelStyleButton').toggleClass('invisible', !isEditing);
-        if (!isEditing && model && this.model.get('lastAction') == EditorOperationAction.none)
-            this._save();
-    },
-    _save: function() {
-        if (this.model.apply(this.$('input').val()))
+        if (!isEditing)
             this._refresh();
     },
+    _save: function() {
+        this.model.apply(this.$('input').val());
+        this.model.complete();
+    },
     _cancel: function() {
-        this._refresh();
+        this.model.cancel();
     },
     _refresh: function() {
-        this.$('.styleValue').html(this.model.getValue());
-        this.$('input').val(this.model.getValue());
-        this.model.set('isEditing', false);
+        var value = this.model.getValue();
+        this.$('.styleValue').html(value);
+        this.$('input').val(value);
     },
     _onInput: function(e) {
-        if (e.keyCode == 13)
+        if (e.keyCode == 13) // Enter
             this._save();
+        else if (e.keyCode == 27) // Esc
+            this._cancel();
+        else
+            this.model.apply(this.$('input').val());
+
         e.stopPropagation();
     }
 })
