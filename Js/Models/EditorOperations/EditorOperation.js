@@ -53,12 +53,16 @@ var EditorOperation = Backbone.Model.extend({
         this.set('isNew', false);
         this.set('lastAction', EditorOperationAction.complete);
         this.set('isEditing', false);
+
+        this.trigger('action', this);
     },
     cancel: function(skipDOMChange) {
         this._discardChanges(skipDOMChange);
         this.set('changedState', this.get('previousState'));
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);
+
+        this.trigger('action', this);
     },
     remove: function() {
         this._deleteChanges();
@@ -66,6 +70,8 @@ var EditorOperation = Backbone.Model.extend({
         this.unset('previousState');
         this.set('lastAction', EditorOperationAction.remove);
         this.set('isEditing', false);
+
+        this.trigger('action', this);
     },
     isOverriding: function(operation) {
         return false;

@@ -250,6 +250,7 @@ ul.editorMenu {
 .editorOverlay .cssGroupItems { display: none; }
 .editorOverlay .cssGroup .styleItem {
     margin: 1px 0 1px 12px;
+    line-height: 15px;
 }
 .editorOverlay .cssGroup .styleItem * {
     vertical-align: middle;
@@ -302,6 +303,10 @@ ul.editorMenu {
     outline: 0;
     margin: 0px;
 }
+.editorOverlay .styleItem input.editStyleName {
+    width: 60px;
+    margin-right: 73px;
+}
 .editorOverlay .styleItem .styleColor {
     height: 8px;
     width: 8px;
@@ -319,6 +324,16 @@ ul.editorMenu {
     position: relative;
     top: 3px;
     left: -311px;
+}
+.editorOverlay .addCustomCss {
+    margin-top: 5px;
+    margin-left: 20px;
+}
+.editorOverlay .addCustomCss a {
+    cursor: pointer;
+    text-decoration: none;
+    outline: 0;
+    color: #0B578F;
 }
 
 /* Custom jPicker styles */

@@ -4,17 +4,20 @@ var StyleItemView = Backbone.View.extend({
         'click .editStyleButton': '_edit',
         'click .saveStyleButton': '_save',
         'click .cancelStyleButton': '_cancel',
-        'keyup input': '_onInput'
+        'keyup .editStyleValue': '_onEditValue'
     },
     initialize: function() {
         this.model.on('change:isEditing', this._onEditing, this);
+        this.model.on('stateResetted', this._refresh, this);
     },
     render: function() {
         this.$el.html(_.template($('#styleItem').html(), {
             name: this.model.get('property'),
-            value: this.model.getValue()
+            value: this.model.getValue(),
+            isCustom: this.model.isCustom()
         }));
         this._onEditing();
+        this.$('.editStyleValue').off('blur').blur(_.bind(this._setNeedToSave, this));
 
         return this;
     },
@@ -24,30 +27,42 @@ var StyleItemView = Backbone.View.extend({
     _onEditing: function() {
         var isEditing = this.model.get('isEditing');
         this.$('.styleValue,.editStyleButton').toggleClass('invisible', isEditing);
-        this.$('input,.saveStyleButton,.cancelStyleButton').toggleClass('invisible', !isEditing);
+        this.$('.editStyleValue,.saveStyleButton,.cancelStyleButton').toggleClass('invisible', !isEditing);
         if (!isEditing)
-            this._refresh();
+            this._checkNeedToSave();
+
+        this._refresh();
     },
     _save: function() {
-        this.model.apply(this.$('input').val());
+        this._needToSave = false;
+        this.model.apply(this.$('.editStyleValue').val());
         this.model.complete();
     },
     _cancel: function() {
+        this._needToSave = false;
         this.model.cancel();
     },
     _refresh: function() {
         var value = this.model.getValue();
         this.$('.styleValue').html(value);
-        this.$('input').val(value);
+        this.$('.editStyleValue').val(value);
     },
-    _onInput: function(e) {
+    _onEditValue: function(e) {
+        this._needToSave = false;
         if (e.keyCode == 13) // Enter
             this._save();
         else if (e.keyCode == 27) // Esc
             this._cancel();
         else
-            this.model.apply(this.$('input').val());
-
-        e.stopPropagation();
+            this.model.apply(this.$('.editStyleValue').val());
+    },
+    _setNeedToSave: function() {
+        this._needToSave = true;
+    },
+    _checkNeedToSave: function() {
+        if (this._needToSave) {
+            this._needToSave = false;
+            this._save();
+        }
     }
 })

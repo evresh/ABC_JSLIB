@@ -90,8 +90,11 @@
                 <a class="cancelStyleButton" title="Cancel"></a>
             </div>
             <span class="styleName"><%=name%></span>
+            <%if (isCustom) {%>
+                <input type="text" class="editStyleName" />
+            <%}%>
             <span class="styleValue"></span>
-            <input type="text" />
+            <input type="text" class="editStyleValue" />
             <div class="clearFloat"></div>
         </div>
     </script>
@@ -150,6 +153,7 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/EditView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/StyleItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ColorItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/CustomStyleItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>

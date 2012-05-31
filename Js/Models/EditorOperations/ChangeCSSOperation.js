@@ -377,12 +377,6 @@ var ChangeCSSOperation = Backbone.Model.extend({
                 property: "marker-offset",
                 //"values": "",
                 target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Custom",
-                property: "",
-                //"values": "",
-                target: this.get('target')
             })
             ]
         ));
@@ -390,6 +384,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
 
         this.on('change:isEditing', this._onEditing, this);
         this.get('tempItems').on('change:isEditing', this._onItemEditing, this);
+        this.get('tempItems').on('action', this._onItemAction, this);
     },
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -405,6 +400,18 @@ var ChangeCSSOperation = Backbone.Model.extend({
             this.get('tempItems').each(function(item) {
                 if (item != editItem)
                     item.set('isEditing', false);
+            });
+        }
+    },
+    _onItemAction: function(actionItem) {
+        var isCompleted = actionItem.get('lastAction') == EditorOperationAction.complete;
+        var isRemoved = actionItem.get('lastAction') == EditorOperationAction.remove && actionItem.isCustom();
+        if (isCompleted || isRemoved) {
+            var existentItems = this.get('tempItems').select(function(item) { return item != actionItem &&
+                item.get('property') == actionItem.get('property'); });
+
+            $.each(existentItems, function(i, item) {
+                item.resetState(actionItem.getValue());
             });
         }
     },
@@ -437,7 +444,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
             var changedState = item.get('changedState');
             if (sourceItem && !_.isNull(changedState))
                 sourceItem.set('changedState', changedState);
-            if (!sourceItem && item.get('lastAction') == EditorOperationAction.remove && item.get('group') == 'Custom')
+            if (!sourceItem && item.get('lastAction') == EditorOperationAction.remove && item.isCustom())
                 items.remove(item);
         });
 
@@ -458,5 +465,13 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     isOverriding: function(operation) {
         return false;
+    },
+    createCustomItem: function() {
+        var model = new StyleItemOperation({
+            group: 'Custom',
+            target: this.get('target')
+        });
+        this.get('tempItems').add(model);
+        return model;
     }
 });
