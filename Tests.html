@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Tests</title>
+    <link href="Css/qunit.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="Js/Libs/underscore.js"></script>
+    <script type="text/javascript" src="Js/Libs/backbone.js"></script>
+    <script type="text/javascript" src="Js/Libs/jquery-center.js"></script>
+    <script type="text/javascript" src="Js/Libs/jquery-outerHTML.js"></script>
+    <script type="text/javascript" src="Js/Libs/CodeMirror/codemirror.js"></script>
+    <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-xml.js"></script>
+    <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-javascript.js"></script>
+    <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-css.js"></script>
+    <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-htmlmixed.js"></script>
+    <script type="text/javascript" src="tiny_mce/tiny_mce_src.js"></script>
+    <script type="text/javascript" src="Js/Libs/jPicker.js"></script>
+
+    <script type="text/javascript" src="Js/Models/TestPage.js"></script>
+    <script type="text/javascript" src="Js/Models/Editor.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenu.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/EditorMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/OperationMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/SelectParentMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/VisibilityOperationMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/HTMLOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/RemoveOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/VisibilityOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/StyleItemOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ColorItemOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ChangeCSSOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperations.js"></script>
+
+    <script type="text/javascript" src="Js/Views/EditorOverlayView.js"></script>
+    <script type="text/javascript" src="Js/Views/TestPageView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorMenuItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/OperationView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/EditHTMLView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/EditView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/StyleItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ColorItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/CustomStyleItemView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
+
+    <script type="text/javascript" src="Js/Tools/Debug.js"></script>
+    <script type="text/javascript" src="Js/Tools/Tools.js"></script>
+
+    <h1 id="qunit-header">Optimizer Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture"></div>
+
+    <script type="text/javascript" src="Js/Tests/qunit.js"></script>
+    <script type="text/javascript" src="Js/Tests/ChangeCSSOperationTests.js"></script>
+</body>
+</html>

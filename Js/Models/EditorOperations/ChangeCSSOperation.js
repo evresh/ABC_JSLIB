@@ -420,7 +420,8 @@ var ChangeCSSOperation = Backbone.Model.extend({
             return item;
 
         var attrs = {
-            initialState: item.getValue(),
+            initialState: item.isCustom() ? item.get('initialState') : item.getValue(),
+            changedState: item.getValue(),
             target: item.get('target'),
             source: item,
             group: item.get('group'),

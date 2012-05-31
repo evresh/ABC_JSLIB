@@ -16,8 +16,7 @@ var StyleItemOperation = EditorOperation.extend({
             this._applyNewValue(this.get('previousState') || this.get('initialState'));
     },
     _deleteChanges: function() {
-        if (this.get('changedState'))
-            this._applyNewValue(this.get('initialState'));
+        this._applyNewValue(this.get('initialState'));
     },
     _applyNewValue: function(newValue) {
         var property = this.get('property');
@@ -30,6 +29,8 @@ var StyleItemOperation = EditorOperation.extend({
             this.get('target').css(oldProperty, this.get('initialState'));
 
         this.set('initialState', this._getInitialState());
+        this.unset('changedState');
+        this.unset('previousState');
         this._applyChanges(this.getValue());
     },
     getValue: function() {
