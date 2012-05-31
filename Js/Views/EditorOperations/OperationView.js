@@ -56,5 +56,8 @@ var OperationView = Backbone.View.extend({
     },
     _done: function() {
         this.model.complete();
+    },
+    _updateOverlayPosition: function() {
+        this._overlay.attachToTarget();
     }
 })

@@ -46,7 +46,8 @@ var ChangeCSSView = OperationView.extend({
         var el = $(e.target);
         if (!el.closest('.cssGroup').hasClass('openCssGroup')) {
             this.$('.openCssGroup').removeClass('openCssGroup').find('.cssGroupItems').slideUp(250);
-            el.closest('.cssGroup').addClass('openCssGroup').find('.cssGroupItems').slideDown(250);
+            var deferred = el.closest('.cssGroup').addClass('openCssGroup').find('.cssGroupItems').slideDown(250);
+            $.when(deferred).done(_.bind(this._updateOverlayPosition, this));
         }
         this.model.resetEdit();
         //this._overlay.attachToTarget();
