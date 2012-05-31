@@ -444,8 +444,16 @@ var ChangeCSSOperation = Backbone.Model.extend({
             var changedState = item.get('changedState');
             if (sourceItem && !_.isNull(changedState))
                 sourceItem.set('changedState', changedState);
-            if (!sourceItem && item.get('lastAction') == EditorOperationAction.remove && item.isCustom())
-                items.remove(item);
+
+            if (item.isCustom()) {
+                if (item.get('lastAction') == EditorOperationAction.remove) {
+                    if (sourceItem)
+                        items.remove(sourceItem);
+                } else {
+                    if (!sourceItem)
+                        items.add(item);
+                }
+            }
         });
 
         this.set('lastAction', EditorOperationAction.complete);

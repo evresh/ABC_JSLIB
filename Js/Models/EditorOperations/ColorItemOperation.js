@@ -4,8 +4,8 @@ var ColorItemOperation = StyleItemOperation.extend({
     },
     getColor: function() {
         var value = this.getValue();
-        if (value == 'transparent') {
-            return value;
+        if (value == 'transparent' || value.substr(0,1) == '#') {
+            return value.replace('#', '');
         } else {
             var color = Tools.RGBtoHex(value);
             if (color.a == 0)

@@ -44,7 +44,7 @@ var EditorOperation = Backbone.Model.extend({
     },
     apply: function(data) {
         var newState = this._applyChanges(data);
-        if (newState) {
+        if (!_.isUndefined(newState)) {
             this.set('changedState', newState);
             return true;
         }

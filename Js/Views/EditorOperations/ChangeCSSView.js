@@ -21,7 +21,12 @@ var ChangeCSSView = OperationView.extend({
                 }))
                 .appendTo(cssList);
             }
-            var itemViewCtor = item instanceof ColorItemOperation ? ColorItemView : StyleItemView;
+
+            var itemViewCtor = StyleItemView;
+            if (item.isCustom())
+                itemViewCtor = CustomStyleItemView;
+            else if (item instanceof ColorItemOperation)
+                itemViewCtor = ColorItemView;
             new (itemViewCtor)({ model: item }).render().$el.appendTo(this.$('.' + selector).find('.cssGroupItems'));
         }, this));
 

@@ -16,18 +16,20 @@ var CustomStyleItemView = StyleItemView.extend({
         this.$('.styleName').toggleClass('invisible', isEditing);
         this.$('.editStyleName').toggleClass('invisible', !isEditing);
         this.$('.editStyleValue,.saveStyleButton,.cancelStyleButton').toggleClass('invisible', !isEditing);
+        var isEmpty = !this.model.get('property') && !this.model.get('changedState');
         if (!isEditing) {
-            if (!this.model.get('property') && !this.model.getValue() && model) {
+            if (isEmpty && model) {
                 this._cancel();
             } else {
                 this._checkNeedToSave();
-                this._refresh();
             }
-        } else if (!this.model.get('property')) {
+        } else if (isEmpty) {
             this.$('.editStyleName').focus();
         } else {
             this.$('.editStyleValue').focus();
         }
+
+        this._refresh();
     },
     _refresh: function() {
         var value = this.model.getValue();

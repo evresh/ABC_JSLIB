@@ -64,7 +64,7 @@ var HTMLOperation = EditorOperation.extend({
                     }
                     buffer.remove();
                     if (brokenScripts)
-                        return false;
+                        return;
                 }
 
                 this.set('changedState', newTarget);
