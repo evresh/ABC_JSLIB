@@ -1,4 +1,5 @@
 var EditHTMLView = OperationView.extend({
+    maximizable: true,
     _afterRender: function() {
         var _this = this;
 
@@ -21,7 +22,18 @@ var EditHTMLView = OperationView.extend({
     },
     _reset: function() {
         this._mirror.setValue(this.model.getValue());
-        this._mirror.refresh();
         this._mirror.focus();
+        this._mirror.refresh();
+    },
+    _toggleMaximizing: function(info) {
+        var element = this.$('.CodeMirror-scroll');
+        if (info.maximized) {
+            element.attr('actualHeight', element.height()).attr('actualWidth', element.width());
+            element.css('height', info.availableHeight);
+        } else if (element.attr('actualHeight')) {
+            element.css('height', element.attr('actualHeight')).css('width', element.attr('actualWidth'));
+        }
+        element.toggleClass('maximized', info.maximized);
+        this._mirror.refresh();
     }
 })

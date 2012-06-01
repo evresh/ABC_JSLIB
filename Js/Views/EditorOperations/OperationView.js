@@ -6,6 +6,7 @@ var OperationView = Backbone.View.extend({
     initialize: function() {
         this._overlay = new EditorOverlayView();
         this._overlay.on('close', this._overlayClosed, this);
+        this._overlay.on('toggleMaximizing', this._toggleMaximizing, this);
 
         if (this.model)
             this.setModel(this.model);
@@ -22,6 +23,7 @@ var OperationView = Backbone.View.extend({
         var templateId = this.model.get('type') + 'Operation';
         var content = $('<div>').html($('#' + templateId).html());
         this._overlay.options.frame = this.options.frame;
+        this._overlay.options.maximizable = !!this.maximizable;
         this._overlay.render().setContent(content);
         this._overlay.$el.addClass(templateId);
         this.setElement(content);
@@ -30,6 +32,7 @@ var OperationView = Backbone.View.extend({
         return this;
     },
     show: function() {
+        this._toggleMaximizing({ maximized: false });
         this._overlay.show({ target: this.model.get('target') });
         this._reset();
     },
@@ -60,5 +63,7 @@ var OperationView = Backbone.View.extend({
     },
     _updateOverlayPosition: function() {
         this._overlay.attachToTarget();
+    },
+    _toggleMaximizing: function(info) {
     }
 })

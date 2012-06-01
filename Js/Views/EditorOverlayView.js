@@ -1,11 +1,12 @@
 var EditorOverlayView = Backbone.View.extend({
     className: 'editorOverlay',
     events: {
-        'click .closeButton': '_innerClose'
+        'click .closeButton': '_innerClose',
+        'click .maximizeButton': '_toggleMaximizing'
     },
     render: function() {
         this.$el
-            .html(_.template($('#overlayTemplate').html()))
+            .html(_.template($('#overlayTemplate').html(), { maximizable: !!this.options.maximizable }))
             .hide()
             .appendTo('body');
 
@@ -20,6 +21,7 @@ var EditorOverlayView = Backbone.View.extend({
         return this;
     },
     show: function(targetData) {
+        this.$el.toggleClass('maximized', false);
         this.$el.fadeIn(150);
         this.attachToTarget(targetData);
     },
@@ -29,6 +31,14 @@ var EditorOverlayView = Backbone.View.extend({
             if (!skipEvent)
                 _this.trigger('close');
         });
+    },
+    _toggleMaximizing: function() {
+        this.$el.toggleClass('maximized');
+        var info = {
+            maximized: this.$el.hasClass('maximized'),
+            availableHeight: this.$el.height() - this.$('.overlayTitle').outerHeight() - this.$('.overlayFooter').outerHeight()
+        }
+        this.trigger('toggleMaximizing', info);
     },
     close: function(skipEvent) {
         this._innerClose(null, skipEvent);

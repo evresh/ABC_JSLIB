@@ -1,4 +1,5 @@
 var EditView = OperationView.extend({
+    maximizable: true,
     events: function() {
         return $.extend({}, OperationView.prototype.events, {
             'click .editHTMLButton': '_editHTML'
@@ -65,5 +66,16 @@ var EditView = OperationView.extend({
     },
     _editHTML: function() {
         this.model.switchTo('editHTML');
+    },
+    _toggleMaximizing: function(info) {
+        var container = this.$('.editContainer');
+        var elements = this.$('.editContainer,#tiny_tbl,#tiny_ifr');
+        if (info.maximized) {
+            container.attr('actualHeight', container.height()).attr('actualWidth', container.width());
+            elements.css('height', info.availableHeight);
+        } else if (container.attr('actualHeight')) {
+            elements.css('height', container.attr('actualHeight')).css('width', container.attr('actualWidth'));
+        }
+        elements.toggleClass('maximized', info.maximized);
     }
 })

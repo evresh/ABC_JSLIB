@@ -17,9 +17,16 @@
     <script id="overlayTemplate" type="text/template">
         <div class="overlayTitle">
             <span class="titleText"></span>
-            <span class="closeButton">
-                <img title="Close" src="Img/close.png">
-            </span>
+            <div class="rightAligned">
+                <%if (maximizable) {%>
+                    <div class="maximizeButton">
+                        <img src="Img/maximize.png" />
+                    </div>
+                <%}%>
+                <div class="closeButton">
+                    <img title="Close" src="Img/close.png" />
+                </div>
+            </div>
             <div class="clearFloat"></div>
         </div>
         <div class="overlayContent"></div>
@@ -115,7 +122,9 @@
     </script>
 
     <script id="changeTextOperation" type="text/template">
-        <textarea></textarea>
+        <div class="textareaContainer">
+            <textarea></textarea>
+        </div>
         <div class="overlayFooter">
             <div class="rightAligned">
                 <button class="overlayButton cancelButton">Cancel</button>
