@@ -17,9 +17,14 @@ var Editor = Backbone.Model.extend({
         alert('Not implemented yet');
     },
     _targetChanged: function() {
-        var targetData = this.get('testPage').get('targetData');
-        this.get('menu').set('targetData', targetData);
-        this.get('menu').set('isVisible', !!targetData);
+        var operation = this.get('currentOperation');
+        if (operation) {
+            operation.cancel();
+        } else {
+            var targetData = this.get('testPage').get('targetData');
+            this.get('menu').set('targetData', targetData);
+            this.get('menu').set('isVisible', !!targetData);
+        }
     },
     _setCurrentOperation: function(operation) {
         this.set('currentOperation', operation);
@@ -43,7 +48,7 @@ var Editor = Backbone.Model.extend({
                     this._setCurrentOperation(operation);
                 }
             } else {
-                this.get('testPage').unset('targetData');
+                this.get('testPage').set('targetData', null);
             }
         }
     },
@@ -59,13 +64,13 @@ var Editor = Backbone.Model.extend({
                 this.get('completedOperations').add(operation);
             }
             operation.off('change:isEditing', this._onOperationEditing, this);
-            this.unset('currentOperation');
+            this.set('currentOperation', null);
 
             var operationToSwitch = operation.get('switchedTo');
             if (operation.get('lastAction') == EditorOperationAction.cancel && operationToSwitch) {
                 this._setCurrentOperation(operationToSwitch);
             } else {
-                this.get('testPage').unset('targetData');
+                this.get('testPage').set('targetData', null);
             }
         }
     }
