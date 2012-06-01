@@ -36,8 +36,17 @@ var EditorView = Backbone.View.extend({
                     }).render();
                 else
                     view.setModel(operation);
+
+                var prevOperationView = this._currentOperationView;
+                if (prevOperationView)
+                    view.maximized(prevOperationView.maximized());
+
+                this._currentOperationView = view;
+                return;
             }
         }
+
+        this._currentOperationView = null;
     },
     _save: function() {
         this.model.save();

@@ -32,12 +32,17 @@ var OperationView = Backbone.View.extend({
         return this;
     },
     show: function() {
-        this._toggleMaximizing({ maximized: false });
         this._overlay.show({ target: this.model.get('target') });
         this._reset();
     },
     close: function(skipEvent) {
         return this._overlay.close(skipEvent);
+    },
+    maximized: function(value) {
+        if (_.isBoolean(value))
+            this._overlay.options.maximized = value;
+        else
+            return this._overlay.options.maximized;
     },
     _afterRender: function() { },
     _reset: function() { },
@@ -45,6 +50,8 @@ var OperationView = Backbone.View.extend({
         if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
         this.model.set('isEditing', false);
+        if (this.maximizable)
+            this.maximized(false);
     },
     _changeVisibility: function() {
         var isOverlayVisible = this._overlay.$el.is(':visible');

@@ -64,13 +64,13 @@ var Editor = Backbone.Model.extend({
                 this.get('completedOperations').add(operation);
             }
             operation.off('change:isEditing', this._onOperationEditing, this);
-            this.set('currentOperation', null);
 
             var operationToSwitch = operation.get('switchedTo');
             if (operation.get('lastAction') == EditorOperationAction.cancel && operationToSwitch) {
                 this._setCurrentOperation(operationToSwitch);
             } else {
                 this.get('testPage').set('targetData', null);
+                this.set('currentOperation', null);
             }
         }
     }
