@@ -59,7 +59,7 @@ var EditView = OperationView.extend({
     },
     _reset: function() {
         if (this._editor) {
-            this._editor.setContent(this.model.getCurrentHTML());
+            this._editor.setContent(this.model.getValue());
             this._editor.focus();
         }
     },

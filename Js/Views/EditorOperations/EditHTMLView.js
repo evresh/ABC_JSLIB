@@ -20,7 +20,7 @@ var EditHTMLView = OperationView.extend({
         });
     },
     _reset: function() {
-        this._mirror.setValue(this.model.getCurrentHTML());
+        this._mirror.setValue(this.model.getValue());
         this._mirror.refresh();
         this._mirror.focus();
     }

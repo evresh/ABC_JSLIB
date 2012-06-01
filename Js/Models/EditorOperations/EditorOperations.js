@@ -9,7 +9,7 @@ var EditorOperations = (function() {
         remove: 'RemoveOperation',
         visibility: 'VisibilityOperation',
         changeCSS: 'ChangeCSSOperation',
-        changeText: notImplementedYet,
+        changeText: 'ChangeTextOperation',
         changeImage: notImplementedYet,
         editImage: notImplementedYet,
         changeBackgroundImage: notImplementedYet,

@@ -23,6 +23,7 @@ var OperationView = Backbone.View.extend({
         var content = $('<div>').html($('#' + templateId).html());
         this._overlay.options.frame = this.options.frame;
         this._overlay.render().setContent(content);
+        this._overlay.$el.addClass(templateId);
         this.setElement(content);
         this._afterRender();
 

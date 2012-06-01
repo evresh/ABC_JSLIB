@@ -12,7 +12,7 @@ var EditorMenu = Backbone.Model.extend({
             ,new OperationMenuItem({ name: 'Remove', type: 'remove' })
             ,new VisibilityOperationMenuItem()
             ,new OperationMenuItem({ name: 'Change CSS', type: 'changeCSS' })
-            ,new OperationMenuItem({ name: 'Change Text', type: 'changeText' })
+            ,new ChangeTextOperationMenuItem({ name: 'Change Text' })
             ,new OperationMenuItem({ name: 'Change Image', type: 'changeImage' })
             ,new OperationMenuItem({ name: 'Edit Image', type: 'editImage' })
             ,new OperationMenuItem({ name: 'Change Background Image', type: 'changeBackgroundImage' })

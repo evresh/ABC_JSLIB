@@ -24,6 +24,9 @@ var EditorOperation = Backbone.Model.extend({
     _getInitialState: function() {
         return null;
     },
+    _getPreviousState: function() {
+        return this.get('previousState') || this.get('initialState');
+    },
     _beforeEdit: function() {},
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -78,12 +81,15 @@ var EditorOperation = Backbone.Model.extend({
     switchTo: function(newType) {
         if (EditorOperations.isValidTypeForOperation(this, newType)) {
             var newOperation = EditorOperations.create(newType, this.get('target'));
-            newOperation.set('initialState', this.get('previousState') || this.get('initialState'));
+            newOperation.set('initialState', this._getPreviousState());
             newOperation.set('changedState', this.get('changedState'));
             this.set('switchedTo', newOperation);
             this.cancel(true);
         } else {
             Debug.trace('EditorOperationAction.switchTo() -> invalid operation type');
         }
+    },
+    getValue: function() {
+        return this.get('changedState') || this._getPreviousState();
     }
 });

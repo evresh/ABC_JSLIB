@@ -13,7 +13,7 @@ var StyleItemOperation = EditorOperation.extend({
     },
     _discardChanges: function() {
         if (this.get('changedState'))
-            this._applyNewValue(this.get('previousState') || this.get('initialState'));
+            this._applyNewValue(this._getPreviousState());
     },
     _deleteChanges: function() {
         this._applyNewValue(this.get('initialState'));
@@ -32,9 +32,6 @@ var StyleItemOperation = EditorOperation.extend({
         this.unset('changedState');
         this.unset('previousState');
         this._applyChanges(this.getValue());
-    },
-    getValue: function() {
-        return this.get('changedState') || this.get('previousState') || this.get('initialState');
     },
     isCustom: function() {
         return this.get('group') == 'Custom';

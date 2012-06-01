@@ -114,6 +114,17 @@
         </div>
     </script>
 
+    <script id="changeTextOperation" type="text/template">
+        <textarea></textarea>
+        <div class="overlayFooter">
+            <div class="rightAligned">
+                <button class="overlayButton cancelButton">Cancel</button>
+                <button class="overlayButton doneButton">Done</button>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+    </script>
+
     <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="Js/Libs/underscore.js"></script>
     <script type="text/javascript" src="Js/Libs/backbone.js"></script>
@@ -134,6 +145,7 @@
     <script type="text/javascript" src="Js/Models/EditorMenuItems/OperationMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenuItems/SelectParentMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenuItems/VisibilityOperationMenuItem.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorMenuItems/ChangeTextOperationMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/HTMLOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/RemoveOperation.js"></script>
@@ -141,6 +153,7 @@
     <script type="text/javascript" src="Js/Models/EditorOperations/StyleItemOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ColorItemOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ChangeCSSOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ChangeTextOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperations.js"></script>
 
     <script type="text/javascript" src="Js/Views/EditorOverlayView.js"></script>
@@ -155,6 +168,7 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/ColorItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/CustomStyleItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ChangeTextView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
     <script type="text/javascript" src="Js/Tools/Tools.js"></script>

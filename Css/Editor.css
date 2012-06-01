@@ -335,6 +335,14 @@ ul.editorMenu {
     outline: 0;
     color: #0B578F;
 }
+.changeTextOperation textarea {
+    width: 360px;
+    height: 100px;
+    border: 1px #CECECE solid;
+    outline: none;
+    margin: 8px;
+    margin-bottom: 0px;
+}
 
 /* Custom jPicker styles */
 .jPicker.Icon {

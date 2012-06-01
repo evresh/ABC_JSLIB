@@ -1,6 +1,6 @@
 var HTMLOperation = EditorOperation.extend({
-    getCurrentHTML: function() {
-        var state = this.get('changedState') || this.get('previousState') || this.get('initialState');
+    getValue: function() {
+        var state = this.get('changedState') || this._getPreviousState();
         return state.outerHTML();
     },
     _getInitialState: function() {
@@ -17,7 +17,7 @@ var HTMLOperation = EditorOperation.extend({
         }
     },
     _applyChanges: function(html) {
-        var previousState = this.get('previousState') || this.get('initialState');
+        var previousState = this._getPreviousState();
         var target = this.get('changedState') || previousState;
         var parent = target.parent();
         var parentTag = parent.get(0).tagName;
@@ -76,7 +76,7 @@ var HTMLOperation = EditorOperation.extend({
     },
     _discardChanges: function(skipDOMChange) {
         if (this.get('changedState'))
-            this._changeTarget(this.get('changedState'), this.get('previousState') || this.get('initialState'), skipDOMChange);
+            this._changeTarget(this.get('changedState'), this._getPreviousState(), skipDOMChange);
     },
     _deleteChanges: function() {
         if (this.get('changedState'))
@@ -132,6 +132,6 @@ var HTMLOperation = EditorOperation.extend({
     },
     isOverriding: function(operation) {
         return this.get('type') == operation.get('type')
-            && operation.get('target')[0] == (this.get('previousState') || this.get('initialState'))[0];
+            && operation.get('target')[0] == (this._getPreviousState())[0];
     }
 })

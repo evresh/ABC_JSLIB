@@ -9,6 +9,7 @@ var EditorMenuItemView = Backbone.View.extend({
     },
     render: function() {
         this.$el.html(this.model.get('name'));
+        this._visibilityChanged();
 
         return this;
     },
