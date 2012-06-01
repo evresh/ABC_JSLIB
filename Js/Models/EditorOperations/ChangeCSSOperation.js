@@ -463,6 +463,9 @@ var ChangeCSSOperation = Backbone.Model.extend({
     cancel: function() {
         this.get('tempItems').each(function(item) {
             item.remove();
+            var sourceItem = item.get('source');
+            if (sourceItem)
+                sourceItem.refreshTarget();
         });
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);

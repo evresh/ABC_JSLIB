@@ -43,5 +43,8 @@ var StyleItemOperation = EditorOperation.extend({
             this.set('initialState', state);
 
         this.trigger('stateResetted');
+    },
+    refreshTarget: function() {
+        this._applyChanges(this.getValue());
     }
 })

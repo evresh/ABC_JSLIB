@@ -40,7 +40,7 @@ test('StyleItemOperation tests', function() {
 });
 
 test('ChangeCSSOperation tests', function() {
-    var target = $('<div>').css('text-decoration', 'underline');
+    var target = $('<div>').hide().css('text-decoration', 'underline').appendTo('body');
     var changeCSS = new ChangeCSSOperation({ target: target });
     changeCSS.set('isEditing', true);
 
@@ -53,7 +53,8 @@ test('ChangeCSSOperation tests', function() {
     item.apply('overline');
     item.complete();
     changeCSS.cancel();
-    equal(item.getValue(), 'underline', 'Item was completed, but ChangeCSS was cancelled')
+    equal(item.getValue(), 'underline', 'Item was completed, but ChangeCSS was cancelled');
+    equal(target.css('text-decoration'), 'underline', 'Item was completed, but ChangeCSS was cancelled (target state)');
 
     changeCSS.set('isEditing', true);
     item = getTempItems()[0];
@@ -62,13 +63,15 @@ test('ChangeCSSOperation tests', function() {
     item.complete();
     changeCSS.complete();
     equal(getItems()[0].getValue(), 'overline', 'Item was completed and ChangeCSS was completed');
+    equal(target.css('text-decoration'), 'overline', 'Item was completed and ChangeCSS was completed (target state)');
 
     changeCSS.set('isEditing', true);
     item = getTempItems()[0];
     item.apply('line-through');
     item.complete();
     changeCSS.cancel();
-    equal(getItems()[0].getValue(), 'overline', 'Item was completed, but ChangeCSS was cancelled (in the previous step it was completed)');
+    equal(getItems()[0].getValue(), 'overline', 'Item was completed, but ChangeCSS was cancelled, in the previous step it was completed');
+    equal(target.css('text-decoration'), 'overline', 'Item was completed, but ChangeCSS was cancelled, in the previous step it was completed (target state)');
 
     changeCSS.set('isEditing', true);
     customItem = changeCSS.createCustomItem();
@@ -79,6 +82,7 @@ test('ChangeCSSOperation tests', function() {
     customItem.complete();
     changeCSS.cancel();
     equal(getItems('border-radius')[0], null, 'Custom item was added, but ChangeCSS was cancelled');
+    equal(target.css('border-radius'), '0px', 'Custom item was added, but ChangeCSS was cancelled (target state)');
 
     changeCSS.set('isEditing', true);
     customItem = changeCSS.createCustomItem();
@@ -94,28 +98,35 @@ test('ChangeCSSOperation tests', function() {
     customItem.complete();
     changeCSS.cancel();
     equal(getItems('border-radius')[0].getValue(), '3px', 'Custom item value was not saved after ChangeCSS was cancelled');
+    equal(target.css('border-radius'), '3px', 'Custom item value was not saved after ChangeCSS was cancelled (target state)');
 
     changeCSS.set('isEditing', true);
     customItem = getTempItems('border-radius')[0];
     customItem.remove();
     changeCSS.cancel();
     ok(getItems('border-radius').length == 1, 'Remove previously completed custom item and cancel ChangeCSS');
+    equal(target.css('border-radius'), '3px', 'Remove previously completed custom item and cancel ChangeCSS (target state)');
 
     changeCSS.set('isEditing', true);
     customItem = getTempItems('border-radius')[0];
     customItem.remove();
     changeCSS.complete();
     ok(getItems('border-radius').length == 0, 'Remove previously completed custom item and complete ChangeCSS');
+    equal(target.css('border-radius'), '0px', 'Remove previously completed custom item and complete ChangeCSS (target state)');
 
     changeCSS.set('isEditing', true);
     customItem = changeCSS.createCustomItem();
     customItem.set('property', 'text-decoration');
     customItem.apply('line-through');
     customItem.complete();
-    item = getTempItems()[0];
-    ok(!item.isCustom() && item.getValue() == 'line-through', 'Item was updated after changing the same custom item');
+    items = getTempItems();
+    ok(items.length == 2 && !items[0].isCustom() && items[0].getValue() == 'line-through', 'Item was updated after changing the same custom item');
+    equal(target.css('text-decoration'), 'line-through', 'Item was updated after changing the same custom item (target state)');
 
     changeCSS.cancel();
     var items = getItems();
     ok(items.length == 1 && !items[0].isCustom() && items[0].getValue() == 'overline', 'Item was cancelled, custom item was removed after cancelling ChangeCSS');
+    equal(target.css('text-decoration'), 'overline', 'Item was cancelled, custom item was removed after cancelling ChangeCSS (target state)');
+
+    target.remove();
 });
