@@ -37,14 +37,33 @@ var StyleItemOperation = EditorOperation.extend({
         return this.get('group') == 'Custom';
     },
     resetState: function(state) {
-        this.apply(state);
-        this.set('previousState', state);
-        if (this.isCustom())
+        if (!_.isUndefined(state.changedState) || !_.isUndefined(state.initialState)) {
+            $.extend(this.attributes, state);
+            this._applyChanges(this.getValue());
+        } else {
+            this.apply(state);
             this.set('initialState', state);
+        }
 
         this.trigger('stateResetted');
     },
-    refreshTarget: function() {
-        this._applyChanges(this.getValue());
+    complete: function() {
+        var previousProperty = this.get('previousProperty');
+        if (previousProperty && previousProperty != this.get('property'))
+            StyleOperationStateSynchronizer.remove(this, previousProperty);
+
+        StyleOperationStateSynchronizer.update(this);
+
+        this.set('previousProperty', this.get('property'));
+        EditorOperation.prototype.complete.apply(this);
+    },
+    remove: function() {
+        EditorOperation.prototype.remove.apply(this);
+
+        StyleOperationStateSynchronizer.remove(this);
+    },
+    synchronizeState: function() {
+        StyleOperationStateSynchronizer.synchronize(this);
+        EditorOperation.prototype.complete.apply(this);
     }
 })

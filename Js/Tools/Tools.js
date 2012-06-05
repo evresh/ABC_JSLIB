@@ -12,5 +12,8 @@ var Tools = {
     },
     hex: function(x) {
         return isNaN(x) ? "00": this._hexDigits[(x - x % 16) / 16] + this._hexDigits[x % 16];
+    },
+    createUID: function() {
+        return new Date().getTime();
     }
 }

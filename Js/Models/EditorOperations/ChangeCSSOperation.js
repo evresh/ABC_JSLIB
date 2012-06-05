@@ -405,14 +405,14 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     _onItemAction: function(actionItem) {
         var isCompleted = actionItem.get('lastAction') == EditorOperationAction.complete;
-        var isRemoved = actionItem.get('lastAction') == EditorOperationAction.remove && actionItem.isCustom();
-        if (isCompleted || isRemoved) {
-            var existentItems = this.get('tempItems').select(function(item) { return item != actionItem &&
-                item.get('property') == actionItem.get('property'); });
-
-            $.each(existentItems, function(i, item) {
-                item.resetState(actionItem.getValue());
+        if (isCompleted) {
+            var existentNewItems = this.get('tempItems').select(function(item) {
+                return item != actionItem
+                    && item.get('isNew')
+                    && item.get('property') == actionItem.get('property');
             });
+
+            $.each(existentNewItems, function(i, item) { item.synchronizeState(); });
         }
     },
     _createTempItem: function(item) {
@@ -443,17 +443,18 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('tempItems').each(function(item) {
             var sourceItem = item.get('source');
             var changedState = item.get('changedState');
-            if (sourceItem && !_.isNull(changedState))
-                sourceItem.set('changedState', changedState);
-
-            if (item.isCustom()) {
-                if (item.get('lastAction') == EditorOperationAction.remove) {
-                    if (sourceItem)
-                        items.remove(sourceItem);
-                } else {
-                    if (!sourceItem)
-                        items.add(item);
+            var isRemoved = item.get('lastAction') == EditorOperationAction.remove;
+            if (sourceItem) {
+                if (!item.get('isNew')) {
+                    sourceItem.set('changedState', changedState);
+                    sourceItem.complete();
+                    item.remove();
+                } else if (item.isCustom() && isRemoved) {
+                    sourceItem.remove();
+                    items.remove(sourceItem);
                 }
+            } else if (item.isCustom() && !isRemoved) {
+                items.add(item);
             }
         });
 
@@ -464,8 +465,6 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('tempItems').each(function(item) {
             item.remove();
             var sourceItem = item.get('source');
-            if (sourceItem)
-                sourceItem.refreshTarget();
         });
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);

@@ -72,6 +72,7 @@ var EditorOperation = Backbone.Model.extend({
         this.unset('previousState');
         this.set('lastAction', EditorOperationAction.remove);
         this.set('isEditing', false);
+        this.set('isNew', true);
 
         this.trigger('action', this);
     },
