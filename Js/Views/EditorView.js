@@ -22,8 +22,19 @@ var EditorView = Backbone.View.extend({
         return this;
     },
     _currentOperationChanged: function() {
+        var prevOperation = this.model.previous('currentOperation');
+        if (prevOperation) {
+            prevOperation
+                .off('change:changedState', this._onTargetUpdated, this)
+                .off('targetUpdated', this._onTargetUpdated, this);
+        }
+
         var operation = this.model.get('currentOperation');
         if (operation) {
+            operation
+                .on('change:changedState', this._onTargetUpdated, this)
+                .on('targetUpdated', this._onTargetUpdated, this);
+
             var type = operation.get('type');
             var viewName = type.substr(0, 1).toUpperCase() + type.substr(1) + 'View';
             var viewCtor = window[viewName];
@@ -47,6 +58,9 @@ var EditorView = Backbone.View.extend({
         }
 
         this._currentOperationView = null;
+    },
+    _onTargetUpdated: function() {
+        this._testView.updateTargetEnvironment();
     },
     _save: function() {
         this.model.save();

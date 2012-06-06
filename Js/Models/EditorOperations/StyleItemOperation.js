@@ -62,8 +62,12 @@ var StyleItemOperation = EditorOperation.extend({
 
         StyleOperationStateSynchronizer.remove(this);
     },
-    synchronizeState: function() {
-        StyleOperationStateSynchronizer.synchronize(this);
-        EditorOperation.prototype.complete.apply(this);
+    matchToTargetIfNew: function() {
+        if (this.get('isNew')) {
+            this.resetState({
+                initialState: this._getInitialState(),
+                changedState: null
+            });
+        }
     }
 })

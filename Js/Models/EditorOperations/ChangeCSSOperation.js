@@ -383,8 +383,9 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.set('tempItems', new Backbone.Collection());
 
         this.on('change:isEditing', this._onEditing, this);
-        this.get('tempItems').on('change:isEditing', this._onItemEditing, this);
-        this.get('tempItems').on('action', this._onItemAction, this);
+        this.get('tempItems')
+            .on('change:isEditing', this._onItemEditing, this)
+            .on('action', this._onItemAction, this);
     },
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -393,6 +394,9 @@ var ChangeCSSOperation = Backbone.Model.extend({
             this.get('items').each(_.bind(function(item) {
                 tempItems.add(this._createTempItem(item));
             }, this))
+            this.get('tempItems')
+                .off('change:changedState', this._onTargetUpdated, this)
+                .on('change:changedState', this._onTargetUpdated, this);
         }
     },
     _onItemEditing: function(editItem) {
@@ -404,16 +408,16 @@ var ChangeCSSOperation = Backbone.Model.extend({
         }
     },
     _onItemAction: function(actionItem) {
-        var isCompleted = actionItem.get('lastAction') == EditorOperationAction.complete;
-        if (isCompleted) {
-            var existentNewItems = this.get('tempItems').select(function(item) {
-                return item != actionItem
-                    && item.get('isNew')
-                    && item.get('property') == actionItem.get('property');
+        var lastAction = actionItem.get('lastAction');
+        if (lastAction == EditorOperationAction.complete || lastAction == EditorOperationAction.remove) {
+            this.get('tempItems').each(function(item) {
+                if (item != actionItem && item.get('property') == actionItem.get('property'))
+                    item.matchToTargetIfNew();
             });
-
-            $.each(existentNewItems, function(i, item) { item.synchronizeState(); });
         }
+    },
+    _onTargetUpdated: function() {
+        this.trigger('targetUpdated');
     },
     _createTempItem: function(item) {
         if (item.get('isNew'))
@@ -439,6 +443,8 @@ var ChangeCSSOperation = Backbone.Model.extend({
         });
     },
     complete: function() {
+        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
+
         var items = this.get('items');
         this.get('tempItems').each(function(item) {
             var sourceItem = item.get('source');
@@ -458,19 +464,27 @@ var ChangeCSSOperation = Backbone.Model.extend({
             }
         });
 
+        this._onTargetUpdated();
         this.set('lastAction', EditorOperationAction.complete);
         this.set('isEditing', false);
     },
     cancel: function() {
+        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
+
         this.get('tempItems').each(function(item) {
             item.remove();
-            var sourceItem = item.get('source');
         });
+
+        this._onTargetUpdated();
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);
     },
     remove: function() {
+        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
+
         this.get('items').each(function(item) { item.remove(); });
+
+        this._onTargetUpdated();
         this.set('lastAction', EditorOperationAction.remove);
         this.set('isEditing', false);
     },

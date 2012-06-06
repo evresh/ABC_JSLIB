@@ -1,7 +1,7 @@
 var TestPageView = Backbone.View.extend({
     initialize: function() {
         $(window).resize(_.bind(this._onWindowResize, this));
-        this.model.on('change:targetData', this._targetChanged, this);
+        this.model.on('change:targetData', this.updateTargetEnvironment, this);
     },
     render: function() {
         var iframe = $('<iframe>')
@@ -109,7 +109,7 @@ var TestPageView = Backbone.View.extend({
             })
         .end();
     },
-    _targetChanged: function() {
+    updateTargetEnvironment: function() {
         var doc = this.getFrame().getDocument(), body = doc.find('body');
         if (this.model.get('targetData')) {
             var el = $(this.model.get('targetData').target),
@@ -117,6 +117,11 @@ var TestPageView = Backbone.View.extend({
                 docH = doc.height(),
                 docW = doc.width(),
                 height = el.outerHeight();
+
+            if (el.is(':hidden')) {
+                body.find('.elementOutlineBackground,.elementGlassBackground,.elementOutline').hide();
+                return;
+            }
 
             this._selectElement(el);
 

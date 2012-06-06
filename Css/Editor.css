@@ -570,6 +570,21 @@ table.jPicker {
 }
 
 /* Resize operation */
-.resizeOperation .resizeContainer {
-    width: 145px;
+.resizeOperation .helpHint {
+    padding: 5px 5px 5px 20px;
+    background: #FFF8DB no-repeat url("/Img/bulb.png") 6px 5px;
+    margin: -8px;
+    margin-bottom: 8px;
+}
+.resizeOperation .fieldSection {
+    margin-top: 8px;
+}
+.resizeOperation input[type=text] {
+    border: 1px #CECECE solid;
+    text-align: right;
+    padding: 1px;
+}
+.resizeOperation input {
+    padding: 0px;
+    margin: 0px;
 }

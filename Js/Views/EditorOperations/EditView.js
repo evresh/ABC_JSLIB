@@ -1,20 +1,19 @@
 var EditView = OperationView.extend({
     maximizable: true,
-    events: function() {
-        return $.extend({}, OperationView.prototype.events, {
+    _getExtendedEvents: function() {
+        return {
             'click .editHTMLButton': '_editHTML'
-        });
+        };
     },
     _afterRender: function() {
         this._overlay.setTitle('Edit');
+        this._overlay.setContent($('#editOperation').html());
+
         this.$el.find('.overlayFooter').prepend(
             $('<div>').addClass('leftAligned').append(
                 $('<button>').addClass('overlayButton').addClass('editHTMLButton').html('Edit HTML')
             )
         );
-
-
-        var _this = this;
 
         var styles = this.options.frame.getDocument()[0].styleSheets;
         var css = [];
@@ -23,6 +22,7 @@ var EditView = OperationView.extend({
                 css.push(this.href);
         });
 
+        var _this = this;
         tinymce.settings = {
             mode: 'none',
             theme: 'advanced',

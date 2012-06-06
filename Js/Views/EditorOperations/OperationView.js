@@ -1,7 +1,15 @@
 var OperationView = Backbone.View.extend({
-    events: {
-        'click .cancelButton': '_cancel',
-        'click .doneButton': '_done'
+    events: function() {
+        var events = {
+            'click .cancelButton': '_cancel',
+            'click .doneButton': '_done'
+        }
+
+        var extendedEvents = this._getExtendedEvents();
+        if (extendedEvents)
+            $.extend(events, extendedEvents);
+
+        return events;
     },
     initialize: function() {
         this._overlay = new EditorOverlayView({ showFooter: true });
@@ -25,11 +33,13 @@ var OperationView = Backbone.View.extend({
         this._overlay.render();
 
         var overlayName = this.model.get('type') + 'Operation';
+        /*
         var templateContainer = $('#' + overlayName);
         if (templateContainer.length) {
             var content = $('<div>').html(templateContainer.html());
             this._overlay.setContent(content);
         }
+        */
 
         this._overlay.$el.addClass(overlayName);
         this.setElement(this._overlay.$el);
@@ -50,6 +60,7 @@ var OperationView = Backbone.View.extend({
         else
             return this._overlay.options.maximized;
     },
+    _getExtendedEvents: function() { },
     _afterRender: function() { },
     _reset: function() { },
     _overlayClosed: function() {

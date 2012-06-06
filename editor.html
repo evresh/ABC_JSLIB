@@ -105,7 +105,23 @@
     </script>
 
     <script id="resizeOperation" type="text/template">
-        <div class="overlayContentPaddings resizeContainer"></div>
+        <div class="overlayContentPaddings">
+            <div class="helpHint"><nobr>Drag the handles to resize</nobr></div>
+            <div class="fieldSection">
+                <span class="leftAligned">Width:</span>
+                <span class="rightAligned"><input type="text" size="5" class="resizeWidth" value="<%=width%>"></span>
+                <div class="clearFloat"></div>
+            </div>
+            <div class="fieldSection">
+                <span class="leftAligned">Height:</span>
+                <span class="rightAligned"><input type="text" size="5" class="resizeHeight" value="<%=height%>"></span>
+                <div class="clearFloat"></div>
+            </div>
+            <div class="fieldSection">
+                <span class="leftAligned"><input type="checkbox">&nbsp;Bring to Front</span>
+                <div class="clearFloat"></div>
+            </div>
+        </div>
     </script>
 
     <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>

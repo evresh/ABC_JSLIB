@@ -1,9 +1,9 @@
 var ChangeCSSView = OperationView.extend({
-    events: function() {
-        return $.extend({}, OperationView.prototype.events, {
+    _getExtendedEvents: function() {
+        return {
             'click .cssGroupTitle': '_groupSelected',
             'click .addCustomCss': '_addCustomStyle'
-        });
+        };
     },
     _afterRender: function() {
         this._overlay.setTitle('Change CSS');

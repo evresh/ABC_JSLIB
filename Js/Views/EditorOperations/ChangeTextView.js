@@ -1,12 +1,13 @@
 var ChangeTextView = OperationView.extend({
     maximizable: true,
-    events: function() {
-        return $.extend({}, OperationView.prototype.events, {
+    _getExtendedEvents: function() {
+        return {
             'keyup textarea': '_textChanged'
-        });
+        };
     },
     _afterRender: function() {
         this._overlay.setTitle('Change Text');
+        this._overlay.setContent($('#changeTextOperation').html());
     },
     _reset: function() {
         this.$('textarea').val(this.model.getValue());
