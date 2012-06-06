@@ -7,6 +7,7 @@ var ChangeCSSView = OperationView.extend({
     },
     _afterRender: function() {
         this._overlay.setTitle('Change CSS');
+        this._overlay.setContent($('<div>').addClass('cssList'));
     },
     _reset: function() {
         var cssList = this.$('.cssList');

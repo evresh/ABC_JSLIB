@@ -7,6 +7,12 @@ var EditView = OperationView.extend({
     },
     _afterRender: function() {
         this._overlay.setTitle('Edit');
+        this.$el.find('.overlayFooter').prepend(
+            $('<div>').addClass('leftAligned').append(
+                $('<button>').addClass('overlayButton').addClass('editHTMLButton').html('Edit HTML')
+            )
+        );
+
 
         var _this = this;
 

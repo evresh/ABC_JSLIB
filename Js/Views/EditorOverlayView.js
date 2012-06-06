@@ -6,7 +6,10 @@ var EditorOverlayView = Backbone.View.extend({
     },
     render: function() {
         this.$el
-            .html(_.template($('#overlayTemplate').html(), { maximizable: !!this.options.maximizable }))
+            .html(_.template($('#overlayTemplate').html(), {
+                maximizable: !!this.options.maximizable,
+                showFooter: !!this.options.showFooter
+            }))
             .hide()
             .appendTo('body');
 

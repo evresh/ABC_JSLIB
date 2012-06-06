@@ -30,6 +30,15 @@
             <div class="clearFloat"></div>
         </div>
         <div class="overlayContent"></div>
+        <%if (showFooter) {%>
+            <div class="overlayFooter">
+                <div class="rightAligned">
+                    <button class="overlayButton cancelButton">Cancel</button>
+                    <button class="overlayButton doneButton">Done</button>
+                </div>
+                <div class="clearFloat"></div>
+            </div>
+        <%}%>
     </script>
 
     <script id="frameTargetElements" type="text/template">
@@ -44,41 +53,9 @@
         <div class="elementGlassBackground"></div>
     </script>
 
-    <script id="editHTMLOperation" type="text/template">
-        <div class="mirrorContainer"></div>
-        <div class="overlayFooter">
-            <div class="rightAligned">
-                <button class="overlayButton cancelButton">Cancel</button>
-                <button class="overlayButton doneButton">Done</button>
-            </div>
-            <div class="clearFloat"></div>
-        </div>
-    </script>
-
     <script id="editOperation" type="text/template">
         <div class="editContainer">
             <textarea id="editOp"></textarea>
-        </div>
-        <div class="overlayFooter">
-            <div class="leftAligned">
-                <button class="overlayButton editHTMLButton">Edit HTML</button>
-            </div>
-            <div class="rightAligned">
-                <button class="overlayButton cancelButton">Cancel</button>
-                <button class="overlayButton doneButton">Done</button>
-            </div>
-            <div class="clearFloat"></div>
-        </div>
-    </script>
-
-    <script id="changeCSSOperation" type="text/template">
-        <div class="cssList"></div>
-        <div class="overlayFooter">
-            <div class="rightAligned">
-                <button class="overlayButton cancelButton">Cancel</button>
-                <button class="overlayButton doneButton">Done</button>
-            </div>
-            <div class="clearFloat"></div>
         </div>
     </script>
 
@@ -122,16 +99,13 @@
     </script>
 
     <script id="changeTextOperation" type="text/template">
-        <div class="textareaContainer">
+        <div class="overlayContentPaddings textareaContainer">
             <textarea></textarea>
         </div>
-        <div class="overlayFooter">
-            <div class="rightAligned">
-                <button class="overlayButton cancelButton">Cancel</button>
-                <button class="overlayButton doneButton">Done</button>
-            </div>
-            <div class="clearFloat"></div>
-        </div>
+    </script>
+
+    <script id="resizeOperation" type="text/template">
+        <div class="overlayContentPaddings resizeContainer"></div>
     </script>
 
     <script type="text/javascript" src="Js/Libs/jquery-1.7.1.js"></script>
@@ -163,6 +137,7 @@
     <script type="text/javascript" src="Js/Models/EditorOperations/ColorItemOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ChangeCSSOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ChangeTextOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ResizeOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperations.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/StyleOperationStateSynchronizer.js"></script>
 
@@ -179,6 +154,7 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/CustomStyleItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeTextView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ResizeView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
     <script type="text/javascript" src="Js/Tools/Tools.js"></script>

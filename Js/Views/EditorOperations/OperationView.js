@@ -4,7 +4,7 @@ var OperationView = Backbone.View.extend({
         'click .doneButton': '_done'
     },
     initialize: function() {
-        this._overlay = new EditorOverlayView();
+        this._overlay = new EditorOverlayView({ showFooter: true });
         this._overlay.on('close', this._overlayClosed, this);
         this._overlay.on('toggleMaximizing', this._toggleMaximizing, this);
 
@@ -20,13 +20,19 @@ var OperationView = Backbone.View.extend({
         this.model.on('change:isEditing', this._changeVisibility, this);
     },
     render: function() {
-        var templateId = this.model.get('type') + 'Operation';
-        var content = $('<div>').html($('#' + templateId).html());
         this._overlay.options.frame = this.options.frame;
         this._overlay.options.maximizable = !!this.maximizable;
-        this._overlay.render().setContent(content);
-        this._overlay.$el.addClass(templateId);
-        this.setElement(content);
+        this._overlay.render();
+
+        var overlayName = this.model.get('type') + 'Operation';
+        var templateContainer = $('#' + overlayName);
+        if (templateContainer.length) {
+            var content = $('<div>').html(templateContainer.html());
+            this._overlay.setContent(content);
+        }
+
+        this._overlay.$el.addClass(overlayName);
+        this.setElement(this._overlay.$el);
         this._afterRender();
 
         return this;

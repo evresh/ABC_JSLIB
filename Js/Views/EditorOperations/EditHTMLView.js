@@ -4,9 +4,11 @@ var EditHTMLView = OperationView.extend({
         var _this = this;
 
         this._overlay.setTitle('Edit HTML');
+        var mirrorContainer = $('<div>').addClass('mirrorContainer')
+        this._overlay.setContent(mirrorContainer);
 
         this._mirror = CodeMirror(function(el) {
-            _this.$('.mirrorContainer').append(el);
+            mirrorContainer.append(el);
         },
         {
             mode: 'text/html',
