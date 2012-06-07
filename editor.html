@@ -60,6 +60,19 @@
         <div class="elementGlassBackground"></div>
     </script>
 
+    <script id="resizeTargetElements" type="text/template">
+        <div class="resizeGlassLayer">
+            <div class="resizeHandle NE"></div>
+            <div class="resizeHandle NN"></div>
+            <div class="resizeHandle NW"></div>
+            <div class="resizeHandle WW"></div>
+            <div class="resizeHandle EE"></div>
+            <div class="resizeHandle SW"></div>
+            <div class="resizeHandle SS"></div>
+            <div class="resizeHandle SE"></div>
+        </div>
+    </script>
+
     <script id="editOperation" type="text/template">
         <div class="editContainer">
             <textarea id="editOp"></textarea>
@@ -116,12 +129,12 @@
             <div class="helpHint"><nobr>Drag the handles to resize</nobr></div>
             <div class="fieldSection">
                 <span class="leftAligned">Width:</span>
-                <span class="rightAligned"><input type="text" size="5" class="resizeWidth" value="<%=width%>"></span>
+                <span class="rightAligned widthField"></span>
                 <div class="clearFloat"></div>
             </div>
             <div class="fieldSection">
                 <span class="leftAligned">Height:</span>
-                <span class="rightAligned"><input type="text" size="5" class="resizeHeight" value="<%=height%>"></span>
+                <span class="rightAligned heightField"></span>
                 <div class="clearFloat"></div>
             </div>
             <div class="fieldSection">
@@ -143,6 +156,7 @@
     <script type="text/javascript" src="Js/Libs/CodeMirror/code-mirror-htmlmixed.js"></script>
     <script type="text/javascript" src="tiny_mce/tiny_mce_src.js"></script>
     <script type="text/javascript" src="Js/Libs/jPicker.js"></script>
+    <script type="text/javascript" src="Js/Libs/jquery-drag-drop.js"></script>
 
     <script type="text/javascript" src="Js/Models/Editor.js"></script>
     <script type="text/javascript" src="Js/Models/EditorTarget.js"></script>
@@ -179,6 +193,7 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeCSSView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeTextView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ResizeView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/InputStyleView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
     <script type="text/javascript" src="Js/Tools/Tools.js"></script>

@@ -7,6 +7,13 @@ var StyleItemOperation = EditorOperation.extend({
         var property = this.get('property');
         return property ? this.getTargetElement().css(property) : null;
     },
+    _onEditing: function() {
+        EditorOperation.prototype._onEditing.apply(this);
+        if (this.get('isEditing'))
+            this.get('target').on('updated', this._targetUpdated, this);
+        else
+            this.get('target').off('updated', this._targetUpdated, this);
+    },
     _applyChanges: function(value) {
         this._applyNewValue(value);
         return value;
@@ -68,6 +75,13 @@ var StyleItemOperation = EditorOperation.extend({
                 initialState: this._getInitialState(),
                 changedState: null
             });
+        }
+    },
+    _targetUpdated: function(sender) {
+        if (sender != this) {
+            var valueFromElement = this.getTargetElement().css(this.get('property'));
+            if (this.getValue() != valueFromElement)
+                this.resetState({ changedState: valueFromElement });
         }
     }
 })

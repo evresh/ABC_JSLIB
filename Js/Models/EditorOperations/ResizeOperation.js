@@ -25,6 +25,7 @@ var ResizeOperation = EditorOperation.extend({
         this.get('items').each(function(item) {
             item.set('isEditing', isEditing);
         });
+        this.get('target').set('editMode', EditorTargetMode.resizing);
     },
     _discardChanges: function() {
         this.get('items').each(function(item) {

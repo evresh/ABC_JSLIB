@@ -1,23 +1,27 @@
 var ResizeView = OperationView.extend({
-    _getExtendedEvents: function() {
-        return {
-            'keyup .resizeWidth': '_widthChanged',
-            'keyup .resizeHeight': '_heightChanged'
-        }
-    },
     _afterRender: function() {
         this._overlay.setTitle('Resize');
+        this._overlay.setContent($('#resizeOperation').html());
     },
     _reset: function() {
-        this._overlay.setContent(_.template($('#resizeOperation').html(), {
-            width: this.model.getItem('width').getValue(),
-            height: this.model.getItem('height').getValue()
-        }));
+        var textboxAttrs = { type: 'text', size: '5' };
+
+        var _this = this;
+        this._views = {};
+        $.each({ width: textboxAttrs, height: textboxAttrs }, function(prop, attrs) {
+            var view = new InputStyleView({ model: _this.model.getItem(prop), attrs: attrs }).render();
+            _this._views[prop] = view;
+            view.$el.appendTo(_this.$('.' + prop + 'Field').empty());
+        });
+
+        this.model.get('target').on('updated', this._overlay.attachToTarget, this._overlay);
     },
-    _widthChanged: function() {
-        this.model.getItem('width').apply(this.$('.resizeWidth').val());
-    },
-    _heightChanged: function() {
-        this.model.getItem('height').apply(this.$('.resizeHeight').val());
+    _overlayClosed: function() {
+        OperationView.prototype._overlayClosed.apply(this);
+        $.each(this._views, function(prop, view) {
+            view.remove();
+        });
+
+        this.model.get('target').off('updated', this._overlay.attachToTarget, this._overlay);
     }
 })

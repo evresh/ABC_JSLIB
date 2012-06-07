@@ -85,8 +85,7 @@ var EditorView = Backbone.View.extend({
                 var view = this._operationViews[viewName];
                 if (!view)
                     view = this._operationViews[viewName] = new (viewCtor)({
-                        model: operation,
-                        frame: $('.testPage')
+                        model: operation
                     }).render();
                 else
                     view.setModel(operation);

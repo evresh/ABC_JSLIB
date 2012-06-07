@@ -5,7 +5,7 @@ var EditorTargetMode = {
 
 var EditorTarget = Backbone.Model.extend({
     defaults: {
-        mode: EditorTargetMode.none,
+        editMode: EditorTargetMode.none,
         element: null,
         pageX: null,
         pageY: null
@@ -25,7 +25,7 @@ var EditorTarget = Backbone.Model.extend({
 
         return result;
     },
-    updated: function(initiator) {
-        this.trigger('updated', initiator);
+    updated: function(sender) {
+        this.trigger('updated', sender);
     }
 })

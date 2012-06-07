@@ -123,6 +123,63 @@ iframe.testPage {
     filter: alpha(opacity = 20);
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
 }
+.resizeHandle {
+    position: absolute;
+    height: 7px;
+    width: 7px;
+    border: 1px solid #89B;
+    background: #9AC;
+}
+.resizeGlassLayer {
+    position: absolute;
+    z-index: 2147483002;
+    background: transparent;
+    opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=1) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)" !important;
+}
+.NE {
+    cursor: ne-resize;
+}
+.NN {
+    cursor: n-resize;
+}
+.NW {
+    cursor: nw-resize;
+}
+.WW {
+    cursor: w-resize;
+}
+.SW {
+    cursor: sw-resize;
+}
+.SS {
+    cursor: s-resize;
+}
+.SE {
+    cursor: se-resize;
+}
+.NE, .EE, .SE {
+    right: -5px;
+}
+.NW, .NN, .NE {
+    top: -5px;
+}
+.NN, .SS {
+    left: 50%;
+    margin-left: -4px;
+}
+.NW, .WW, .SW {
+    left: -5px;
+}
+.EE, .WW {
+    top: 50%;
+    margin-top: -4px;
+}
+.SW, .SS, .SE {
+    bottom: -5px;
+}
 
 /* Editor overlay */
 .editorOverlay {
