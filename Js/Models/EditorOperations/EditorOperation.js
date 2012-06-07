@@ -20,6 +20,7 @@ var EditorOperation = Backbone.Model.extend({
         if (!this.get('initialState'))
             this.set('initialState', this._getInitialState());
         this.on('change:isEditing', this._onEditing, this);
+        this.on('change:changedState', this._stateChanged, this);
     },
     _getInitialState: function() {
         return null;
@@ -42,6 +43,13 @@ var EditorOperation = Backbone.Model.extend({
     },
     _deleteChanges: function() {
         alert('Not implemented yet');
+    },
+    _stateChanged: function() {
+        if (this.get('isEditing'))
+            this.get('target').updated(this);
+    },
+    getTargetElement: function() {
+        return this.get('target').get('element');
     },
     apply: function(data) {
         var newState = this._applyChanges(data);

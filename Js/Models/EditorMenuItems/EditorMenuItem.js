@@ -1,7 +1,7 @@
 var EditorMenuItem = Backbone.Model.extend({
     defaults: {
         name: '',
-        target: null,
+        targetElement: null,
         isVisible: false
     },
     update: function() { },

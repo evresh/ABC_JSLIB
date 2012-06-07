@@ -1,6 +1,6 @@
 var ColorItemOperation = StyleItemOperation.extend({
     _getInitialState: function() {
-        return this.get('target').css(this.get('property'));
+        return this.getTargetElement().css(this.get('property'));
     },
     getColor: function() {
         var value = this.getValue();

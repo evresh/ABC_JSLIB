@@ -1,12 +1,11 @@
 var Editor = Backbone.Model.extend({
     defaults: {
-        testPage: null,
         menu: null,
+        target: null,
         currentOperation: null
     },
     initialize: function() {
-        this.set('testPage', new TestPage({ pageUrl: this.get('pageUrl') }));
-        this.get('testPage').on('change:targetData', this._targetChanged, this);
+        this.on('change:target', this._targetChanged, this);
 
         this.set('menu', new EditorMenu());
         this.get('menu').on('change:isVisible', this._menuVisibilityChanged, this);
@@ -21,9 +20,9 @@ var Editor = Backbone.Model.extend({
         if (operation) {
             operation.cancel();
         } else {
-            var targetData = this.get('testPage').get('targetData');
-            this.get('menu').set('targetData', targetData);
-            this.get('menu').set('isVisible', !!targetData);
+            var target = this.get('target');
+            this.get('menu').set('target', target);
+            this.get('menu').set('isVisible', !!target);
         }
     },
     _setCurrentOperation: function(operation) {
@@ -37,18 +36,20 @@ var Editor = Backbone.Model.extend({
             var performedItem = this.get('menu').get('performedItem');
             if (performedItem) {
                 if (performedItem instanceof SelectParentMenuItem) {
-                    this.get('testPage').selectTarget(performedItem.get('target').parent());
+                    this.set('target', new EditorTarget({ element: this.get('target').get('element').parent() }));
                 } else if (performedItem instanceof OperationMenuItem) {
-                    var operation = this.get('completedOperations').find(function(o) {
+                    var operation = this.get('completedOperations').find(_.bind(function(o) {
                         return o.get('type') == performedItem.get('type')
-                            && o.get('target')[0] == performedItem.get('target')[0];
-                    });
-                    if (!operation)
-                        operation = EditorOperations.create(performedItem.get('type'), performedItem.get('target'));
+                            && o.get('target').get('element')[0] == this.get('target').get('element')[0];
+                    }, this));
+                    if (operation)
+                        operation.set('target', this.get('target')); // update target object, target element remains the same
+                    else
+                        operation = EditorOperations.create(performedItem.get('type'), this.get('target'));
                     this._setCurrentOperation(operation);
                 }
             } else {
-                this.get('testPage').set('targetData', null);
+                this.set('target', null);
             }
         }
     },
@@ -70,7 +71,7 @@ var Editor = Backbone.Model.extend({
                 this._setCurrentOperation(operationToSwitch);
             } else {
                 this.set('currentOperation', null);
-                this.get('testPage').set('targetData', null);
+                this.set('target', null);
             }
         }
     }

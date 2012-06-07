@@ -5,10 +5,10 @@ var VisibilityOperationMenuItem = OperationMenuItem.extend({
         });
     },
     update: function() {
-        var target = this.get('target');
-        this.set('isVisible', !!target);
+        var targetElement = this.get('targetElement');
+        this.set('isVisible', !!targetElement);
 
-        if (target)
-            this.set('name', VisibilityOperation.isTargetHidden(target) ? 'Show' : 'Hide');
+        if (targetElement)
+            this.set('name', VisibilityOperation.isTargetElementHidden(targetElement) ? 'Show' : 'Hide');
     }
 })

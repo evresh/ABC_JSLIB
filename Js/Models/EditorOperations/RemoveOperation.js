@@ -1,6 +1,6 @@
 var RemoveOperation = EditorOperation.extend({
     _getInitialState: function() {
-        return this.get('target').css('display');
+        return this.getTargetElement().css('display');
     },
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -10,11 +10,11 @@ var RemoveOperation = EditorOperation.extend({
         }
     },
     _applyChanges: function() {
-        this.get('target').hide();
-        return this.get('target').css('display');
+        this.getTargetElement().hide();
+        return this.getTargetElement().css('display');
     },
     _deleteChanges: function() {
         if (this.get('changedState'))
-            this.get('target').css('display', this.get('initialState'));
+            this.getTargetElement().css('display', this.get('initialState'));
     }
 });

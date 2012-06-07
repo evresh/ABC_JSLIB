@@ -2,15 +2,15 @@ var StyleOperationStateSynchronizer = (function() {
     var syncObj = {};
 
     function getOperations(operation) {
-        var target = operation.get('target');
+        var targetElement = operation.get('target').get('element');
 
-        var targetId = target.attr('editor_target_id');
+        var targetId = targetElement.attr('editor_target_id');
         if (!targetId) {
             targetId = Tools.createUID();
-            target.attr('editor_target_id', targetId);
+            targetElement.attr('editor_target_id', targetId);
         }
 
-        var syncId = operation.get('property') + '_' + operation.get('target').attr('editor_target_id');
+        var syncId = operation.get('property') + '_' + targetElement.attr('editor_target_id');
         var operations = syncObj[syncId];
         if (!operations) {
             syncObj[syncId] = operations = {
@@ -61,7 +61,8 @@ var StyleOperationStateSynchronizer = (function() {
             }
         },
         remove: function(operation, previousProperty) {
-            var syncId = (previousProperty || operation.get('property')) + '_' + operation.get('target').attr('editor_target_id');
+            var syncId = (previousProperty || operation.get('property'))
+                + '_' + operation.get('target').get('element').attr('editor_target_id');
             var operations = syncObj[syncId];
 
             if (operations) {

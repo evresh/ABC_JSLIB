@@ -1,6 +1,6 @@
 var EditorMenu = Backbone.Model.extend({
     defaults: {
-        targetData: false,
+        target: null,
         performedItem: null,
         isVisible: false
     },
@@ -25,7 +25,7 @@ var EditorMenu = Backbone.Model.extend({
             //,new OperationMenuItem({ name: 'Track Form Submits', type: EditorOperation })
         ]));
 
-        this.on('change:targetData', this._updateItems, this);
+        this.on('change:target', this._updateItems, this);
         this.on('change:isVisible', this._visibilityChanged, this);
         this.get('items').on('perform', this._itemPerformed, this);
     },
@@ -33,17 +33,17 @@ var EditorMenu = Backbone.Model.extend({
         if (this.get('isVisible'))
             this.unset('performedItem');
         else
-            this.unset('targetData');
+            this.unset('target');
     },
     _itemPerformed: function(item) {
         this.set('performedItem', item);
         this.set('isVisible', false);
     },
     _updateItems: function() {
-        var targetData = this.get('targetData');
-        if (targetData) {
+        var target = this.get('target');
+        if (target) {
             this.get('items').each(function(item) {
-                item.set('target', $(targetData.target));
+                item.set('targetElement', target.get('element'));
                 item.update();
             });
         }

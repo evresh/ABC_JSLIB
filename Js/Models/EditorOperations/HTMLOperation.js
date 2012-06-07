@@ -4,7 +4,7 @@ var HTMLOperation = EditorOperation.extend({
         return state.outerHTML();
     },
     _getInitialState: function() {
-        return this.get('target');
+        return this.getTargetElement();
     },
     _beforeEdit: function() {
         if (this.get('changedState')) {
@@ -18,8 +18,8 @@ var HTMLOperation = EditorOperation.extend({
     },
     _applyChanges: function(html) {
         var previousState = this._getPreviousState();
-        var target = this.get('changedState') || previousState;
-        var parent = target.parent();
+        var targetElement = this.get('changedState') || previousState;
+        var parent = targetElement.parent();
         var parentTag = parent.get(0).tagName;
         var cleanedHtml = this._stripWhite(html, parentTag);
 
@@ -28,11 +28,11 @@ var HTMLOperation = EditorOperation.extend({
             this.set('changedState', this.get('previousState'));
         } else if (html == '') {
             this.set('changedState', $('<span>'));
-            return this._changeTarget(target, this.get('changedState'));
-        } else if (this._stripWhite(target.outerHTML(), parentTag) != cleanedHtml) {
+            return this._changeTarget(targetElement, this.get('changedState'));
+        } else if (this._stripWhite(targetElement.outerHTML(), parentTag) != cleanedHtml) {
             html = this._formatContent(html, parentTag);
             try {
-                var doc = target[0].ownerDocument;
+                var doc = this.get('target').getDocument()[0];
                 var s = doc.createElement(parent.get(0).tagName);
                 s.innerHTML = html;
                 var hasScripts = false;
@@ -53,12 +53,12 @@ var HTMLOperation = EditorOperation.extend({
                         head.removeChild(script);
                     }
                 }
-                var newTarget = $(s.innerHTML);
+                var newTargetElement = $(s.innerHTML);
                 if (hasScripts) {
                     var buffer = $('<div>').hide().appendTo($(doc).find('body'));
                     var brokenScripts = false;
                     try {
-                        buffer.append(newTarget);
+                        buffer.append(newTargetElement);
                     } catch (e) {
                         brokenScripts = true;
                     }
@@ -67,8 +67,8 @@ var HTMLOperation = EditorOperation.extend({
                         return;
                 }
 
-                this.set('changedState', newTarget);
-                return this._changeTarget(target, newTarget);
+                this.set('changedState', newTargetElement);
+                return this._changeTarget(targetElement, newTargetElement);
             } catch (e) {
                 Debug.trace('HTMLOperation._innerApply() -> ' + e);
             }
@@ -82,13 +82,13 @@ var HTMLOperation = EditorOperation.extend({
         if (this.get('changedState'))
             this._changeTarget(this.get('changedState'), this.get('initialState'));
     },
-    _changeTarget: function(target, newTarget, skipDOMChange) {
-        if (target[0] != newTarget[0]) {
+    _changeTarget: function(targetElement, newTargetElement, skipDOMChange) {
+        if (targetElement[0] != newTargetElement[0]) {
             if (!skipDOMChange)
-                target.replaceWith(newTarget);
-            this.set('target', newTarget);
+                targetElement.replaceWith(newTargetElement);
+            this.get('target').set('element', newTargetElement);
         }
-        return newTarget;
+        return newTargetElement;
     },
     _stripWhite: function(content, tag) {
         var node = document.createElement(tag);
@@ -132,6 +132,6 @@ var HTMLOperation = EditorOperation.extend({
     },
     isOverriding: function(operation) {
         return this.get('type') == operation.get('type')
-            && operation.get('target')[0] == (this._getPreviousState())[0];
+            && operation.get('target').get('element')[0] == (this._getPreviousState())[0];
     }
 })

@@ -23,12 +23,12 @@ var EditorOverlayView = Backbone.View.extend({
         this.$('.overlayContent').empty().append(content);
         return this;
     },
-    show: function(targetData) {
+    show: function() {
         this.$el.toggleClass('maximized', false);
         this.$el.fadeIn(150);
         if (this.options.maximizable)
             this._toggleMaximizing(!!this.options.maximized);
-        this.attachToTarget(targetData);
+        this.attachToTarget();
     },
     _innerClose: function(e, skipEvent) {
         var _this = this;
@@ -53,16 +53,13 @@ var EditorOverlayView = Backbone.View.extend({
     close: function(skipEvent) {
         this._innerClose(null, skipEvent);
     },
-    attachToTarget: function(targetData) {
-        if (targetData)
-            this._targetData = targetData;
-
+    attachToTarget: function() {
         var top, left, menu = this.$el,
-        elem = $(this._targetData.target),
-        frame = this.options.frame,
-        frameDoc = frame.getDocument()[0],
-        x = parseInt(this._targetData.pageX || 0, 10) - window.pageXOffset,
-        y = parseInt(this._targetData.pageY || 0, 10) - window.pageYOffset,
+        elem = $(this.model.get('element')),
+        frame = this.model.getParentIframe(),
+        frameDoc = this.model.getDocument()[0],
+        x = parseInt(this.model.get('pageX') || 0, 10) - window.pageXOffset,
+        y = parseInt(this.model.get('pageY') || 0, 10) - window.pageYOffset,
         margin = 8,
         flag = false,
         eoW = elem.outerWidth(),

@@ -5,6 +5,8 @@ var ResizeOperation = EditorOperation.extend({
             new StyleItemOperation({ property: 'height', target: this.get('target') })
         ]));
         EditorOperation.prototype.initialize.apply(this);
+
+        this.on('change:target', this._targetChanged, this);
     },
     complete: function() {
         this.get('items').each(function(item) {
@@ -19,30 +21,25 @@ var ResizeOperation = EditorOperation.extend({
         });
     },
     _onEditing: function() {
-        if (this.get('isEditing'))
-            this.get('items')
-                .off('change:changedState', this._onTargetUpdated, this)
-                .on('change:changedState', this._onTargetUpdated, this);
-    },
-    _onTargetUpdated: function() {
-        this.trigger('targetUpdated');
+        var isEditing = this.get('isEditing');
+        this.get('items').each(function(item) {
+            item.set('isEditing', isEditing);
+        });
     },
     _discardChanges: function() {
-        this.get('items').off('change:changedState', this._onTargetUpdated, this);
-
         this.get('items').each(function(item) {
             item.cancel();
         });
-
-        this._onTargetUpdated();
     },
     _deleteChanges: function() {
-        this.get('items').off('change:changedState', this._onTargetUpdated, this);
-
         this.get('items').each(function(item) {
             item.remove();
         });
-
-        this._onTargetUpdated();
+    },
+    _targetChanged: function() {
+        var target = this.get('target');
+        this.get('items').each(function(item) {
+            item.set('target', target);
+        });
     }
 });

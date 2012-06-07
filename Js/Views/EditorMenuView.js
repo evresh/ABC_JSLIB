@@ -5,7 +5,6 @@ var EditorMenuView = Backbone.View.extend({
         this._overlay.on('close', this._close, this);
     },
     render: function() {
-        this._overlay.options.frame = this.options.frame;
         this._overlay.render();
         var menu = $('<ul>').addClass('editorMenu');
         this.model.get('items').each(_.bind(function(item) {
@@ -19,11 +18,12 @@ var EditorMenuView = Backbone.View.extend({
     _visibilityChanged: function() {
         var isOverlayVisible = this._overlay.$el.is(':visible');
         if (this.model.get('isVisible')) {
-            var targetData = this.model.get('targetData');
-            var tagName = targetData.target.tagName.toLowerCase();
+            var target = this.model.get('target');
+            var tagName = target.get('element')[0].tagName.toLowerCase();
+            this._overlay.model = target;
             this._overlay
                 .setTitle('<nobr>' + this._getTagDescription(tagName) + '</nobr>&nbsp;<i>&lt;' + tagName + '&gt;</i>')
-                .show(targetData);
+                .show();
         } else if (isOverlayVisible) {
             this._overlay.close();
         }

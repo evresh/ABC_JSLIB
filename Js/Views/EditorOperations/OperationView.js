@@ -28,18 +28,10 @@ var OperationView = Backbone.View.extend({
         this.model.on('change:isEditing', this._changeVisibility, this);
     },
     render: function() {
-        this._overlay.options.frame = this.options.frame;
         this._overlay.options.maximizable = !!this.maximizable;
         this._overlay.render();
 
         var overlayName = this.model.get('type') + 'Operation';
-        /*
-        var templateContainer = $('#' + overlayName);
-        if (templateContainer.length) {
-            var content = $('<div>').html(templateContainer.html());
-            this._overlay.setContent(content);
-        }
-        */
 
         this._overlay.$el.addClass(overlayName);
         this.setElement(this._overlay.$el);
@@ -48,7 +40,8 @@ var OperationView = Backbone.View.extend({
         return this;
     },
     show: function() {
-        this._overlay.show({ target: this.model.get('target') });
+        this._overlay.model = this.model.get('target');
+        this._overlay.show();
         this._reset();
     },
     close: function(skipEvent) {

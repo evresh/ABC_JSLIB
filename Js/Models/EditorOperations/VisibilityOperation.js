@@ -1,6 +1,6 @@
 var VisibilityOperation = EditorOperation.extend({
     _getInitialState: function() {
-        return this.get('target').css('visibility');
+        return this.getTargetElement().css('visibility');
     },
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -10,20 +10,20 @@ var VisibilityOperation = EditorOperation.extend({
         }
     },
     _applyChanges: function() {
-        var target = this.get('target');
-        var isHidden = VisibilityOperation.isTargetHidden(target);
-        target.toggleClass('hiddenByOptimizer', !isHidden);
-        target.css('visibility', isHidden ? 'visible' : 'hidden');
-        return target.css('visibility');
+        var targetElement = this.getTargetElement();
+        var isHidden = VisibilityOperation.isTargetElementHidden(targetElement);
+        targetElement.toggleClass('hiddenByOptimizer', !isHidden);
+        targetElement.css('visibility', isHidden ? 'visible' : 'hidden');
+        return targetElement.css('visibility');
     },
     _deleteChanges: function() {
         if (this.get('changedState')) {
-            this.get('target').css('visibility', this.get('initialState'));
-            this.get('target').removeClass('hiddenByOptimizer');
+            this.getTargetElement().css('visibility', this.get('initialState'));
+            this.getTargetElement().removeClass('hiddenByOptimizer');
         }
     }
 });
-VisibilityOperation.isTargetHidden = function(target) {
-    return target.css('visibility') == 'hidden' || target.css('visibility') == 'collapse'
-        || target.hasClass('hiddenByOptimizer');
+VisibilityOperation.isTargetElementHidden = function(targetElement) {
+    return targetElement.css('visibility') == 'hidden' || targetElement.css('visibility') == 'collapse'
+        || targetElement.hasClass('hiddenByOptimizer');
 }

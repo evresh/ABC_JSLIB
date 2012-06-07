@@ -5,7 +5,7 @@ var StyleItemOperation = EditorOperation.extend({
     },
     _getInitialState: function() {
         var property = this.get('property');
-        return property ? this.get('target').css(property) : null;
+        return property ? this.getTargetElement().css(property) : null;
     },
     _applyChanges: function(value) {
         this._applyNewValue(value);
@@ -21,12 +21,12 @@ var StyleItemOperation = EditorOperation.extend({
     _applyNewValue: function(newValue) {
         var property = this.get('property');
         if (property)
-            this.get('target').css(property, newValue);
+            this.getTargetElement().css(property, newValue);
     },
     _propertyChanged: function() {
         var oldProperty = this.previous('property');
         if (oldProperty)
-            this.get('target').css(oldProperty, this.get('initialState'));
+            this.getTargetElement().css(oldProperty, this.get('initialState'));
 
         this.set('initialState', this._getInitialState());
         this.unset('changedState');

@@ -12,7 +12,11 @@
         <input type="button" value="Save changes" class="saveChanges" />
         <div class="clearFloat"></div>
     </div>
-    <div class="testPageContainer"></div>
+    <div class="testPageContainer">
+        <iframe class="testPage"></iframe>
+        <div class="loadingBackground" style="display: none;"></div>
+    </div>
+    <div class="loadingMessage" style="display: none;">Please wait while the page is loaded...</div>
 
     <script id="overlayTemplate" type="text/template">
         <div class="overlayTitle">
@@ -41,11 +45,14 @@
         <%}%>
     </script>
 
-    <script id="frameTargetElements" type="text/template">
+    <script id="highlightElements" type="text/template">
         <div class="elementOutline leftOutline"></div>
         <div class="elementOutline rightOutline"></div>
         <div class="elementOutline topOutline"></div>
         <div class="elementOutline bottomOutline"></div>
+    </script>
+
+    <script id="selectedTargetElements" type="text/template">
         <div class="elementOutlineBackground leftOutlineBackground"></div>
         <div class="elementOutlineBackground rightOutlineBackground"></div>
         <div class="elementOutlineBackground topOutlineBackground"></div>
@@ -137,8 +144,8 @@
     <script type="text/javascript" src="tiny_mce/tiny_mce_src.js"></script>
     <script type="text/javascript" src="Js/Libs/jPicker.js"></script>
 
-    <script type="text/javascript" src="Js/Models/TestPage.js"></script>
     <script type="text/javascript" src="Js/Models/Editor.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorTarget.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenu.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenuItems/EditorMenuItem.js"></script>
     <script type="text/javascript" src="Js/Models/EditorMenuItems/OperationMenuItem.js"></script>
@@ -158,8 +165,9 @@
     <script type="text/javascript" src="Js/Models/EditorOperations/StyleOperationStateSynchronizer.js"></script>
 
     <script type="text/javascript" src="Js/Views/EditorOverlayView.js"></script>
-    <script type="text/javascript" src="Js/Views/TestPageView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorView.js"></script>
+    <script type="text/javascript" src="Js/Views/TargetHighlighter.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorTargetView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorMenuItemView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/OperationView.js"></script>
@@ -179,7 +187,7 @@
         $(function() {
             new EditorView({
                 el: $('body'),
-                model: new Editor({ pageUrl: 'test.html' })
+                model: new Editor({ pageUrl: 'TestPage.html' })
             }).render();
         });
     </script>

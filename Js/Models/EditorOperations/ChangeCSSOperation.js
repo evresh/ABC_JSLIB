@@ -386,6 +386,8 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('tempItems')
             .on('change:isEditing', this._onItemEditing, this)
             .on('action', this._onItemAction, this);
+
+        this.on('change:target', this._targetChanged, this);
     },
     _onEditing: function() {
         if (this.get('isEditing')) {
@@ -394,9 +396,6 @@ var ChangeCSSOperation = Backbone.Model.extend({
             this.get('items').each(_.bind(function(item) {
                 tempItems.add(this._createTempItem(item));
             }, this))
-            this.get('tempItems')
-                .off('change:changedState', this._onTargetUpdated, this)
-                .on('change:changedState', this._onTargetUpdated, this);
         }
     },
     _onItemEditing: function(editItem) {
@@ -416,9 +415,6 @@ var ChangeCSSOperation = Backbone.Model.extend({
             });
         }
     },
-    _onTargetUpdated: function() {
-        this.trigger('targetUpdated');
-    },
     _createTempItem: function(item) {
         if (item.get('isNew'))
             return item;
@@ -437,14 +433,18 @@ var ChangeCSSOperation = Backbone.Model.extend({
 
         return new StyleItemOperation(attrs);
     },
+    _targetChanged: function() {
+        var target = this.get('target');
+        this.get('items').each(function(item) {
+            item.set('target', target);
+        });
+    },
     resetEdit: function() {
         this.get('tempItems').each(function(item) {
             item.set('isEditing', false);
         });
     },
     complete: function() {
-        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
-
         var items = this.get('items');
         this.get('tempItems').each(function(item) {
             var sourceItem = item.get('source');
@@ -464,27 +464,26 @@ var ChangeCSSOperation = Backbone.Model.extend({
             }
         });
 
-        this._onTargetUpdated();
+        this.get('target').updated();
+
         this.set('lastAction', EditorOperationAction.complete);
         this.set('isEditing', false);
     },
     cancel: function() {
-        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
-
         this.get('tempItems').each(function(item) {
             item.remove();
         });
 
-        this._onTargetUpdated();
+        this.get('target').updated();
+
         this.set('lastAction', EditorOperationAction.cancel);
         this.set('isEditing', false);
     },
     remove: function() {
-        this.get('tempItems').off('change:changedState', this._onTargetUpdated, this);
-
         this.get('items').each(function(item) { item.remove(); });
 
-        this._onTargetUpdated();
+        this.get('target').updated();
+
         this.set('lastAction', EditorOperationAction.remove);
         this.set('isEditing', false);
     },

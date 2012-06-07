@@ -15,7 +15,7 @@ var EditView = OperationView.extend({
             )
         );
 
-        var styles = this.options.frame.getDocument()[0].styleSheets;
+        var styles = this.model.get('target').getDocument()[0].styleSheets;
         var css = [];
         $.each(styles, function() {
             if (!!this.href)

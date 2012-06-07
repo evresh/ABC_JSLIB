@@ -5,8 +5,8 @@ var ChangeTextOperationMenuItem = OperationMenuItem.extend({
         });
     },
     update: function() {
-        var target = this.get('target');
-        var tagName = target.get(0).tagName;
-        this.set('isVisible', !!target && target.children().length == 0 && tagName != 'IMG' && tagName != 'INPUT');
+        var targetElement = this.get('targetElement');
+        var tagName = targetElement.get(0).tagName;
+        this.set('isVisible', !!targetElement && targetElement.children().length == 0 && tagName != 'IMG' && tagName != 'INPUT');
     }
 })

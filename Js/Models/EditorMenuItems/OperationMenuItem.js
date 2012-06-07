@@ -1,5 +1,5 @@
 var OperationMenuItem = EditorMenuItem.extend({
     update: function() {
-        this.set('isVisible', !!this.get('target'));
+        this.set('isVisible', !!this.get('targetElement'));
     }
 })
