@@ -71,6 +71,16 @@ var EditorTargetView = Backbone.View.extend({
                 height: el.outerHeight(),
                 width: el.outerWidth()
             });
+
+        var resizeLayer = doc.find('.resizeGlassLayer');
+        if (resizeLayer.length > 0) {
+            resizeLayer.css({
+                left: el.offset().left,
+                top: el.offset().top,
+                height: el.outerHeight(),
+                width: el.outerWidth()
+            });
+        }
     },
     _hide: function() {
         $(this.model.getDocument())
@@ -88,7 +98,7 @@ var EditorTargetView = Backbone.View.extend({
 
             var _this = this;
             var targetElement = this.model.get('element');
-            var layer = doc.find('.resizeGlassLayer').css({
+            doc.find('.resizeGlassLayer').css({
                 left: targetElement.offset().left,
                 top: targetElement.offset().top,
                 height: targetElement.outerHeight(),
@@ -116,12 +126,6 @@ var EditorTargetView = Backbone.View.extend({
                 height += 'px';
                 width += 'px';
                 targetElement.css('width', width).css('height', height);
-                layer.css({
-                    left: targetElement.offset().left,
-                    top: targetElement.offset().top,
-                    height: targetElement.outerHeight(),
-                    width: targetElement.outerWidth()
-                });
                 _this.model.updated();
             });
         }

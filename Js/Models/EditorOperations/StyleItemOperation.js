@@ -50,6 +50,7 @@ var StyleItemOperation = EditorOperation.extend({
         } else {
             this.apply(state);
             this.set('initialState', state);
+            this.set('previousState', null);
         }
 
         this.trigger('stateResetted');
