@@ -63,48 +63,30 @@ var EditorTargetView = Backbone.View.extend({
                 height: height,
                 width: (docW - offset.left - el.outerWidth())
             })
-        .end()
-        .find('.elementGlassBackground')
-            .css({
-                top: offset.top,
-                left: offset.left,
-                height: el.outerHeight(),
-                width: el.outerWidth()
-            });
-
-        var resizeLayer = doc.find('.resizeGlassLayer');
-        if (resizeLayer.length > 0) {
-            resizeLayer.css({
-                left: el.offset().left,
-                top: el.offset().top,
-                height: el.outerHeight(),
-                width: el.outerWidth()
-            });
-        }
+        .end();
+            
+        this._updateCover(doc.find('.elementGlassBackground,.resizeGlassLayer,.moveGlassLayer'));
     },
     _hide: function() {
         $(this.model.getDocument())
             .find('.elementOutlineBackground,.elementGlassBackground').hide().end()
-            .find('.resizeGlassLayer').remove();
+            .find('.resizeGlassLayer').remove().end()
+            .find('.moveGlassLayer').remove();
 
 
         TargetHighlighter.removeHighlight(this.model.get('element'));
     },
     _modeChanged: function() {
-        if (this.model.get('editMode') == EditorTargetMode.resizing) {
-            var doc = this.model.getDocument();
+        var editMode = this.model.get('editMode');
+        var doc = this.model.getDocument();
+        var targetElement = this.model.get('element');
+        var _this = this;
+
+        if (editMode == EditorTargetMode.resize) {
             if (!doc.find('.resizeGlassLayer').length)
                 doc.find('body').append($('#resizeTargetElements').html())
 
-            var _this = this;
-            var targetElement = this.model.get('element');
-            doc.find('.resizeGlassLayer').css({
-                left: targetElement.offset().left,
-                top: targetElement.offset().top,
-                height: targetElement.outerHeight(),
-                width: targetElement.outerWidth()
-            })
-            .drag('start', function(ev, dd) {
+            this._updateCover(doc.find('.resizeGlassLayer')).drag('start', function(ev, dd) {
                 dd.attr = ev.target.className;
                 dd.width = targetElement.width();
                 dd.height = targetElement.height();
@@ -122,13 +104,44 @@ var EditorTargetView = Backbone.View.extend({
                 if (dd.attr.indexOf("N") > -1) {
                     height = Math.max(20, dd.height - dd.deltaY);
                 }
-                //props['z-index'] = targetElement.css('z-index');
                 height += 'px';
                 width += 'px';
                 targetElement.css('width', width).css('height', height);
                 _this.model.updated();
             });
+        } else if (editMode == EditorTargetMode.move) {
+            if (!doc.find('.moveGlassLayer').length)
+                doc.find('body').append($('<div>').addClass('moveGlassLayer'));
+
+            var original_top, original_left;
+
+            function updateOriginalValues() {
+                original_top = parseInt(targetElement.css('top'), 10) || 0;
+                original_left = parseInt(targetElement.css('left'), 10) || 0;
+            }
+
+            updateOriginalValues();
+
+            this._updateCover(doc.find('.moveGlassLayer')).drag(function(ev, dd) {
+                targetElement.css('top', original_top + dd.deltaY).css('left', original_left + dd.deltaX);
+                _this.model.updated();
+            }).drop(function() {
+                updateOriginalValues();
+            });
         }
+    },
+    _updateCover: function(cover) {
+        var targetElement = this.model.get('element');
+        if (cover.length > 0) {
+            cover.css({
+                left: targetElement.offset().left,
+                top: targetElement.offset().top,
+                height: targetElement.outerHeight(),
+                width: targetElement.outerWidth()
+            });
+        }
+
+        return cover;
     },
     _destroy: function() {
         this.model

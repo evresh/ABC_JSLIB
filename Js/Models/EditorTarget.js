@@ -1,6 +1,7 @@
 var EditorTargetMode = {
     none: 0,
-    resizing: 1
+    resize: 1,
+    move: 2
 }
 
 var EditorTarget = Backbone.Model.extend({

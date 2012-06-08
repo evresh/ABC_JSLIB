@@ -19,7 +19,7 @@ var StyleItemOperation = EditorOperation.extend({
         return value;
     },
     _discardChanges: function() {
-        if (this.get('changedState'))
+        if (!_.isUndefined(this.get('changedState')) && !_.isNull(this.get('changedState')))
             this._applyNewValue(this._getPreviousState());
     },
     _deleteChanges: function() {

@@ -1,12 +1,18 @@
-var ResizeOperation = EditorOperation.extend({
+var MoveOperation = EditorOperation.extend({
     initialize: function() {
         this.set('items', new Backbone.Collection([
-            new StyleItemOperation({ property: 'width', target: this.get('target') }),
-            new StyleItemOperation({ property: 'height', target: this.get('target') })
+            new StyleItemOperation({ property: 'left', target: this.get('target') }),
+            new StyleItemOperation({ property: 'top', target: this.get('target') }),
+            new BringToFrontOperation({ target: this.get('target') }),
+            new StyleItemOperation({ property: 'position', target: this.get('target') })
         ]));
         EditorOperation.prototype.initialize.apply(this);
 
         this.on('change:target', this._targetChanged, this);
+
+        var position = this.getItem('position');
+        if (position.getValue() == 'static')
+            position.apply('relative');
     },
     complete: function() {
         this.get('items').each(function(item) {
@@ -25,7 +31,7 @@ var ResizeOperation = EditorOperation.extend({
         this.get('items').each(function(item) {
             item.set('isEditing', isEditing);
         });
-        this.get('target').set('editMode', EditorTargetMode.resize);
+        this.get('target').set('editMode', EditorTargetMode.move);
     },
     _discardChanges: function() {
         this.get('items').each(function(item) {

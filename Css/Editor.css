@@ -130,7 +130,8 @@ iframe.testPage {
     border: 1px solid #89B;
     background: #9AC;
 }
-.resizeGlassLayer {
+.resizeGlassLayer,
+.moveGlassLayer{
     position: absolute;
     z-index: 2147483002;
     background: transparent;
@@ -139,6 +140,7 @@ iframe.testPage {
     filter: alpha(opacity=1) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)" !important;
 }
+.moveGlassLayer { cursor: move; }
 .NE {
     cursor: ne-resize;
 }
@@ -626,22 +628,26 @@ table.jPicker {
     width: 100%!important;
 }
 
-/* Resize operation */
-.resizeOperation .helpHint {
+/* Resize and Move operations */
+.resizeOperation .helpHint,
+.moveOperation .helpHint{
     padding: 5px 5px 5px 20px;
     background: #FFF8DB no-repeat url("/Img/bulb.png") 6px 5px;
     margin: -8px;
     margin-bottom: 8px;
 }
-.resizeOperation .fieldSection {
+.resizeOperation .fieldSection,
+.moveOperation .fieldSection{
     margin-top: 8px;
 }
-.resizeOperation input[type=text] {
+.resizeOperation input[type=text],
+.moveOperation input[type=text]{
     border: 1px #CECECE solid;
     text-align: right;
     padding: 1px;
 }
-.resizeOperation input {
+.resizeOperation input,
+.moveOperation input{
     padding: 0px;
     margin: 0px;
 }

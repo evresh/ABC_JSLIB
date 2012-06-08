@@ -15,7 +15,7 @@ var EditorOperations = (function() {
         changeBackgroundImage: notImplementedYet,
         editBackgroundImage: notImplementedYet,
         rearrange: notImplementedYet,
-        move: notImplementedYet,
+        move: MoveOperation,
         resize: ResizeOperation
     }
 
