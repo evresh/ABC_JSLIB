@@ -54,8 +54,13 @@ var EditorView = Backbone.View.extend({
             TargetHighlighter.highlight($(e.target));
     },
     _iframeMousedown: function(e) {
-        if (this.model.get('target')) {
-            this.model.set('target', null);
+        var target = this.model.get('target');
+        if (target) {
+            var unsetTarget = target.get('editMode') == EditorTargetMode.none
+                || !$(e.target).closest(target.get('element')).length;
+
+            if (unsetTarget)
+                this.model.set('target', null);
         } else {
             this.model.set('target', new EditorTarget({
                 element: $(e.target),

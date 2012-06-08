@@ -7,7 +7,7 @@ var MoveView = OperationView.extend({
         this._views = [
             new InputStyleView({ model: this.model.getItem('left'), attrs: { size: '5' } }),
             new InputStyleView({ model: this.model.getItem('top'), attrs: { size: '5' } }),
-            new CheckboxStyleView({ model: this.model.getItem('z-index'), label: '&nbsp;Bring to Front' })
+            new CheckboxStyleView({ model: this.model.getItem('bringToFront'), label: '&nbsp;Bring to Front' })
         ];
 
         var _this = this;

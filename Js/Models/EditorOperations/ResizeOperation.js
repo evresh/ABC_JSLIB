@@ -2,7 +2,8 @@ var ResizeOperation = EditorOperation.extend({
     initialize: function() {
         this.set('items', new Backbone.Collection([
             new StyleItemOperation({ property: 'width', target: this.get('target') }),
-            new StyleItemOperation({ property: 'height', target: this.get('target') })
+            new StyleItemOperation({ property: 'height', target: this.get('target') }),
+            new BringToFrontOperation({ property: 'bringToFront', target: this.get('target') })
         ]));
         EditorOperation.prototype.initialize.apply(this);
 

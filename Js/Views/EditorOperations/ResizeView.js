@@ -4,21 +4,22 @@ var ResizeView = OperationView.extend({
         this._overlay.setContent($('#resizeOperation').html());
     },
     _reset: function() {
-        var textboxAttrs = { type: 'text', size: '5' };
+        this._views = [
+            new InputStyleView({ model: this.model.getItem('width'), attrs: { size: '5' } }),
+            new InputStyleView({ model: this.model.getItem('height'), attrs: { size: '5' } }),
+            new CheckboxStyleView({ model: this.model.getItem('bringToFront'), label: '&nbsp;Bring to Front' })
+        ];
 
         var _this = this;
-        this._views = {};
-        $.each({ width: textboxAttrs, height: textboxAttrs }, function(prop, attrs) {
-            var view = new InputStyleView({ model: _this.model.getItem(prop), attrs: attrs }).render();
-            _this._views[prop] = view;
-            view.$el.appendTo(_this.$('.' + prop + 'Field').empty());
+        $.each(this._views, function(i, view) {
+            view.render().$el.appendTo(_this.$('.' + view.model.get('property') + 'Field').empty());
         });
 
         this.model.get('target').on('updated', this._overlay.attachToTarget, this._overlay);
     },
     _overlayClosed: function() {
         OperationView.prototype._overlayClosed.apply(this);
-        $.each(this._views, function(prop, view) {
+        $.each(this._views, function(i, view) {
             view.remove();
         });
 

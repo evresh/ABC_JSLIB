@@ -3,8 +3,8 @@ var MoveOperation = EditorOperation.extend({
         this.set('items', new Backbone.Collection([
             new StyleItemOperation({ property: 'left', target: this.get('target') }),
             new StyleItemOperation({ property: 'top', target: this.get('target') }),
-            new BringToFrontOperation({ target: this.get('target') }),
-            new StyleItemOperation({ property: 'position', target: this.get('target') })
+            new StyleItemOperation({ property: 'position', target: this.get('target') }),
+            new BringToFrontOperation({ property: 'bringToFront', target: this.get('target'), excludePosition: true })
         ]));
         EditorOperation.prototype.initialize.apply(this);
 
