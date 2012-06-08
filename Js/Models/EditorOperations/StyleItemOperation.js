@@ -27,8 +27,11 @@ var StyleItemOperation = EditorOperation.extend({
     },
     _applyNewValue: function(newValue) {
         var property = this.get('property');
-        if (property)
-            this.getTargetElement().css(property, newValue);
+        if (property) {
+            var targetElement = this.getTargetElement();
+            if (targetElement.css(property) != newValue)
+                targetElement.css(property, newValue);
+        }
     },
     _propertyChanged: function() {
         var oldProperty = this.previous('property');

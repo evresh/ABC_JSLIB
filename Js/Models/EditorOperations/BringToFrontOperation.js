@@ -59,7 +59,8 @@ var BringToFrontOperation = StyleItemOperation.extend({
             if (positionOp && positionOp.getValue() == 'static')
                 positionOp.apply('relative');
         } else {
-            zIndexOp.apply(zIndexOp.get('initialState'));
+            var zIndexOpInitialState = zIndexOp.get('initialState');
+            zIndexOp.apply(zIndexOpInitialState == this._zIndex ? 'auto' : zIndexOpInitialState);
             if (positionOp)
                 positionOp.apply(positionOp.get('initialState'));
         }
