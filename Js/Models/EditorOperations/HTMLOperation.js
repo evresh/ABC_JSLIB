@@ -24,6 +24,9 @@ var HTMLOperation = EditorOperation.extend({
         var parentTag = parent.get(0).tagName;
         var cleanedHtml = this._stripWhite(html, parentTag);
 
+        if (!!html && !cleanedHtml)
+            return;
+
         if (this._stripWhite(previousState.outerHTML(), parentTag) == cleanedHtml) {
             this._discardChanges();
             this.set('changedState', this.get('previousState'));
