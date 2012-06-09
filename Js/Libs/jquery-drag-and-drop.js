@@ -57,7 +57,7 @@
                 f.removeData(this, c.datakey);
                 i.remove(this, "mousedown", c.init);
                 i.remove(this, "draginit", c.delegate);
-                c.textselect(true);
+                c.textselect(true, this.ownerDocument);
                 this.detachEvent && this.detachEvent("ondragstart", c.dontstart)
             }
         },
@@ -82,8 +82,8 @@
                     }
                     a.propagates = a.interactions.length;
                     a.drop !== false && h.drop && h.drop.handler(b, a);
-                    c.textselect(false);
-                    i.add($('.testPage')[0].contentDocument || $('.testPage')[0].contentWindow.document, "mousemove mouseup", c.handler, a);
+                    c.textselect(false, a.target.ownerDocument);
+                    i.add(a.target.ownerDocument, "mousemove mouseup", c.handler, a);
                     return false
                 }
             }
@@ -116,12 +116,12 @@
                     b.type = "mouseup"
                 }
             case "mouseup":
-                i.remove($('.testPage')[0].contentDocument || $('.testPage')[0].contentWindow.document, "mousemove mouseup", c.handler);
+                i.remove(a.target.ownerDocument, "mousemove mouseup", c.handler);
                 if (a.dragging) {
                     a.drop !== false && h.drop && h.drop.handler(b, a);
                     c.hijack(b, "dragend", a)
                 }
-                c.textselect(true);
+                c.textselect(true, a.target.ownerDocument);
                 if (a.click === false && a.dragging) {
                     jQuery.event.triggered = true;
                     setTimeout(function() {
@@ -218,8 +218,10 @@
                 return a && a.jquery ? f.makeArray(a) : a && a.length ? c.flatten(a) : a
             })
         },
-        textselect: function(b) {
-            f($('.testPage')[0].contentDocument || $('.testPage')[0].contentWindow.document)[b ? "unbind": "bind"]("selectstart", c.dontstart).attr("unselectable", b ? "off": "on").css("MozUserSelect", b ? "": "none")
+        textselect: function(b, doc) {
+            if (!doc && window.console)
+                console.log('drag-and-drop: textselect -> doc is not defined');
+            f(doc)[b ? "unbind": "bind"]("selectstart", c.dontstart).attr("unselectable", b ? "off": "on").css("MozUserSelect", b ? "": "none")
         },
         dontstart: function() {
             return false
