@@ -6,9 +6,7 @@ test('ResizeOperation tests', function() {
     var heightItem = operation.getItem('height');
 
     equal(widthItem.getValue(), '200px', 'Width item is correctly initialized');
-    equal(targetElement.css('width'), '200px', 'Width item is correctly initialized (targetElement state)');
     equal(heightItem.getValue(), '100px', 'Height item is correctly initialized');
-    equal(targetElement.css('height'), '100px', 'Height item is correctly initialized (targetElement state)');
 
     operation.edit();
     widthItem.apply('400px');

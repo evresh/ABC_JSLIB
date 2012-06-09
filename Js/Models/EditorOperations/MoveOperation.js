@@ -9,10 +9,6 @@ var MoveOperation = EditorOperation.extend({
         EditorOperation.prototype.initialize.apply(this);
 
         this.on('change:target', this._targetChanged, this);
-
-        var position = this.getItem('position');
-        if (position.getValue() == 'static')
-            position.apply('relative');
     },
     complete: function() {
         this.get('items').each(function(item) {
@@ -28,6 +24,10 @@ var MoveOperation = EditorOperation.extend({
     },
     edit: function() {
         EditorOperation.prototype.edit.apply(this);
+
+        var position = this.getItem('position');
+        if (position.getValue() == 'static')
+            position.apply('relative');
         this.get('items').each(function(item) {
             item.edit();
         });
