@@ -73,6 +73,10 @@ var EditorTargetView = Backbone.View.extend({
             .find('.resizeGlassLayer').remove().end()
             .find('.moveGlassLayer').remove();
 
+        if (this._moveOnKeydownHandler) {
+            $('body').off('keydown', this._moveOnKeydownHandler);
+            this._moveOnKeydownHandler = null;
+        }
 
         TargetHighlighter.removeHighlight(this.model.get('element'));
     },
@@ -128,6 +132,31 @@ var EditorTargetView = Backbone.View.extend({
             }).drop(function() {
                 updateOriginalValues();
             });
+
+            this._moveOnKeydownHandler = function(e) {
+                var dx = 0;
+                var dy = 0;
+                var shiftMoveAmount = 20;
+
+                if (e.target.tagName == 'INPUT')
+                    return;
+
+                if (e.which == 37)
+                    dx = e.shiftKey ? -shiftMoveAmount: -1;
+                else if (e.which == 39)
+                    dx = e.shiftKey ? shiftMoveAmount: 1;
+                if (e.which == 38)
+                    dy = e.shiftKey ? -shiftMoveAmount: -1;
+                else if (e.which == 40)
+                    dy = e.shiftKey ? shiftMoveAmount: 1;
+
+                original_top = (parseInt(targetElement.css('top')) || 0) + dy;
+                original_left = (parseInt(targetElement.css('left')) || 0) + dx;
+
+                targetElement.css('top', original_top).css('left', original_left);
+                _this.model.updated();
+            }
+            $('body').on('keydown', this._moveOnKeydownHandler);
         }
     },
     _updateCover: function(cover) {
