@@ -49,4 +49,21 @@ test('Style state synchronization tests', function() {
 
     operation1.remove();
     equal(targetElement.css('width'), '100px', 'After all operations are removed targetElement has it initial value');
+
+    var operation4 = new StyleItemOperation({
+        property: "width",
+        target: new EditorTarget({ element: targetElement })
+    });
+    operation4.apply('200px');
+    operation4.complete();
+    var operation5 = new StyleItemOperation({
+        property: "width",
+        target: new EditorTarget({ element: targetElement })
+    });
+    operation5.apply('700px');
+    operation5.complete();
+    operation5.remove();
+    operation4.cancel();
+    equal(operation4.getValue(), '200px', 'previousState was handled correctly');
+    equal(targetElement.css('width'), '200px', 'previousState was handled correctly (targetElement state)');
 });

@@ -64,10 +64,10 @@ var StyleItemOperation = EditorOperation.extend({
         if (previousProperty && previousProperty != this.get('property'))
             StyleOperationStateSynchronizer.remove(this, previousProperty);
 
-        StyleOperationStateSynchronizer.update(this);
-
         this.set('previousProperty', this.get('property'));
         EditorOperation.prototype.complete.apply(this);
+
+        StyleOperationStateSynchronizer.update(this);
     },
     remove: function() {
         EditorOperation.prototype.remove.apply(this);
