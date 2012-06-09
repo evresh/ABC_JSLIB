@@ -6,23 +6,23 @@ var EditorMenu = Backbone.Model.extend({
     },
     initialize: function() {
         this.set('items', new Backbone.Collection([
-            new SelectParentMenuItem({ name: 'Select Parent' })
-            ,new OperationMenuItem({ name: 'Edit HTML', type: 'editHTML' })
-            ,new EditOperationMenuItem({ name: 'Edit' })
-            ,new OperationMenuItem({ name: 'Remove', type: 'remove' })
-            ,new VisibilityOperationMenuItem()
-            ,new OperationMenuItem({ name: 'Change CSS', type: 'changeCSS' })
-            ,new ChangeTextOperationMenuItem({ name: 'Change Text' })
-            /*,new OperationMenuItem({ name: 'Change Image', type: 'changeImage' })
-            ,new OperationMenuItem({ name: 'Edit Image', type: 'editImage' })
-            ,new OperationMenuItem({ name: 'Change Background Image', type: 'changeBackgroundImage' })
-            ,new OperationMenuItem({ name: 'Edit Background Image', type: 'editBackgroundImage' })
-            ,new OperationMenuItem({ name: 'Rearrange', type: 'rearrange' })*/
-            ,new OperationMenuItem({ name: 'Move', type: 'move' })
-            ,new OperationMenuItem({ name: 'Resize', type: 'resize' })
-            //,new OperationMenuItem({ name: 'Change URL', type: EditorOperation })
-            //,new OperationMenuItem({ name: 'Track Clicks', type: EditorOperation })
-            //,new OperationMenuItem({ name: 'Track Form Submits', type: EditorOperation })
+            new EditorMenuItem({ name: 'Select Parent', type: 'selectParent' })
+            ,new EditorMenuItem({ name: 'Edit HTML', type: 'editHTML' })
+            ,new EditorMenuItem({ name: 'Edit', type: 'edit' })
+            ,new EditorMenuItem({ name: 'Remove', type: 'remove' })
+            ,new EditorMenuItem({ type: 'visibility' })
+            ,new EditorMenuItem({ name: 'Change CSS', type: 'changeCSS' })
+            ,new EditorMenuItem({ name: 'Change Text', type: 'changeText' })
+            ,new EditorMenuItem({ name: 'Change Image', type: 'changeImage' })
+            /*,new EditorMenuItem({ name: 'Edit Image', type: 'editImage' })
+            ,new EditorMenuItem({ name: 'Change Background Image', type: 'changeBackgroundImage' })
+            ,new EditorMenuItem({ name: 'Edit Background Image', type: 'editBackgroundImage' })
+            ,new EditorMenuItem({ name: 'Rearrange', type: 'rearrange' })*/
+            ,new EditorMenuItem({ name: 'Move', type: 'move' })
+            ,new EditorMenuItem({ name: 'Resize', type: 'resize' })
+            //,new EditorMenuItem({ name: 'Change URL', type: EditorOperation })
+            //,new EditorMenuItem({ name: 'Track Clicks', type: EditorOperation })
+            //,new EditorMenuItem({ name: 'Track Form Submits', type: EditorOperation })
         ]));
 
         this.on('change:target', this._updateItems, this);

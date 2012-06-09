@@ -1,0 +1,3 @@
+var ChangeImageOperation = EditorOperation.extend({
+
+});

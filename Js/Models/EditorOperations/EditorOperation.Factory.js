@@ -6,7 +6,7 @@ EditorOperation.createMain = function(type, target) {
         visibility: VisibilityOperation,
         changeCSS: ChangeCSSOperation,
         changeText: ChangeTextOperation,
-        //changeImage: notImplementedYet,
+        changeImage: ChangeImageOperation,
         //editImage: notImplementedYet,
         //changeBackgroundImage: notImplementedYet,
         //editBackgroundImage: notImplementedYet,

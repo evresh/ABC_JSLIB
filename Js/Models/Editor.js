@@ -35,17 +35,18 @@ var Editor = Backbone.Model.extend({
         if (!this.get('menu').get('isVisible')) {
             var performedItem = this.get('menu').get('performedItem');
             if (performedItem) {
-                if (performedItem instanceof SelectParentMenuItem) {
+                var type = performedItem.get('type');
+                if (type == 'selectParent') {
                     this.set('target', new EditorTarget({ element: this.get('target').get('element').parent() }));
-                } else if (performedItem instanceof OperationMenuItem) {
+                } else {
                     var operation = this.get('completedOperations').find(_.bind(function(o) {
-                        return o.get('type') == performedItem.get('type')
+                        return o.get('type') == type
                             && o.get('target').get('element')[0] == this.get('target').get('element')[0];
                     }, this));
                     if (operation)
                         operation.set('target', this.get('target')); // update target object, target element remains the same
                     else
-                        operation = EditorOperation.createMain(performedItem.get('type'), this.get('target'));
+                        operation = EditorOperation.createMain(type, this.get('target'));
                     this._setCurrentOperation(operation);
                 }
             } else {

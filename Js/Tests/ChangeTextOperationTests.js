@@ -1,5 +1,5 @@
 test('ChangeTextOperation tests', function() {
-    var menuItem = new ChangeTextOperationMenuItem();
+    var menuItem = new EditorMenuItem({ type: 'changeText' });
 
     var targetElement = $('<div>').html('<h1>Test</h1>');
     menuItem.set('targetElement', targetElement);
