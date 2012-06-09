@@ -80,14 +80,12 @@ var EditorOperation = Backbone.Model.extend({
         return false;
     },
     switchTo: function(newType) {
-        if (EditorOperations.isValidTypeForOperation(this, newType)) {
-            var newOperation = EditorOperations.create(newType, this.get('target'));
+        var newOperation = EditorOperation.createMain(newType, this.get('target'));
+        if (newOperation) {
             newOperation.set('initialState', this._getPreviousState());
             newOperation.set('changedState', this.get('changedState'));
             this.set('switchedTo', newOperation);
             this.cancel(true);
-        } else {
-            Debug.trace('EditorOperationAction.switchTo() -> invalid operation type');
         }
     },
     getValue: function() {
