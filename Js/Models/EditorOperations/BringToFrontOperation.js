@@ -1,4 +1,4 @@
-var BringToFrontOperation = StyleItemOperation.extend({
+var BringToFrontOperation = EditorOperation.extend({
     defaults: {
         excludePosition: false
     },
@@ -27,12 +27,17 @@ var BringToFrontOperation = StyleItemOperation.extend({
             return item.get('property') == property;
         });
     },
-    _onEditing: function() {
-        var isEditing = this.get('isEditing');
+    edit: function() {
+        EditorOperation.prototype.edit.apply(this);
         this.get('items').each(function(item) {
-            item.set('isEditing', isEditing);
+            item.edit();
         });
-        this.get('target').set('editMode', EditorTargetMode.move);
+    },
+    stopEdit: function() {
+        EditorOperation.prototype.stopEdit.apply(this);
+        this.get('items').each(function(item) {
+            item.stopEdit();
+        });
     },
     _discardChanges: function() {
         this.get('items').each(function(item) {

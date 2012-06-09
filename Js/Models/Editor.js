@@ -29,7 +29,7 @@ var Editor = Backbone.Model.extend({
         this.set('currentOperation', operation);
         operation.on('change:isEditing', this._onOperationEditing, this);
         operation.set('lastAction', EditorOperationAction.none);
-        operation.set('isEditing', true);
+        operation.edit();
     },
     _menuVisibilityChanged: function() {
         if (!this.get('menu').get('isVisible')) {

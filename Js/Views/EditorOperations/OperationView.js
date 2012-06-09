@@ -59,7 +59,7 @@ var OperationView = Backbone.View.extend({
     _overlayClosed: function() {
         if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
-        this.model.set('isEditing', false);
+        this.model.stopEdit();
         if (this.maximizable)
             this.maximized(false);
     },

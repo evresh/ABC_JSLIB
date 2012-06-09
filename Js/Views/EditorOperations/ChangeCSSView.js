@@ -57,6 +57,6 @@ var ChangeCSSView = OperationView.extend({
         var model = this.model.createCustomItem();
         new CustomStyleItemView({ model: model })
             .render().$el.insertBefore(this.$('.addCustomCss'));
-        model.set('isEditing', true);
+        model.edit();
     }
 });

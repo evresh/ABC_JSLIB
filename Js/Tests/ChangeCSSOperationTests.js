@@ -1,7 +1,7 @@
 test('ChangeCSSOperation tests', function() {
     var targetElement = $('<div>').hide().css('text-decoration', 'underline').appendTo('body');
     var changeCSS = new ChangeCSSOperation({ target: new EditorTarget({ element: targetElement }) });
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
 
     function getTempItems(property) { return changeCSS.get('tempItems').select(function(item) { return item.get('property') == (property || 'text-decoration'); }); }
     function getItems(property) { return changeCSS.get('items').select(function(item) { return item.get('property') == (property || 'text-decoration'); }); }
@@ -15,7 +15,7 @@ test('ChangeCSSOperation tests', function() {
     equal(item.getValue(), 'underline', 'Item was completed, but ChangeCSS was cancelled');
     equal(targetElement.css('text-decoration'), 'underline', 'Item was completed, but ChangeCSS was cancelled (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     item = getTempItems()[0];
 
     item.apply('overline');
@@ -24,7 +24,7 @@ test('ChangeCSSOperation tests', function() {
     equal(getItems()[0].getValue(), 'overline', 'Item was completed and ChangeCSS was completed');
     equal(targetElement.css('text-decoration'), 'overline', 'Item was completed and ChangeCSS was completed (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     item = getTempItems()[0];
     item.apply('line-through');
     item.complete();
@@ -32,7 +32,7 @@ test('ChangeCSSOperation tests', function() {
     equal(getItems()[0].getValue(), 'overline', 'Item was completed, but ChangeCSS was cancelled, in the previous step it was completed');
     equal(targetElement.css('text-decoration'), 'overline', 'Item was completed, but ChangeCSS was cancelled, in the previous step it was completed (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = changeCSS.createCustomItem();
     ok(customItem.getTargetElement()[0] == targetElement[0] && customItem.isCustom(), 'Custom item initialization');
 
@@ -43,7 +43,7 @@ test('ChangeCSSOperation tests', function() {
     equal(getItems('border-radius')[0], null, 'Custom item was added, but ChangeCSS was cancelled');
     equal(targetElement.css('border-radius'), '0px', 'Custom item was added, but ChangeCSS was cancelled (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = changeCSS.createCustomItem();
     customItem.set('property', 'border-radius');
     customItem.apply('3px');
@@ -51,7 +51,7 @@ test('ChangeCSSOperation tests', function() {
     changeCSS.complete();
     equal(getItems('border-radius')[0], customItem, 'Custom item was added and ChangeCSS was completed');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = getTempItems('border-radius')[0];
     customItem.apply('5px');
     customItem.complete();
@@ -59,21 +59,21 @@ test('ChangeCSSOperation tests', function() {
     equal(getItems('border-radius')[0].getValue(), '3px', 'Custom item value was not saved after ChangeCSS was cancelled');
     equal(targetElement.css('border-radius'), '3px', 'Custom item value was not saved after ChangeCSS was cancelled (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = getTempItems('border-radius')[0];
     customItem.remove();
     changeCSS.cancel();
     ok(getItems('border-radius').length == 1, 'Remove previously completed custom item and cancel ChangeCSS');
     equal(targetElement.css('border-radius'), '3px', 'Remove previously completed custom item and cancel ChangeCSS (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = getTempItems('border-radius')[0];
     customItem.remove();
     changeCSS.complete();
     ok(getItems('border-radius').length == 0, 'Remove previously completed custom item and complete ChangeCSS');
     equal(targetElement.css('border-radius'), '0px', 'Remove previously completed custom item and complete ChangeCSS (targetElement state)');
 
-    changeCSS.set('isEditing', true);
+    changeCSS.edit();
     customItem = changeCSS.createCustomItem();
     customItem.set('property', 'text-decoration');
     customItem.apply('line-through');

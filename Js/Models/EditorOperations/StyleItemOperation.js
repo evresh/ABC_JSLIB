@@ -7,12 +7,13 @@ var StyleItemOperation = EditorOperation.extend({
         var property = this.get('property');
         return property ? this.getTargetElement().css(property) : null;
     },
-    _onEditing: function() {
-        EditorOperation.prototype._onEditing.apply(this);
-        if (this.get('isEditing'))
-            this.get('target').on('updated', this._targetUpdated, this);
-        else
-            this.get('target').off('updated', this._targetUpdated, this);
+    edit: function() {
+        EditorOperation.prototype.edit.apply(this);
+        this.get('target').on('updated', this._targetUpdated, this);
+    },
+    stopEdit: function() {
+        EditorOperation.prototype.stopEdit.apply(this);
+        this.get('target').off('updated', this._targetUpdated, this);
     },
     _applyChanges: function(value) {
         this._applyNewValue(value);

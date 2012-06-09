@@ -2,12 +2,11 @@ var RemoveOperation = EditorOperation.extend({
     _getInitialState: function() {
         return this.getTargetElement().css('display');
     },
-    _onEditing: function() {
-        if (this.get('isEditing')) {
-            this.apply();
-            this.complete();
-            this.set('isEditing', false);
-        }
+    edit: function() {
+        EditorOperation.prototype.edit.apply(this);
+        this.apply();
+        this.complete();
+        this.stopEdit();
     },
     _applyChanges: function() {
         this.getTargetElement().hide();

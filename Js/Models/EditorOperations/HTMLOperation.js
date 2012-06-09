@@ -6,7 +6,8 @@ var HTMLOperation = EditorOperation.extend({
     _getInitialState: function() {
         return this.getTargetElement();
     },
-    _beforeEdit: function() {
+    edit: function() {
+        EditorOperation.prototype.edit.apply(this);
         if (this.get('changedState')) {
             var state = this.get('changedState');
             state.each(function() {

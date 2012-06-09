@@ -382,27 +382,28 @@ var ChangeCSSOperation = Backbone.Model.extend({
         ));
         this.set('tempItems', new Backbone.Collection());
 
-        this.on('change:isEditing', this._onEditing, this);
         this.get('tempItems')
             .on('change:isEditing', this._onItemEditing, this)
             .on('action', this._onItemAction, this);
 
         this.on('change:target', this._targetChanged, this);
     },
-    _onEditing: function() {
-        if (this.get('isEditing')) {
-            var tempItems = this.get('tempItems');
-            tempItems.reset();
-            this.get('items').each(_.bind(function(item) {
-                tempItems.add(this._createTempItem(item));
-            }, this))
-        }
+    edit: function() {
+        var tempItems = this.get('tempItems');
+        tempItems.reset();
+        this.get('items').each(_.bind(function(item) {
+            tempItems.add(this._createTempItem(item));
+        }, this))
+        this.set('isEditing', true);
+    },
+    stopEdit: function() {
+        this.set('isEditing', false);
     },
     _onItemEditing: function(editItem) {
         if (editItem.get('isEditing')) {
             this.get('tempItems').each(function(item) {
                 if (item != editItem)
-                    item.set('isEditing', false);
+                    item.stopEdit();
             });
         }
     },
@@ -441,7 +442,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     resetEdit: function() {
         this.get('tempItems').each(function(item) {
-            item.set('isEditing', false);
+            item.stopEdit();
         });
     },
     complete: function() {
@@ -467,7 +468,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('target').updated();
 
         this.set('lastAction', EditorOperationAction.complete);
-        this.set('isEditing', false);
+        this.stopEdit();
     },
     cancel: function() {
         this.get('tempItems').each(function(item) {
@@ -477,7 +478,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('target').updated();
 
         this.set('lastAction', EditorOperationAction.cancel);
-        this.set('isEditing', false);
+        this.stopEdit();
     },
     remove: function() {
         this.get('items').each(function(item) { item.remove(); });
@@ -485,7 +486,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
         this.get('target').updated();
 
         this.set('lastAction', EditorOperationAction.remove);
-        this.set('isEditing', false);
+        this.stopEdit();
     },
     isOverriding: function(operation) {
         return false;

@@ -19,7 +19,6 @@ var EditorOperation = Backbone.Model.extend({
     initialize: function() {
         if (!this.get('initialState'))
             this.set('initialState', this._getInitialState());
-        this.on('change:isEditing', this._onEditing, this);
         this.on('change:changedState', this._stateChanged, this);
     },
     _getInitialState: function() {
@@ -27,13 +26,6 @@ var EditorOperation = Backbone.Model.extend({
     },
     _getPreviousState: function() {
         return this.get('previousState') || this.get('initialState');
-    },
-    _beforeEdit: function() {},
-    _onEditing: function() {
-        if (this.get('isEditing')) {
-            this._beforeEdit();
-            this.unset('switchedTo');
-        }
     },
     _applyChanges: function(data) {
         alert('Not implemented yet');
@@ -62,7 +54,7 @@ var EditorOperation = Backbone.Model.extend({
         this.set('isNew', false);
         this.set('previousState', this.get('changedState'));
         this.set('lastAction', EditorOperationAction.complete);
-        this.set('isEditing', false);
+        this.stopEdit();
 
         this.trigger('action', this);
     },
@@ -70,7 +62,7 @@ var EditorOperation = Backbone.Model.extend({
         this._discardChanges(skipDOMChange);
         this.set('changedState', this.get('previousState'));
         this.set('lastAction', EditorOperationAction.cancel);
-        this.set('isEditing', false);
+        this.stopEdit();
 
         this.trigger('action', this);
     },
@@ -79,7 +71,7 @@ var EditorOperation = Backbone.Model.extend({
         this.unset('changedState');
         this.unset('previousState');
         this.set('lastAction', EditorOperationAction.remove);
-        this.set('isEditing', false);
+        this.stopEdit();
         this.set('isNew', true);
 
         this.trigger('action', this);
@@ -100,5 +92,12 @@ var EditorOperation = Backbone.Model.extend({
     },
     getValue: function() {
         return this.get('changedState') || this._getPreviousState();
+    },
+    edit: function() {
+        this.set('isEditing', true);
+        this.unset('switchedTo');
+    },
+    stopEdit: function() {
+        this.set('isEditing', false);
     }
 });

@@ -22,7 +22,7 @@ var StyleItemView = Backbone.View.extend({
         return this;
     },
     _edit: function() {
-        this.model.set('isEditing', true);
+        this.model.edit();
     },
     _onEditing: function() {
         var isEditing = this.model.get('isEditing');
