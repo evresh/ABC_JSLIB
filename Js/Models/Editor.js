@@ -45,7 +45,7 @@ var Editor = Backbone.Model.extend({
                     if (operation)
                         operation.set('target', this.get('target')); // update target object, target element remains the same
                     else
-                        operation = EditorOperations.create(performedItem.get('type'), this.get('target'));
+                        operation = EditorOperation.createMain(performedItem.get('type'), this.get('target'));
                     this._setCurrentOperation(operation);
                 }
             } else {
