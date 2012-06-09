@@ -313,7 +313,8 @@ ul.editorMenu {
 /* Edit operation */
 .editorOverlay .editContainer,
 .editorOverlay #tiny_tbl,
-.editorOverlay #tiny_ifr {
+.editorOverlay #tiny_ifr,
+.editorOverlay #editOp {
     width: 500px;
     height: 244px;
 }
