@@ -36,42 +36,42 @@ test('ChangeCSSOperation tests', function() {
     customItem = changeCSS.createCustomItem();
     ok(customItem.getTargetElement()[0] == targetElement[0] && customItem.isCustom(), 'Custom item initialization');
 
-    customItem.set('property', 'border-radius');
+    customItem.set('property', 'text-indent');
     customItem.apply('3px');
     customItem.complete();
     changeCSS.cancel();
-    equal(getItems('border-radius')[0], null, 'Custom item was added, but ChangeCSS was cancelled');
-    equal(targetElement.css('border-radius'), '0px', 'Custom item was added, but ChangeCSS was cancelled (targetElement state)');
+    equal(getItems('text-indent')[0], null, 'Custom item was added, but ChangeCSS was cancelled');
+    equal(targetElement.css('text-indent'), '0px', 'Custom item was added, but ChangeCSS was cancelled (targetElement state)');
 
     changeCSS.edit();
     customItem = changeCSS.createCustomItem();
-    customItem.set('property', 'border-radius');
+    customItem.set('property', 'text-indent');
     customItem.apply('3px');
     customItem.complete();
     changeCSS.complete();
-    equal(getItems('border-radius')[0], customItem, 'Custom item was added and ChangeCSS was completed');
+    equal(getItems('text-indent')[0], customItem, 'Custom item was added and ChangeCSS was completed');
 
     changeCSS.edit();
-    customItem = getTempItems('border-radius')[0];
+    customItem = getTempItems('text-indent')[0];
     customItem.apply('5px');
     customItem.complete();
     changeCSS.cancel();
-    equal(getItems('border-radius')[0].getValue(), '3px', 'Custom item value was not saved after ChangeCSS was cancelled');
-    equal(targetElement.css('border-radius'), '3px', 'Custom item value was not saved after ChangeCSS was cancelled (targetElement state)');
+    equal(getItems('text-indent')[0].getValue(), '3px', 'Custom item value was not saved after ChangeCSS was cancelled');
+    equal(targetElement.css('text-indent'), '3px', 'Custom item value was not saved after ChangeCSS was cancelled (targetElement state)');
 
     changeCSS.edit();
-    customItem = getTempItems('border-radius')[0];
+    customItem = getTempItems('text-indent')[0];
     customItem.remove();
     changeCSS.cancel();
-    ok(getItems('border-radius').length == 1, 'Remove previously completed custom item and cancel ChangeCSS');
-    equal(targetElement.css('border-radius'), '3px', 'Remove previously completed custom item and cancel ChangeCSS (targetElement state)');
+    ok(getItems('text-indent').length == 1, 'Remove previously completed custom item and cancel ChangeCSS');
+    equal(targetElement.css('text-indent'), '3px', 'Remove previously completed custom item and cancel ChangeCSS (targetElement state)');
 
     changeCSS.edit();
-    customItem = getTempItems('border-radius')[0];
+    customItem = getTempItems('text-indent')[0];
     customItem.remove();
     changeCSS.complete();
-    ok(getItems('border-radius').length == 0, 'Remove previously completed custom item and complete ChangeCSS');
-    equal(targetElement.css('border-radius'), '0px', 'Remove previously completed custom item and complete ChangeCSS (targetElement state)');
+    ok(getItems('text-indent').length == 0, 'Remove previously completed custom item and complete ChangeCSS');
+    equal(targetElement.css('text-indent'), '0px', 'Remove previously completed custom item and complete ChangeCSS (targetElement state)');
 
     changeCSS.edit();
     customItem = changeCSS.createCustomItem();
