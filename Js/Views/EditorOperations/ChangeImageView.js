@@ -5,7 +5,7 @@ var ChangeImageView = OperationView.extend({
     },
     _reset: function() {
         this._views = [
-            new InputStyleView({ model: this.model.getItem('src') }),
+            new InputStyleView({ model: this.model.getItem('src'), disableImmediateChange: true }),
             new InputStyleView({ model: this.model.getItem('title') }),
             new InputStyleView({ model: this.model.getItem('alt') }),
             new InputStyleView({ model: this.model.getItem('width'), attrs: { size: '4' } }),

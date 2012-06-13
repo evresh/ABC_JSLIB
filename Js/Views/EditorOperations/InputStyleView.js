@@ -1,7 +1,7 @@
 var InputStyleView = Backbone.View.extend({
     tagName: 'input',
-    events: {
-        'change': '_changed'
+    events: function() {
+        return this.options.disableImmediateChange ? { 'change': '_changed' } : { 'keyup': '_changed' };
     },
     initialize: function() {
         this.model.on('change:changedState', this.render, this);
