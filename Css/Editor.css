@@ -652,3 +652,43 @@ table.jPicker {
     padding: 0px;
     margin: 0px;
 }
+
+/* Change Image operation */
+.changeImageOperation .overlayContentPaddings {
+    min-width: 630px;
+}
+.changeImageOperation .overlayContentPaddings > .leftAligned {
+    margin-right: 8px;
+}
+.changeImageOperation .uploadImage {
+    height: 27px;
+}
+.changeImageOperation .fieldSection .fieldTitle {
+    display: inline-block;
+}
+.changeImageOperation .fieldSection input {
+    border: 1px #CECECE solid;
+    border-radius: 0;
+    outline: none;
+}
+.changeImageOperation .leftAligned .fieldSection .fieldTitle {
+    width: 90px;
+}
+.changeImageOperation .specifyURL input {
+    width: 294px;
+}
+.changeImageOperation .previewContainer {
+    text-align: center;
+    width: 210px;
+}
+.changeImageOperation img {
+    max-width: 200px;
+    max-height: 150px;
+    border: 0px;
+}
+.changeImageOperation .rightAligned .fieldSection {
+    margin: 2px 0;
+}
+.changeImageOperation .rightAligned .fieldSection .fieldTitle {
+    width: 50px;
+}

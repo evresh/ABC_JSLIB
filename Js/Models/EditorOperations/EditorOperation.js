@@ -97,5 +97,8 @@ var EditorOperation = Backbone.Model.extend({
     },
     stopEdit: function() {
         this.set('isEditing', false);
+    },
+    isChanged: function() {
+        return !_.isUndefined(this.get('changedState')) && !_.isNull(this.get('changedState'));
     }
 });

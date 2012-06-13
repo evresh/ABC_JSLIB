@@ -20,7 +20,7 @@ var StyleItemOperation = EditorOperation.extend({
         return value;
     },
     _discardChanges: function() {
-        if (!_.isUndefined(this.get('changedState')) && !_.isNull(this.get('changedState')))
+        if (this.isChanged())
             this._applyNewValue(this._getPreviousState());
     },
     _deleteChanges: function() {
@@ -52,9 +52,9 @@ var StyleItemOperation = EditorOperation.extend({
             $.extend(this.attributes, state);
             this._applyChanges(this.getValue());
         } else {
-            this.apply(state);
             this.set('initialState', state);
             this.set('previousState', null);
+            this.apply(state);
         }
 
         this.trigger('stateResetted');
@@ -74,19 +74,20 @@ var StyleItemOperation = EditorOperation.extend({
 
         StyleOperationStateSynchronizer.remove(this);
     },
-    matchToTargetIfNew: function() {
+    matchToTargetIfNew: function(change) {
         if (this.get('isNew')) {
-            this.resetState({
-                initialState: this._getInitialState(),
-                changedState: null
-            });
+            if (change) {
+                this.apply(this.getTargetElement().css(this.get('property')));
+            } else {
+                this.resetState({
+                    initialState: this._getInitialState(),
+                    changedState: null
+                });
+            }
         }
     },
     _targetUpdated: function(sender) {
-        if (sender != this) {
-            var valueFromElement = this.getTargetElement().css(this.get('property'));
-            if (this.getValue() != valueFromElement)
-                this.resetState({ changedState: valueFromElement });
-        }
+        if (sender != this)
+            this.apply(this.getTargetElement().css(this.get('property')));
     }
 })
