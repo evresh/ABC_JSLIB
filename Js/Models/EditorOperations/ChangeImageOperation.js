@@ -10,7 +10,6 @@ var ChangeImageOperation = OperationGroup.extend({
         ]);
     },
     _imageLoaded: function() {
-        this.getItem('width').matchToTargetIfNew(true);
-        this.getItem('height').matchToTargetIfNew(true);
+        this.get('target').updated(this);
     }
 });

@@ -10,7 +10,7 @@ var AttributeItemOperation = EditorOperation.extend({
         var targetElement = this.getTargetElement();
         var property = this.get('property');
         if (targetElement.attr(property) != newValue)
-            targetElement.attr(property, newValue);
+            targetElement.removeAttr(property).attr(property, newValue);
     },
     _discardChanges: function() {
         if (this.isChanged())

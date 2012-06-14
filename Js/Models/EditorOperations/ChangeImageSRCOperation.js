@@ -9,7 +9,9 @@ var ChangeImageSRCOperation = AttributeItemOperation.extend({
         if (src) {
             var _this = this;
             var img = new Image();
-            img.onload = function() { _this.trigger('imageLoaded'); }
+            img.onload = function() {
+                _this.trigger('imageLoaded');
+            };
             img.src = src;
         }
 

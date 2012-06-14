@@ -74,16 +74,12 @@ var StyleItemOperation = EditorOperation.extend({
 
         StyleOperationStateSynchronizer.remove(this);
     },
-    matchToTargetIfNew: function(change) {
+    matchToTargetIfNew: function() {
         if (this.get('isNew')) {
-            if (change) {
-                this.apply(this.getTargetElement().css(this.get('property')));
-            } else {
-                this.resetState({
-                    initialState: this._getInitialState(),
-                    changedState: null
-                });
-            }
+            this.resetState({
+                initialState: this._getInitialState(),
+                changedState: null
+            });
         }
     },
     _targetUpdated: function(sender) {
