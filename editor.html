@@ -167,11 +167,11 @@
     <script id="changeImageOperation" type="text/template">
         <div class="overlayContentPaddings">
             <div class="leftAligned">
-                <div class="fieldSection uploadImage">
+                <div class="fieldSection uploadImage" style="display:none">
                     <span class="fieldTitle">Upload Image:</span>
                 </div>
                 <div class="fieldSection specifyURL">
-                    <span class="fieldTitle">or specify URL:</span>
+                    <span class="fieldTitle">Specify URL:</span>
                     <span class="srcField"></span>
                 </div>
             </div>
@@ -189,6 +189,24 @@
                     <span class="fieldTitle">Size: </span>
                     <span class="widthField"></span> X <span class="heightField"></span>
                 </div>
+            </div>
+            <div class="clearFloat"></div>
+        </div>
+    </script>
+
+    <script id="changeBackgroundImageOperation" type="text/template">
+        <div class="overlayContentPaddings">
+            <div class="leftAligned">
+                <div class="fieldSection uploadImage" style="display:none">
+                    <span class="fieldTitle">Upload Image:</span>
+                </div>
+                <div class="fieldSection specifyURL">
+                    <span class="fieldTitle">Specify URL:</span>
+                    <span class="srcField"></span>
+                </div>
+            </div>
+            <div class="rightAligned">
+                <div class="previewContainer"><img /></div>
             </div>
             <div class="clearFloat"></div>
         </div>
@@ -225,8 +243,8 @@
     <script type="text/javascript" src="Js/Models/EditorOperations/BringToFrontOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/MoveOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/AttributeItemOperation.js"></script>
-    <script type="text/javascript" src="Js/Models/EditorOperations/ChangeImageSRCOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/ChangeImageOperation.js"></script>
+    <script type="text/javascript" src="Js/Models/EditorOperations/ChangeBackgroundImageOperation.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/EditorOperation.Factory.js"></script>
     <script type="text/javascript" src="Js/Models/EditorOperations/StyleOperationStateSynchronizer.js"></script>
 
@@ -249,6 +267,7 @@
     <script type="text/javascript" src="Js/Views/EditorOperations/InputStyleView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/CheckboxStyleView.js"></script>
     <script type="text/javascript" src="Js/Views/EditorOperations/ChangeImageView.js"></script>
+    <script type="text/javascript" src="Js/Views/EditorOperations/ChangeBackgroundImageView.js"></script>
 
     <script type="text/javascript" src="Js/Tools/Debug.js"></script>
     <script type="text/javascript" src="Js/Tools/Tools.js"></script>

@@ -17,8 +17,8 @@ var ChangeImageView = OperationView.extend({
             view.render().$el.appendTo(_this.$('.' + view.model.get('property') + 'Field').empty());
         });
 
-        this.model.getItem('src').on('imageLoaded', this._imageLoaded, this);
-        this._imageLoaded();
+        this.model.getItem('src').on('change:changedState', this._srcChanged, this);
+        this._srcChanged();
     },
     _overlayClosed: function() {
         OperationView.prototype._overlayClosed.apply(this);
@@ -26,9 +26,9 @@ var ChangeImageView = OperationView.extend({
             view.remove();
         });
 
-        this.model.getItem('src').on('imageLoaded', this._imageLoaded, this);
+        this.model.getItem('src').on('change:changedState', this._srcChanged, this);
     },
-    _imageLoaded: function() {
+    _srcChanged: function() {
         this.$('.previewContainer img').attr('src', this.model.getItem('src').getValue());
     }
 });

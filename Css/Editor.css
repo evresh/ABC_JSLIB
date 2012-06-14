@@ -653,20 +653,25 @@ table.jPicker {
     margin: 0px;
 }
 
-/* Change Image operation */
-.changeImageOperation .overlayContentPaddings {
+/* Change Image & Change Background Image operations */
+.changeImageOperation .overlayContentPaddings,
+.changeBackgroundImageOperation .overlayContentPaddings{
     min-width: 630px;
 }
-.changeImageOperation .overlayContentPaddings > .leftAligned {
+.changeImageOperation .overlayContentPaddings > .leftAligned,
+.changeBackgroundImageOperation .overlayContentPaddings > .leftAligned{
     margin-right: 8px;
 }
-.changeImageOperation .uploadImage {
+.changeImageOperation .uploadImage,
+.changeBackgroundImageOperation .uploadImage{
     height: 27px;
 }
-.changeImageOperation .fieldSection .fieldTitle {
+.changeImageOperation .fieldSection .fieldTitle,
+.changeBackgroundImageOperation .fieldSection .fieldTitle{
     display: inline-block;
 }
-.changeImageOperation .fieldSection input {
+.changeImageOperation .fieldSection input,
+.changeBackgroundImageOperation .fieldSection input{
     border: 1px #CECECE solid;
     border-radius: 0;
     outline: none;
@@ -674,14 +679,17 @@ table.jPicker {
 .changeImageOperation .leftAligned .fieldSection .fieldTitle {
     width: 90px;
 }
-.changeImageOperation .specifyURL input {
+.changeImageOperation .specifyURL input,
+.changeBackgroundImageOperation .specifyURL input{
     width: 294px;
 }
-.changeImageOperation .previewContainer {
+.changeImageOperation .previewContainer,
+.changeBackgroundImageOperation .previewContainer{
     text-align: center;
     width: 210px;
 }
-.changeImageOperation img {
+.changeImageOperation img,
+.changeBackgroundImageOperation img{
     max-width: 200px;
     max-height: 150px;
     border: 0px;

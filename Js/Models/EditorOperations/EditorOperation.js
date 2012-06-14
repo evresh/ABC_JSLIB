@@ -25,7 +25,10 @@ var EditorOperation = Backbone.Model.extend({
         return null;
     },
     _getPreviousState: function() {
-        return this.get('previousState') || this.get('initialState');
+        if (!_.isUndefined(this.get('previousState')) && !_.isNull(this.get('previousState')))
+            return this.get('previousState');
+
+        return this.get('initialState');
     },
     _applyChanges: function(data) {
         alert('Not implemented yet');
@@ -89,7 +92,10 @@ var EditorOperation = Backbone.Model.extend({
         }
     },
     getValue: function() {
-        return this.get('changedState') || this._getPreviousState();
+        if (this.isChanged())
+            return this.get('changedState');
+
+        return this._getPreviousState();
     },
     edit: function() {
         this.set('isEditing', true);
