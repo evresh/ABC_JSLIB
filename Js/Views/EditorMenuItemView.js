@@ -14,7 +14,10 @@ var EditorMenuItemView = Backbone.View.extend({
         return this;
     },
     _visibilityChanged: function() {
-        this.$el.toggle(this.model.get('isVisible'));
+        if (this.model.get('isVisible'))
+            this.$el.show();
+        else
+            this.$el.hide();
     },
     _perform: function(e) {
         this.model.perform();
