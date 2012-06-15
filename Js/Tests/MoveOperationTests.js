@@ -40,7 +40,7 @@ test('MoveOperation tests', function() {
 
     operation.edit();
     targetElement.css('top', '500px').css('left', '400px');
-    target.updated();
+    target.edited();
     equal(topItem.getValue(), '500px', 'Top item is correctly updated on target update');
     equal(leftItem.getValue(), '400px', 'Left item is correctly updated on target update');
 

@@ -37,7 +37,7 @@ test('ResizeOperation tests', function() {
 
     operation.edit();
     targetElement.css('width', '500px').css('height', '400px');
-    target.updated();
+    target.edited();
     equal(widthItem.getValue(), '500px', 'Width item is correctly updated on target update');
     equal(heightItem.getValue(), '400px', 'Height item is correctly updated on target update');
 

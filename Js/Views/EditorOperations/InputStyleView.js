@@ -27,7 +27,7 @@ var InputStyleView = Backbone.View.extend({
     },
     remove: function() {
         this.$el.remove();
-        this.model.off('stateResetted', this.render, this);
+        this.model.off('change:changedState', this.render, this);
     },
     _changed: function() {
         this.model.apply(this.$el.val());

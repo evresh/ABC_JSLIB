@@ -1,7 +1,8 @@
 var EditorTargetMode = {
     none: 0,
-    resize: 1,
-    move: 2
+    editing: 1,
+    resize: 2,
+    move: 3
 }
 
 var EditorTarget = Backbone.Model.extend({
@@ -26,7 +27,16 @@ var EditorTarget = Backbone.Model.extend({
 
         return result;
     },
+    edited: function(sender) {
+        this.trigger('edited', sender);
+    },
     updated: function(sender) {
         this.trigger('updated', sender);
+    },
+    edit: function(mode) {
+        this.set('editMode', mode || EditorTargetMode.editing);
+    },
+    stopEdit: function() {
+        this.set('editMode', EditorTargetMode.none);
     }
 })

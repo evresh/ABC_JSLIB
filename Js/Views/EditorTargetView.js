@@ -1,16 +1,13 @@
 var EditorTargetView = Backbone.View.extend({
     initialize: function() {
         this.model
-            .on('updated', this._select, this)
-            .on('destroy', this._destroy, this)
+            .on('edited', this._select, this)
             .on('change:editMode', this._modeChanged, this);
     },
     render: function() {
         var body = this.model.getDocument().find('body');
         if (!body.find('.elementOutlineBackground').length)
             body.append($('#selectedTargetElements').html());
-
-        this._select();
 
         return this;
     },
@@ -86,77 +83,91 @@ var EditorTargetView = Backbone.View.extend({
         var targetElement = this.model.get('element');
         var _this = this;
 
-        if (editMode == EditorTargetMode.resize) {
-            if (!doc.find('.resizeGlassLayer').length)
-                doc.find('body').append($('#resizeTargetElements').html())
+        switch(editMode) {
+            case EditorTargetMode.editing:
+                this._select();
+                break;
+            case EditorTargetMode.resize:
+                if (!doc.find('.resizeGlassLayer').length)
+                    doc.find('body').append($('#resizeTargetElements').html())
 
-            this._updateCover(doc.find('.resizeGlassLayer')).drag('start', function(ev, dd) {
-                dd.attr = ev.target.className;
-                dd.width = targetElement.width();
-                dd.height = targetElement.height();
-            }, { handle: '.resizeHandle' }).drag(function(ev, dd) {
-                var width, height;
-                if (dd.attr.indexOf("E") > -1) {
-                    width = Math.max(20, dd.width + dd.deltaX);
+                this._updateCover(doc.find('.resizeGlassLayer')).drag('start', function(ev, dd) {
+                    dd.attr = ev.target.className;
+                    dd.width = targetElement.width();
+                    dd.height = targetElement.height();
+                }, { handle: '.resizeHandle' }).drag(function(ev, dd) {
+                    var width, height;
+                    if (dd.attr.indexOf("E") > -1) {
+                        width = Math.max(20, dd.width + dd.deltaX);
+                    }
+                    if (dd.attr.indexOf("S") > -1) {
+                        height = Math.max(20, dd.height + dd.deltaY);
+                    }
+                    if (dd.attr.indexOf("W") > -1) {
+                        width = Math.max(20, dd.width - dd.deltaX);
+                    }
+                    if (dd.attr.indexOf("N") > -1) {
+                        height = Math.max(20, dd.height - dd.deltaY);
+                    }
+                    height += 'px';
+                    width += 'px';
+                    targetElement.css('width', width).css('height', height);
+                    _this.model.edited();
+                });
+                break;
+            case EditorTargetMode.move:
+                if (!doc.find('.moveGlassLayer').length)
+                    doc.find('body').append($('<div>').addClass('moveGlassLayer'));
+
+                var original_top, original_left;
+
+                function updateOriginalValues() {
+                    original_top = parseInt(targetElement.css('top'), 10) || 0;
+                    original_left = parseInt(targetElement.css('left'), 10) || 0;
                 }
-                if (dd.attr.indexOf("S") > -1) {
-                    height = Math.max(20, dd.height + dd.deltaY);
-                }
-                if (dd.attr.indexOf("W") > -1) {
-                    width = Math.max(20, dd.width - dd.deltaX);
-                }
-                if (dd.attr.indexOf("N") > -1) {
-                    height = Math.max(20, dd.height - dd.deltaY);
-                }
-                height += 'px';
-                width += 'px';
-                targetElement.css('width', width).css('height', height);
-                _this.model.updated();
-            });
-        } else if (editMode == EditorTargetMode.move) {
-            if (!doc.find('.moveGlassLayer').length)
-                doc.find('body').append($('<div>').addClass('moveGlassLayer'));
 
-            var original_top, original_left;
-
-            function updateOriginalValues() {
-                original_top = parseInt(targetElement.css('top'), 10) || 0;
-                original_left = parseInt(targetElement.css('left'), 10) || 0;
-            }
-
-            updateOriginalValues();
-
-            this._updateCover(doc.find('.moveGlassLayer')).drag(function(ev, dd) {
-                targetElement.css('top', original_top + dd.deltaY).css('left', original_left + dd.deltaX);
-                _this.model.updated();
-            }).drop(function() {
                 updateOriginalValues();
-            });
 
-            this._moveOnKeydownHandler = function(e) {
-                var dx = 0;
-                var dy = 0;
-                var shiftMoveAmount = 20;
+                this._updateCover(doc.find('.moveGlassLayer')).drag(function(ev, dd) {
+                    targetElement.css('top', original_top + dd.deltaY).css('left', original_left + dd.deltaX);
+                    _this.model.edited();
+                }).drop(function() {
+                    updateOriginalValues();
+                });
 
-                if (e.target.tagName == 'INPUT')
-                    return;
+                this._moveOnKeydownHandler = function(e) {
+                    var dx = 0;
+                    var dy = 0;
+                    var shiftMoveAmount = 20;
 
-                if (e.which == 37)
-                    dx = e.shiftKey ? -shiftMoveAmount: -1;
-                else if (e.which == 39)
-                    dx = e.shiftKey ? shiftMoveAmount: 1;
-                if (e.which == 38)
-                    dy = e.shiftKey ? -shiftMoveAmount: -1;
-                else if (e.which == 40)
-                    dy = e.shiftKey ? shiftMoveAmount: 1;
+                    if (e.target.tagName == 'INPUT')
+                        return;
 
-                original_top = (parseInt(targetElement.css('top')) || 0) + dy;
-                original_left = (parseInt(targetElement.css('left')) || 0) + dx;
+                    if (e.which == 37)
+                        dx = e.shiftKey ? -shiftMoveAmount: -1;
+                    else if (e.which == 39)
+                        dx = e.shiftKey ? shiftMoveAmount: 1;
+                    if (e.which == 38)
+                        dy = e.shiftKey ? -shiftMoveAmount: -1;
+                    else if (e.which == 40)
+                        dy = e.shiftKey ? shiftMoveAmount: 1;
 
-                targetElement.css('top', original_top).css('left', original_left);
-                _this.model.updated();
-            }
-            $('body').on('keydown', this._moveOnKeydownHandler);
+                    original_top = (parseInt(targetElement.css('top')) || 0) + dy;
+                    original_left = (parseInt(targetElement.css('left')) || 0) + dx;
+
+                    targetElement.css('top', original_top).css('left', original_left);
+                    _this.model.edited();
+                }
+                $('body').on('keydown', this._moveOnKeydownHandler);
+                break;
+            case EditorTargetMode.none:
+                this.model
+                    .off('edited', this._select, this)
+                    .off('change:editMode', this._modeChanged, this);
+
+                this._hide();
+
+                break;
         }
     },
     _updateCover: function(cover) {
@@ -171,13 +182,5 @@ var EditorTargetView = Backbone.View.extend({
         }
 
         return cover;
-    },
-    _destroy: function() {
-        this.model
-            .off('updated', this._select, this)
-            .off('destroy', this._destroy, this)
-            .off('change:editMode', this._modeChanged, this);
-
-        this._hide();
     }
 });

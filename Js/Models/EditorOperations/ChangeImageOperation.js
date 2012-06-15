@@ -15,14 +15,14 @@ var ChangeImageOperation = OperationGroup.extend({
             var _this = this;
             var img = new Image();
             img.onload = function() {
-                _this.get('target').updated(_this);
+                _this.get('target').edited(_this);
             };
             img.onerror = function() {
-                _this.get('target').updated(_this);
+                _this.get('target').edited(_this);
             }
             img.src = src;
         } else {
-            this.get('target').updated(this);
+            this.get('target').edited(this);
         }
     }
 });

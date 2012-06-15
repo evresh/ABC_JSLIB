@@ -8,7 +8,7 @@ var StyleItemView = Backbone.View.extend({
     },
     initialize: function() {
         this.model.on('change:isEditing', this._onEditing, this);
-        this.model.on('stateResetted', this._refresh, this);
+        this.model.on('change:changedState', this._onChangedState, this);
     },
     render: function() {
         this.$el.html(_.template($('#styleItem').html(), {
@@ -47,6 +47,10 @@ var StyleItemView = Backbone.View.extend({
         this.$('.styleValue').html(value);
         this.$('.editStyleValue').val(value);
     },
+    _onChangedState: function() {
+        if (!this.model.get('isEditing'))
+            this._refresh();
+    },
     _onEditValue: function(e) {
         this._needToSave = false;
         if (e.keyCode == 13) // Enter
@@ -64,5 +68,10 @@ var StyleItemView = Backbone.View.extend({
             this._needToSave = false;
             this._save();
         }
+    },
+    remove: function() {
+        this.$el.remove();
+        this.model.off('change:isEditing', this._onEditing, this);
+        this.model.off('change:changedState', this._onChangedState, this);
     }
 })

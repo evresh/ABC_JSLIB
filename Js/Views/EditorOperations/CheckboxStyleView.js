@@ -4,7 +4,7 @@ var CheckboxStyleView = Backbone.View.extend({
         'click input': '_changed'
     },
     initialize: function() {
-        this.model.on('stateResetted', this.render, this);
+        this.model.on('change:changedState', this.render, this);
     },
     render: function() {
         if (!this.$el.parent().length)
@@ -16,7 +16,7 @@ var CheckboxStyleView = Backbone.View.extend({
     },
     remove: function() {
         this.$el.remove();
-        this.model.off('stateResetted', this.render, this);
+        this.model.off('change:changedState', this.render, this);
     },
     _changed: function() {
         this.model.apply(this.$el.find('input').is(':checked'));

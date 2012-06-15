@@ -56,12 +56,15 @@ var OperationView = Backbone.View.extend({
     _getExtendedEvents: function() { },
     _afterRender: function() { },
     _reset: function() { },
+    _clear: function() { },
     _overlayClosed: function() {
         if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
         this.model.stopEdit();
         if (this.maximizable)
             this.maximized(false);
+
+        this._clear();
     },
     _changeVisibility: function() {
         var isOverlayVisible = this._overlay.$el.is(':visible');

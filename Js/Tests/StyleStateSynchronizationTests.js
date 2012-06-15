@@ -1,8 +1,9 @@
 test('Style state synchronization tests', function() {
     var targetElement = $('<div>').css('width', '100px');
+    var target = new EditorTarget({ element: targetElement });
     var operation1 = new StyleItemOperation({
         property: "width",
-        target: new EditorTarget({ element: targetElement })
+        target: target
     });
 
     operation1.apply('200px');
@@ -12,7 +13,7 @@ test('Style state synchronization tests', function() {
 
     var operation2 = new StyleItemOperation({
         property: "width",
-        target: new EditorTarget({ element: targetElement })
+        target: target
     });
     operation2.apply('300px');
     operation2.complete();
@@ -23,7 +24,7 @@ test('Style state synchronization tests', function() {
 
     var operation3 = new StyleItemOperation({
         property: "width",
-        target: new EditorTarget({ element: targetElement })
+        target: target
     });
     operation3.apply('400px');
     operation3.complete();
@@ -52,13 +53,13 @@ test('Style state synchronization tests', function() {
 
     var operation4 = new StyleItemOperation({
         property: "width",
-        target: new EditorTarget({ element: targetElement })
+        target: target
     });
     operation4.apply('200px');
     operation4.complete();
     var operation5 = new StyleItemOperation({
         property: "width",
-        target: new EditorTarget({ element: targetElement })
+        target: target
     });
     operation5.apply('700px');
     operation5.complete();

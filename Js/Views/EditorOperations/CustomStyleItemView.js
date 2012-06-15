@@ -1,7 +1,7 @@
 var CustomStyleItemView = StyleItemView.extend({
     events: function() {
         return $.extend({}, StyleItemView.prototype.events, {
-            'keyup .editStyleName': '_onEditName'
+            'change .editStyleName': '_onEditName'
         });
     },
     render: function() {

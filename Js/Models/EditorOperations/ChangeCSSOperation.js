@@ -3,400 +3,71 @@ var ChangeCSSOperation = Backbone.Model.extend({
         lastAction: EditorOperationAction.none,
         isEditing: false
     },
+    _groups: {
+        Text: [ 'font-family', 'font-size', 'font-weight', 'font-style', 'font-size-adjust', 'color', 'text-transform',
+            'text-decoration', 'letter-spacing', 'word-spacing', 'line-height', 'text-align', 'vertical-align', 'direction' ],
+        Background: [ 'background-color', 'background-image', 'background-repeat', 'background-position', 'background-attachment',
+            'opacity' ],
+        Dimensions: [ 'width', 'height', 'top', 'right', 'bottom', 'left', 'margin-top', 'margin-right', 'margin-bottom',
+            'margin-left', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'box-shadow' ],
+        Border: [ 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', 'border-top-color',
+            'border-right-color', 'border-bottom-color', 'border-left-color', 'border-top-style', 'border-right-style', 'border-bottom-style',
+            'border-left-style' ],
+        Layout: [ 'position', 'display', 'visibility', 'z-index', 'overflow-x', 'overflow-y', 'white-space', 'clip', 'float',
+            'clear' ],
+        Other: [ 'cursor', 'list-style-image', 'list-style-position', 'list-style-type', 'marker-offset' ]
+    },
     initialize: function() {
-        var styleItems = Backbone.Collection.extend({ model: StyleItemOperation });
-        this.set('items', new styleItems([
-            new StyleItemOperation({
-                group: "Text",
-                property: "font-family",
-                //"values": "[ [<family-name>|<generic-family>] [,<family-name>|<generic-family>]* ] |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "font-size",
-                //"values": "<absolute-size>|<relative-size>|<length>|<percentage>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "font-weight",
-                //"values": "normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "font-style",
-                //"values": "normal | italic | oblique |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "font-size-adjust",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Text",
-                property: "color",
-                //"values": "<color>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "text-transform",
-                //"values": "capitalize | uppercase | lowercase | none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "text-decoration",
-                //"values": "none | [ underline || overline || line-through || blink ] |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "letter-spacing",
-                //"values": "normal |<length>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "word-spacing",
-                //"values": "normal |<length>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "line-height",
-                //"values": "normal |<number>|<length>|<percentage>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "text-align",
-                //"values": "left | right | center | justify |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "vertical-align",
-                //"values": "baseline | sub | super | top | text-top | middle | bottom | text-bottom |<percentage>|<length>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Text",
-                property: "direction",
-                //"values": "ltr | rtl |inherit",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Background",
-                property: "background-color",
-                //"values": "<color>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Background",
-                property: "background-image",
-                //"values": "<uri>| none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Background",
-                property: "background-repeat",
-                //"values": "repeat | repeat-x | repeat-y | no-repeat |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Background",
-                property: "background-position",
-                //"values": "[ [<percentage>|<length>| left | center | right ] [<percentage>|<length>| top | center | bottom ]? ] | [ [ left | center | right ] || [ top | center | bottom ] ] |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Background",
-                property: "background-attachment",
-                //"values": "scroll | fixed |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Background",
-                property: "opacity",
-                //"values": "<number>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "width",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "height",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "top",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "right",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "bottom",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "left",
-                //"values": "<length>|<percentage>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "margin-top",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "margin-right",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "margin-bottom",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "margin-left",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "padding-top",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "padding-right",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "padding-bottom",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "padding-left",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Dimensions",
-                property: "box-shadow",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-top-width",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-right-width",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-bottom-width",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-left-width",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Border",
-                property: "border-top-color",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Border",
-                property: "border-right-color",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Border",
-                property: "border-bottom-color",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new ColorItemOperation({
-                group: "Border",
-                property: "border-left-color",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-top-style",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-right-style",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-bottom-style",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Border",
-                property: "border-left-style",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "position",
-                //"values": "static | relative | absolute | fixed |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "display",
-                //"values": "inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "visibility",
-                //"values": "visible | hidden | collapse |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "z-index",
-                //"values": "auto |<integer>|inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "overflow-x",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "overflow-y",
-                //"values": "",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "white-space",
-                //"values": "normal | pre | nowrap | pre-wrap | pre-line |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "clip",
-                //"values": "<shape>| auto |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "float",
-                //"values": "left | right | none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Layout",
-                property: "clear",
-                //"values": "none | left | right | both |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Other",
-                property: "cursor",
-                //"values": "[ [<uri>,]* [ auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress ] ] |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Other",
-                property: "list-style-image",
-                //"values": "<uri>| none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Other",
-                property: "list-style-position",
-                //"values": "inside | outside |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Other",
-                property: "list-style-type",
-                //"values": "disc | circle | square | decimal | decimal-leading-zero | lower-roman | upper-roman | lower-greek | lower-latin | upper-latin | armenian | georgian | lower-alpha | upper-alpha | none |inherit",
-                target: this.get('target')
-            }),
-            new StyleItemOperation({
-                group: "Other",
-                property: "marker-offset",
-                //"values": "",
-                target: this.get('target')
-            })
-            ]
-        ));
+        this.set('items', {});
         this.set('tempItems', new Backbone.Collection());
 
         this.get('tempItems')
-            .on('change:isEditing', this._onItemEditing, this)
-            .on('action', this._onItemAction, this);
-
-        this.on('change:target', this._targetChanged, this);
+            .on('change:isEditing', this._onItemEditing, this);
     },
     edit: function() {
-        var tempItems = this.get('tempItems');
-        tempItems.reset();
-        this.get('items').each(_.bind(function(item) {
-            tempItems.add(this._createTempItem(item));
-        }, this))
+        var tempItems = this.get('tempItems').reset();
+        var items = this.get('items');
+        var _this = this;
+
+        $.each(this._groups, function(group, properties) {
+            $.each(properties, function(i, property) {
+                var attrs = {
+                    property: property,
+                    group: group,
+                    target: _this.get('target'),
+                    isTemp: true
+                };
+                var item = items[property];
+                if (item)
+                    attrs.initialState = attrs.changedState = item.getValue();
+
+                var tempItem;
+                if (property == 'color' || property == 'background-color' || property == 'border-top-color'
+                    || property == 'border-right-color' || property == 'border-bottom-color' || property == 'border-left-color') {
+                    tempItem = new ColorItemOperation(attrs);
+                } else {
+                    tempItem = new StyleItemOperation(attrs);
+                }
+
+                tempItems.add(tempItem);
+            });
+        });
+        $.each(items, function(property, item) {
+            if (item.isCustom())
+                tempItems.add(new StyleItemOperation({
+                    property: property,
+                    group: item.get('group'),
+                    target: item.get('target'),
+                    isTemp: true,
+                    initialState: item.get('initialState'),
+                    changedState: item.getValue()
+                }));
+        });
+
         this.set('isEditing', true);
     },
     stopEdit: function() {
+        this.get('tempItems').reset();
         this.set('isEditing', false);
     },
     _onItemEditing: function(editItem) {
@@ -407,39 +78,6 @@ var ChangeCSSOperation = Backbone.Model.extend({
             });
         }
     },
-    _onItemAction: function(actionItem) {
-        var lastAction = actionItem.get('lastAction');
-        if (lastAction == EditorOperationAction.complete || lastAction == EditorOperationAction.remove) {
-            this.get('tempItems').each(function(item) {
-                if (item != actionItem && item.get('property') == actionItem.get('property'))
-                    item.matchToTargetIfNew();
-            });
-        }
-    },
-    _createTempItem: function(item) {
-        if (item.get('isNew'))
-            return item;
-
-        var attrs = {
-            initialState: item.isCustom() ? item.get('initialState') : item.getValue(),
-            changedState: item.getValue(),
-            target: item.get('target'),
-            source: item,
-            group: item.get('group'),
-            property: item.get('property')
-        };
-
-        if (item instanceof ColorItemOperation)
-            return new ColorItemOperation(attrs);
-
-        return new StyleItemOperation(attrs);
-    },
-    _targetChanged: function() {
-        var target = this.get('target');
-        this.get('items').each(function(item) {
-            item.set('target', target);
-        });
-    },
     resetEdit: function() {
         this.get('tempItems').each(function(item) {
             item.stopEdit();
@@ -447,43 +85,59 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     complete: function() {
         var items = this.get('items');
-        this.get('tempItems').each(function(item) {
-            var sourceItem = item.get('source');
-            var changedState = item.get('changedState');
-            var isRemoved = item.get('lastAction') == EditorOperationAction.remove;
-            if (sourceItem) {
-                if (!item.get('isNew')) {
-                    sourceItem.set('changedState', changedState);
-                    sourceItem.complete();
-                    item.remove();
-                } else if (item.isCustom() && isRemoved) {
-                    sourceItem.remove();
-                    items.remove(sourceItem);
+        this.get('tempItems').each(function(tempItem) {
+            if (!tempItem.get('isNew')) {
+                var sourceItem = items[tempItem.get('property')];
+                var changedState = tempItem.get('changedState');
+                var isRemoved = tempItem.get('lastAction') == EditorOperationAction.remove;
+                if (sourceItem) {
+                    if (tempItem.isCustom() && isRemoved && sourceItem.isCustom()) {
+                        sourceItem.remove();
+                        delete items[tempItem.get('property')];
+                    } else if (!isRemoved) {
+                        sourceItem.set('changedState', changedState);
+                        sourceItem.complete();
+                        tempItem.remove();
+                    }
+                } else if (!isRemoved) {
+                    items[tempItem.get('property')] = tempItem.unset('isTemp');
+                    tempItem.complete(); // to notify about changes other external operations
                 }
-            } else if (item.isCustom() && !isRemoved) {
-                items.add(item);
+            } else {
+                tempItem.remove();
+                var sourceItem = items[tempItem.get('property')];
+                if (sourceItem && tempItem.isCustom())
+                    sourceItem.apply(sourceItem.getValue());
             }
         });
 
-        this.get('target').updated();
+        this.get('target').edited(this);
 
         this.set('lastAction', EditorOperationAction.complete);
         this.stopEdit();
     },
     cancel: function() {
-        this.get('tempItems').each(function(item) {
-            item.remove();
+        var items = this.get('items');
+        this.get('tempItems').each(function(tempItem) {
+            tempItem.remove();
+            var sourceItem = items[tempItem.get('property')];
+            if (sourceItem && tempItem.isCustom())
+                sourceItem.apply(sourceItem.getValue());
         });
 
-        this.get('target').updated();
+        this.get('target').edited(this);
 
         this.set('lastAction', EditorOperationAction.cancel);
         this.stopEdit();
     },
     remove: function() {
-        this.get('items').each(function(item) { item.remove(); });
+        var items = this.get('items');
+        $.each(this.get('items'), function(property, item) {
+            item.remove();
+            delete items[property];
+        });
 
-        this.get('target').updated();
+        this.get('target').edited(this);
 
         this.set('lastAction', EditorOperationAction.remove);
         this.stopEdit();
@@ -494,7 +148,8 @@ var ChangeCSSOperation = Backbone.Model.extend({
     createCustomItem: function() {
         var model = new StyleItemOperation({
             group: 'Custom',
-            target: this.get('target')
+            target: this.get('target'),
+            isTemp: true
         });
         this.get('tempItems').add(model);
         return model;

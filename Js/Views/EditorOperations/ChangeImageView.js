@@ -20,8 +20,7 @@ var ChangeImageView = OperationView.extend({
         this.model.getItem('src').on('change:changedState', this._srcChanged, this);
         this._srcChanged();
     },
-    _overlayClosed: function() {
-        OperationView.prototype._overlayClosed.apply(this);
+    _clear: function() {
         $.each(this._views, function(i, view) {
             view.remove();
         });

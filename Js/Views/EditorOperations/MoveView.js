@@ -15,14 +15,13 @@ var MoveView = OperationView.extend({
             view.render().$el.appendTo(_this.$('.' + view.model.get('property') + 'Field').empty());
         });
 
-        this.model.get('target').on('updated', this._overlay.attachToTarget, this._overlay);
+        this.model.get('target').on('edited', this._overlay.attachToTarget, this._overlay);
     },
-    _overlayClosed: function() {
-        OperationView.prototype._overlayClosed.apply(this);
+    _clear: function() {
         $.each(this._views, function(i, view) {
             view.remove();
         });
 
-        this.model.get('target').off('updated', this._overlay.attachToTarget, this._overlay);
+        this.model.get('target').off('edited', this._overlay.attachToTarget, this._overlay);
     }
 })

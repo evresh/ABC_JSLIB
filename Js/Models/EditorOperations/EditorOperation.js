@@ -41,7 +41,7 @@ var EditorOperation = Backbone.Model.extend({
     },
     _stateChanged: function() {
         if (this.get('isEditing'))
-            this.get('target').updated(this);
+            this.get('target').edited(this);
     },
     getTargetElement: function() {
         return this.get('target').get('element');
@@ -75,7 +75,7 @@ var EditorOperation = Backbone.Model.extend({
         this.unset('previousState');
         this.set('lastAction', EditorOperationAction.remove);
         this.stopEdit();
-        this.set('isNew', true);
+        this.set('isNew', false);
 
         this.trigger('action', this);
     },

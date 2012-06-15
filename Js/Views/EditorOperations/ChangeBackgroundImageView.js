@@ -18,8 +18,7 @@ var ChangeBackgroundImageView = OperationView.extend({
             this.$('.previewContainer img').hide();
         }
     },
-    _overlayClosed: function() {
-        OperationView.prototype._overlayClosed.apply(this);
+    _clear: function() {
         this._inputView.remove();
         this.model.off('change:changedState', this._changed, this);
     }

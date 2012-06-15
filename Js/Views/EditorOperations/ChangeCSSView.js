@@ -12,6 +12,9 @@ var ChangeCSSView = OperationView.extend({
     _reset: function() {
         var cssList = this.$('.cssList');
         cssList.empty();
+        this._views = [];
+
+        var _this = this;
         this.model.get('tempItems').each(_.bind(function(item) {
             var group = item.get('group');
             var selector = group.substr(0, 1).toLowerCase() + group.substr(1) + 'CssGroup';
@@ -28,7 +31,9 @@ var ChangeCSSView = OperationView.extend({
                 itemViewCtor = CustomStyleItemView;
             else if (item instanceof ColorItemOperation)
                 itemViewCtor = ColorItemView;
-            new (itemViewCtor)({ model: item }).render().$el.appendTo(this.$('.' + selector).find('.cssGroupItems'));
+            var view = new (itemViewCtor)({ model: item });
+            view.render().$el.appendTo(this.$('.' + selector).find('.cssGroupItems'));
+            _this._views.push(view);
         }, this));
 
         if (!cssList.find('.customCssGroup').length) {
@@ -55,8 +60,14 @@ var ChangeCSSView = OperationView.extend({
     },
     _addCustomStyle: function() {
         var model = this.model.createCustomItem();
-        new CustomStyleItemView({ model: model })
-            .render().$el.insertBefore(this.$('.addCustomCss'));
+        var view = new CustomStyleItemView({ model: model });
+        view.render().$el.insertBefore(this.$('.addCustomCss'));
+        this._views.push(view);
         model.edit();
+    },
+    _clear: function() {
+        $.each(this._views, function(i, view) {
+            view.remove();
+        });
     }
 });

@@ -60,13 +60,9 @@ var EditorView = Backbone.View.extend({
                 || !$(e.target).closest(target.get('element')).length;
 
             if (unsetTarget)
-                this.model.set('target', null);
+                this.model.setTarget(null);
         } else {
-            this.model.set('target', new EditorTarget({
-                element: $(e.target),
-                pageX: e.pageX,
-                pageY: e.pageY
-            }));
+            this.model.setTarget($(e.target), e.pageX, e.pageY);
         }
 
         e.preventDefault();
@@ -78,7 +74,7 @@ var EditorView = Backbone.View.extend({
         if (target)
             new EditorTargetView({ model: target }).render();
         else if (prevTarget)
-            prevTarget.destroy();
+            prevTarget.stopEdit();
     },
     _currentOperationChanged: function() {
         var operation = this.model.get('currentOperation');

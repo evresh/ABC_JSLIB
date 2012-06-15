@@ -2,8 +2,6 @@ var OperationGroup = EditorOperation.extend({
     initialize: function() {
         this.set('items', this._getInitialItems());
         EditorOperation.prototype.initialize.apply(this);
-
-        this.on('change:target', this._targetChanged, this);
     },
     _getInitialItems: function() {
         return new Backbone.Collection();
@@ -41,12 +39,6 @@ var OperationGroup = EditorOperation.extend({
     _deleteChanges: function() {
         this.get('items').each(function(item) {
             item.remove();
-        });
-    },
-    _targetChanged: function() {
-        var target = this.get('target');
-        this.get('items').each(function(item) {
-            item.set('target', target);
         });
     }
 });
