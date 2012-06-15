@@ -48,18 +48,6 @@ var StyleItemOperation = EditorOperation.extend({
     isCustom: function() {
         return this.get('group') == 'Custom';
     },
-    resetState: function(state) {
-        if (!_.isUndefined(state.changedState) || !_.isUndefined(state.initialState)) {
-            $.extend(this.attributes, state);
-            this._applyChanges(this.getValue());
-        } else {
-            this.set('initialState', state);
-            this.set('previousState', null);
-            this.apply(state);
-        }
-
-        this.trigger('stateResetted');
-    },
     complete: function() {
         if (this.get('overridedBy')) {
             this.get('overridedBy').get('originalStates').initialState = this.get('originalStates').initialState;
