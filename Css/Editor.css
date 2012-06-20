@@ -690,7 +690,8 @@ table.jPicker {
     border-radius: 0;
     outline: none;
 }
-.changeImageOperation .leftAligned .fieldSection .fieldTitle {
+.changeImageOperation .leftAligned .fieldSection .fieldTitle,
+.changeBackgroundImageOperation .leftAligned .fieldSection .fieldTitle {
     width: 90px;
 }
 .changeImageOperation .specifyURL input,
@@ -701,6 +702,7 @@ table.jPicker {
 .changeBackgroundImageOperation .previewContainer{
     text-align: center;
     width: 210px;
+    margin-bottom: 5px;
 }
 .changeImageOperation img,
 .changeBackgroundImageOperation img{
