@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body style="padding: 0px; margin: 0px;">
+    <form id="form" action="ImageUpload.html" method="post">
+        <input type="file" style="width: 220px" onchange="onFileSelected(this)" />
+    </form>
+    <script type="text/javascript">
+        function checkExtension(fileName) {
+            var lastDot = fileName.lastIndexOf(".");
+            if (lastDot == -1)
+                return false;
+
+            var extension = fileName.substring(lastDot).toLowerCase();
+            if((extension == ".gif") || (extension == ".jpg") || (extension == ".png") || (extension == ".jpeg"))
+               return true;
+
+            return false;
+        }
+
+        function onFileSelected(fileInput) {
+            var listener;
+            if (window.parent && (listener = window.parent.ImageUploadListener) && fileInput.value) {
+                if (!checkExtension(fileInput.value)) {
+                    listener.trigger('imageUploadError', 'invalidFileType');
+                    return;
+                }
+
+                listener.trigger('imageUploadStarted');
+
+                //document.getElementById('form').submit();
+
+                // until the server logic is ready, let's use the mimic code
+                setTimeout(function() {
+                    var urls = [ '/img/tests/change-image.jpg', '/img/tests/change-image-2.jpg', '/img/tests/change-image-3.jpg' ];
+                    var min = 0, max = urls.length - 1;
+                    var i = Math.floor(Math.random() * (max - min + 1)) + min;
+                    onFileUploaded(urls[i]);
+                }, 3000);
+            }
+        }
+
+        function onFileUploaded(imageUrl) {
+            var listener;
+            if (window.parent && (listener = window.parent.ImageUploadListener))
+                listener.trigger('imageUploadCompleted', imageUrl);
+        }
+    </script>
+
+    <!--script type="text/javascript">
+        // this code should be triggered after the image is successfully uploaded on the server
+        onFileUploaded('IMAGE_URL')
+    </script-->
+</body>
+</html>

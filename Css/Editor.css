@@ -663,8 +663,22 @@ table.jPicker {
     margin-right: 8px;
 }
 .changeImageOperation .uploadImage,
-.changeBackgroundImageOperation .uploadImage{
+.changeBackgroundImageOperation .uploadImage {
     height: 27px;
+}
+.changeImageOperation .uploadImage .fieldTitle,
+.changeBackgroundImageOperation .uploadImage .fieldTitle {
+    vertical-align: top;
+    margin-top: 6px;
+}
+.changeImageOperation .uploadImage iframe,
+.changeBackgroundImageOperation .uploadImage iframe {
+    border: 0px;
+    height: 24px;
+    width: 294px;
+    margin: 0px;
+    padding: 0px;
+    background: white;
 }
 .changeImageOperation .fieldSection .fieldTitle,
 .changeBackgroundImageOperation .fieldSection .fieldTitle{

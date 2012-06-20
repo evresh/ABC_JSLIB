@@ -29,6 +29,9 @@ var InputStyleView = Backbone.View.extend({
         this.$el.remove();
         this.model.off('change:changedState', this.render, this);
     },
+    setAvailability: function(availability) {
+        this.$el.attr('disabled', !availability);
+    },
     _changed: function() {
         this.model.apply(this.$el.val());
     }
