@@ -1,4 +1,8 @@
 var ChangeImageOperation = OperationGroup.extend({
+    initialize: function() {
+        OperationGroup.prototype.initialize.apply(this);
+        this.set('uploadedImages', new UserUploadedImages());
+    },
     _getInitialItems: function() {
         return new Backbone.Collection([
             new AttributeItemOperation({ property: 'src', target: this.get('target') })

@@ -22,6 +22,9 @@ body {
 .leftAligned {
     float: left;
 }
+.warningMessage {
+    color: red;
+}
 
 /* Top bar */
 .topBar {
@@ -658,21 +661,17 @@ table.jPicker {
 .changeBackgroundImageOperation .overlayContentPaddings{
     min-width: 630px;
 }
-.changeImageOperation .overlayContentPaddings > .leftAligned,
-.changeBackgroundImageOperation .overlayContentPaddings > .leftAligned{
+.changeImageView .overlayContentPaddings > .leftAligned {
     margin-right: 8px;
 }
-.changeImageOperation .uploadImage,
-.changeBackgroundImageOperation .uploadImage {
+.changeImageView .uploadImage {
     height: 27px;
 }
-.changeImageOperation .uploadImage .fieldTitle,
-.changeBackgroundImageOperation .uploadImage .fieldTitle {
+.changeImageView .uploadImage .fieldTitle {
     vertical-align: top;
     margin-top: 6px;
 }
-.changeImageOperation .uploadImage iframe,
-.changeBackgroundImageOperation .uploadImage iframe {
+.changeImageView .uploadImage iframe {
     border: 0px;
     height: 24px;
     width: 294px;
@@ -680,39 +679,72 @@ table.jPicker {
     padding: 0px;
     background: white;
 }
-.changeImageOperation .fieldSection .fieldTitle,
-.changeBackgroundImageOperation .fieldSection .fieldTitle{
+.changeImageView .fieldSection .fieldTitle{
     display: inline-block;
 }
-.changeImageOperation .fieldSection input,
-.changeBackgroundImageOperation .fieldSection input{
+.changeImageView .fieldSection input {
     border: 1px #CECECE solid;
     border-radius: 0;
     outline: none;
 }
-.changeImageOperation .leftAligned .fieldSection .fieldTitle,
-.changeBackgroundImageOperation .leftAligned .fieldSection .fieldTitle {
+.changeImageView .leftAligned .fieldSection .fieldTitle {
     width: 90px;
 }
-.changeImageOperation .specifyURL input,
-.changeBackgroundImageOperation .specifyURL input{
+.changeImageView .specifyURL input{
     width: 294px;
 }
-.changeImageOperation .previewContainer,
-.changeBackgroundImageOperation .previewContainer{
+.changeImageView .previewContainer{
     text-align: center;
     width: 210px;
     margin-bottom: 5px;
 }
-.changeImageOperation img,
-.changeBackgroundImageOperation img{
+.changeImageView .previewContainer img{
     max-width: 200px;
     max-height: 150px;
     border: 0px;
 }
-.changeImageOperation .rightAligned .fieldSection {
+.changeImageOperation .changeImageView .rightAligned .fieldSection {
     margin: 2px 0;
 }
-.changeImageOperation .rightAligned .fieldSection .fieldTitle {
+.changeImageOperation .changeImageView .rightAligned .fieldSection .fieldTitle {
     width: 50px;
+}
+.changeImageView .uploadedImages {
+    margin-top: 6px;
+}
+.changeImageView .uploadedImages ul {
+    width: 390px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+.changeImageView .loadUploadedImages a {
+    text-decoration: none;
+    color: #0B578F;
+    cursor: pointer;
+}
+.changeImageView .uploadedImage {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    margin: 4px;
+    padding: 0px;
+    border: 1px solid #DDD;
+    vertical-align: middle;
+}
+.changeImageView .uploadedImage:hover {
+    border: 1px solid #000;
+}
+.changeImageView .uploadedImage span {
+    height: 64px;
+    vertical-align: middle;
+    width: 64px;
+    display: table-cell;
+    position: relative;
+}
+.changeImageView .uploadedImage img {
+    max-height: 64px;
+    max-width: 64px;
 }

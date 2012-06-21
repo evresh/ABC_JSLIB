@@ -1,6 +1,7 @@
 var ChangeBackgroundImageOperation = StyleItemOperation.extend({
     initialize: function() {
         this.set('property', 'background-image');
+        this.set('uploadedImages', new UserUploadedImages());
         StyleItemOperation.prototype.initialize.apply(this);
     },
     _applyChanges: function(value) {
