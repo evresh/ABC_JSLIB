@@ -12,8 +12,8 @@ var ChangeImageView = BaseChangeImageView.extend({
         this._views = [
             new InputStyleView({ model: this.model.getItem('title') }),
             new InputStyleView({ model: this.model.getItem('alt') }),
-            new InputStyleView({ model: this.model.getItem('width'), attrs: { size: '4' } }),
-            new InputStyleView({ model: this.model.getItem('height'), attrs: { size: '4' } })
+            new InputStyleView({ model: this.model.getItem('width') }),
+            new InputStyleView({ model: this.model.getItem('height') })
         ];
 
         var _this = this;

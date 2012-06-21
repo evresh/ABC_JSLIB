@@ -703,11 +703,22 @@ table.jPicker {
     max-height: 150px;
     border: 0px;
 }
+.changeImageView input {
+    margin: 0px;
+}
 .changeImageOperation .changeImageView .rightAligned .fieldSection {
-    margin: 2px 0;
+    margin: 4px 0;
 }
 .changeImageOperation .changeImageView .rightAligned .fieldSection .fieldTitle {
     width: 50px;
+}
+.changeImageOperation .titleField input,
+.changeImageOperation .altField input {
+    width: 151px;
+}
+.changeImageOperation .widthField input,
+.changeImageOperation .heightField input {
+    width: 55px;
 }
 .changeImageView .uploadedImages {
     margin-top: 6px;
