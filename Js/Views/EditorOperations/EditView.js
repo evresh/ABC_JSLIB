@@ -9,10 +9,8 @@ var EditView = OperationView.extend({
         this._overlay.setTitle('Edit');
         this._overlay.setContent($('#editOperation').html());
 
-        this.$el.find('.overlayFooter').prepend(
-            $('<div>').addClass('leftAligned').append(
-                $('<button>').addClass('overlayButton').addClass('editHTMLButton').html('Edit HTML')
-            )
+        this.$el.find('.overlayFooter .leftAligned').append(
+            $('<button>').addClass('overlayButton').addClass('editHTMLButton').html('Edit HTML')
         );
 
         var styles = this.model.get('target').getDocument()[0].styleSheets;

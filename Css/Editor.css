@@ -279,6 +279,9 @@ iframe.testPage {
     left: 2% !important;
     top: 2% !important;
 }
+.editorOverlay .actionProgress {
+    margin-right: 20px;
+}
 
 /* Editor Menu */
 ul.editorMenu {
@@ -758,4 +761,335 @@ table.jPicker {
 .changeImageView .uploadedImage img {
     max-height: 64px;
     max-width: 64px;
+}
+
+/* Edit Image operation */
+.editImageOperation .overlayContentPaddings {
+    width: 542px;
+    height: 245px;
+}
+.editImageOperation .imageEditorLoading {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 70px;
+}
+#avpw_holder #avpw_controls_2 {
+    background: none repeat scroll 0 0 transparent;
+    border-radius: 0 0;
+    height: auto;
+    min-height: 245px !important;
+}
+#avpw_holder #avpw_clouds {
+    display: none !important;
+}
+#avpw_holder #avpw_controls_2 #avpw_mountains {
+    background-color: #CECECE;
+    border-radius: 4px 4px 0 0;
+    height: 25px;
+    top: 0;
+}
+#avpw_holder #avpw_controls_2 #avpw_mountains div {
+    background: none !important;
+    position: static;
+    width: inherit;
+    height: auto;
+    padding: 5px;
+}
+#avpw_holder #avpw_control_cancel_pane {
+    right: 8px;
+    top: 6px;
+}
+#avpw_holder #avpw_control_cancel_pane a, #avpw_holder #avpw_control_cancel_pane a:hover {
+    height: 8px;
+    width: 8px;
+    background-position: 0;
+}
+#avpw_holder #avpw_rightbevel, #avpw_holder #avpw_topleft_corner, #avpw_holder #avpw_topright_corner, #avpw_holder #avpw_topbevel {
+    display: none !important;
+}
+#avpw_holder #avpw_header {
+    display: none;
+}
+#avpw_holder a:visited {
+    color: #fff;
+}
+#avpw_holder #avpw_wrapper_1 {
+    margin: 0;
+    min-width: 542px;
+}
+#avpw_holder #avpw_photo_content {
+    margin-left: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    display: inline-block;
+}
+#avpw_holder #avpw_photo_content_2 {
+    padding: 0;
+}
+#avpw_holder .avpw_cardboard {
+    border-radius: 0;
+    border: none;
+}
+#avpw_holder #avpw_canvas_embed {
+    width: 300px;
+    max-height: 300px;
+}
+#avpw_holder .avpw_white_1px_border {
+    border: 0;
+    background: #fff;
+}
+#avpw_holder #avpw_temp_loading_image, #avpw_holder #avpw_canvas_embed canvas {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    margin: auto;
+}
+#avpw_holder #avpw_control_undoredo {
+    position: static;
+    margin-top: 8px;
+    text-align: center;
+}
+#avpw_holder #avpw_control_undo, #avpw_holder #avpw_control_redo {
+    float: none;
+    display: inline;
+}
+#avpw_holder a:visited {
+    color: #fff;
+}
+#avpw_holder .avpw_chrome_button {
+    display: inline-block;
+    background: linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    -webkit-border-radius: 1px !important;
+    -moz-border-radius: 1px !important;
+    border-radius: 1px !important;
+    color: black !important;
+    cursor: pointer;
+    padding: 4px 8px;
+    border: 1px solid #BBB !important;
+    border-top-color: #CCC !important;
+    border-bottom-color: #A0A0A0 !important;
+    background: #F9F9F9;
+    background: -moz-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #F9F9F9), color-stop(50%, #EEE), color-stop(79%, #E3E3E3));
+    background: -webkit-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -o-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -ms-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f9f9f9', endColorstr = '#e3e3e3', GradientType = 0);
+    background: linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+#avpw_holder #_aviary_error {
+    background: #FFF1A8;
+    padding: 8px;
+    display: none;
+}
+#avpw_holder #avpw_tool_content_wrapper {
+    display: inline-block;
+    margin: 0;
+    margin-left: 8px;
+    padding: 0;
+}
+#avpw_holder #avpw_tool_content {
+    width: 224px;
+}
+#avpw_holder #avpw_tool_options_container, #avpw_holder #avpw_tool_main_container {
+    width: 224px;
+}
+#avpw_holder #avpw_tool_main_container {
+    position: static;
+    width: 100%;
+}
+#avpw_holder .avpw_icon_container_style {
+    border: 0 none;
+    border-radius: 0 0 0 0;
+}
+#avpw_holder .avpw_tool_main_left_bevel, #avpw_holder .avpw_tool_main_right_bevel {
+    display: none;
+}
+#avpw_holder #avpw_control_main {
+    margin-top: 0;
+    height: 243px;
+    width: 224px;
+}
+#avpw_holder #avpw_control_main_scroll_panel {
+    margin: 0;
+    width: 224px;
+}
+#avpw_holder .avpw_scrolling_region_panel {
+    margin: 0;
+    width: 232px;
+    max-width: 232px;
+}
+#avpw_holder #avpw_controls .avpw_egg a {
+    background: linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #BBB;
+    border-top-color: #CCC;
+    border-bottom-color: #A0A0A0;
+    background: #F9F9F9;
+    background: -moz-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #F9F9F9), color-stop(50%, #EEE), color-stop(79%, #E3E3E3));
+    background: -webkit-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -o-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    background: -ms-linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f9f9f9', endColorstr = '#e3e3e3', GradientType = 0);
+    background: linear-gradient(top, #F9F9F9 20%, #EEE 50%, #E3E3E3 79%);
+}
+#avpw_holder .avpw_egg a {
+    margin: 0 8px 8px 0;
+}
+#avpw_holder #avpw_controls .avpw_egg a div {
+    height: 44px;
+}
+#avpw_holder #avpw_aviary_about, #avpw_holder #avpw_aviary_beensaved, #avpw_holder #avpw_aviary_quitareyousure {
+    width: 224px;
+    margin-left: 8px;
+    height: auto;
+}
+#avpw_holder #avpw_aviary_about, #avpw_holder #avpw_aviary_beensaved, #avpw_holder #avpw_aviary_quitareyousure {
+    width: 224px;
+    margin-left: 8px;
+    height: auto;
+}
+#avpw_holder #avpw_lftArrow {
+    top: 216px;
+    left: 0;
+}
+#avpw_holder #avpw_rghtArrow {
+    top: 216px;
+    right: 0;
+}
+#avpw_holder #avpw_tools_pager {
+    display: none;
+}
+#avpw_holder #avpw_tool_options_container, #avpw_holder #avpw_tool_main_container {
+    width: 224px;
+}
+#avpw_holder #avpw_tool_options_container {
+    border-radius: 0;
+    min-height: 243px;
+    height: auto;
+}
+#avpw_holder .avpw_controlpanel_container_style {
+    border: 0;
+}
+#avpw_holder .avpw_controlpanel_container_style {
+    border: 0;
+}
+#avpw_holder #avpw_control_upper {
+    position: static;
+    margin: 5px;
+}
+#avpw_holder .avpw_controlpanel {
+    height: auto;
+    background-color: transparent;
+}
+#avpw_holder .avpw_controlpanel_style {
+    background-color: transparent;
+    border-radius: 0;
+}
+#avpw_holder .avpw_tool_properties_name {
+    top: 0;
+}
+#avpw_holder .avpw_panel_margin, #avpw_holder .avpw_thumb_and_slider {
+    margin-left: 0;
+    text-align: center;
+}
+#avpw_holder #avpw_controls .ui-slider-horizontal .ui-slider-handle {
+    top: -0.37em;
+}
+#avpw_holder #avpw_filter_eggs_panel {
+    display: none !important;
+}
+#avpw_holder #avpw_save_container {
+    display: none;
+}
+#avpw_holder #avpw_save_button {
+    position: absolute;
+    background: #222;
+    color: #EEE;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    width: auto;
+    height: auto;
+    top: 390px;
+    right: 3px;
+}
+#avpw_holder #avpw_save_button a {
+    position: static;
+    font-size: 12px;
+    text-shadow: none;
+    padding: 4px 8px;
+}
+#avpw_holder #avpw_controls_2 #avpw_mountains {
+    background-color: #CECECE;
+    border-radius: 4px 4px 0 0;
+    height: 25px;
+    top: 0;
+}
+#avpw_holder #avpw_controls_2 #avpw_mountains {
+    cursor: auto !important;
+}
+#avpw_holder #avpw_mountains, #avpw_control_cancel {
+    display: none !important;
+}
+#avpw_lftArrow {
+    font-size: 10px;
+    padding: 3px 6px 2px 5px;
+}
+#avpw_rghtArrow {
+    font-size: 10px;
+    padding: 3px 5px 2px 5px;
+}
+.editorOverlay #imageEditor .overlayButton {
+    margin-right: 0px;
+}
+#avpw_version, .avpw_filter_text_style, .avpw_icon_text_style {
+    color: #555 !important;
+}
+.avpw_tool_main_left_bevel,
+.avpw_tool_main_right_bevel,
+.avpw_tool_properties_name div div.avpw_tool_prop_bg,
+.avpw_main_egg_icon, #avpw_rightbevel, #avpw_draweraser,
+.avpw_plus, .avpw__is_styled_checkbox, div.avpw_prev_enabled a,
+div.avpw_prev_disabled a, div.avpw_next_enabled a, div.avpw_next_disabled a,
+div.avpw_overlay_prev_enabled a, div.avpw_filter_prev_enabled a,
+div.avpw_overlay_prev_disabled a, div.avpw_filter_prev_disabled a,
+div.avpw_overlay_next_enabled a, div.avpw_filter_next_enabled a,
+div.avpw_overlay_next_disabled a, div.avpw_filter_next_disabled a,
+#avpw_topleft_corner, #avpw_topright_corner, #avpw_topbevel div,
+#avpw_header_birds, #avpw_clouds, #avpw_header a, .avpw_filter_eggs_panel_eh_egg,
+.avpw_filter_egg_icon_retro, .avpw_filter_egg_icon_oldphoto,
+.avpw_filter_egg_icon_polaroid, div.avpw_filter_egg_icon_toycamera,
+.avpw_aviary_about_feather, .avpw_egg div.avpw_empty_egg, .avpw_options_pager ul li a,
+.avpw_overlay_options_pager ul li a, .avpw_filter_options_pager ul li a,
+.avpw_dropdown_header_arrow_inner, #avpw_controls .ui-slider-horizontal .ui-state-default,
+#avpw_controls .avpw_big_egg_slider .ui-slider-horizontal .ui-state-default,
+#avpw_controls .ui-slider-vertical .ui-state-default {
+    background-image: url("/Img/atlas-hd-darkblue-custom.png") !important;
+}
+.avpw_prev_disabled {
+    opacity: .40;
+    -moz-opacity: 0.40;
+    filter: alpha(opacity = 0.40);
+}
+.avpw_aviary_about_feather {
+    width: 99px;
+}
+.avpw_next_disabled {
+    opacity: .40;
+    -moz-opacity: 0.40;
+    filter: alpha(opacity = 0.40);
+}
+#avpw_holder #avpw_controls .avpw_egg a:hover {
+    background: -webkit-linear-gradient(top, #EEE 20%, #D1D1D1 50%, #DDD 79%);
+    background: -moz-linear-gradient(19% 75% 90deg, #ABABAB, #C9C9C9, #C7C7C7 100%);
 }

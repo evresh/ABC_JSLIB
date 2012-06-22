@@ -23,6 +23,7 @@ var EditorMenuItem = Backbone.Model.extend({
                 isVisible = targetElement.children().length == 0 && tagName != 'IMG' && tagName != 'INPUT';
                 break;
             case 'changeImage':
+            case 'editImage':
                 isVisible = tagName == 'IMG';
                 break;
             case 'changeBackgroundImage':

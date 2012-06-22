@@ -42,6 +42,7 @@ var OperationView = Backbone.View.extend({
     show: function() {
         this._overlay.model = this.model.get('target');
         this._overlay.show();
+        this._toggleButtons(false);
         this._reset();
     },
     close: function(skipEvent) {
@@ -79,11 +80,17 @@ var OperationView = Backbone.View.extend({
         this.model.cancel();
     },
     _done: function() {
+        this._toggleButtons(true);
         this.model.complete();
     },
     _updateOverlayPosition: function() {
         this._overlay.attachToTarget();
     },
     _toggleMaximizing: function(info) {
+    },
+    _toggleButtons: function(isAction) {
+        this.$('.actionProgress').toggle(isAction);
+        this.$('.cancelButton').css('visibility', !isAction ? 'visible' : 'hidden');
+        this.$('.doneButton').css('visibility', !isAction ? 'visible' : 'hidden');
     }
 })
