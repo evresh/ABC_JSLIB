@@ -1,7 +1,11 @@
 var UserUploadedImages = Backbone.Collection.extend({
     fetch: function() {
         // until the server logic is ready, let's use the mimic code
-        var data = [ '/img/tests/change-image.jpg', '/img/tests/change-image-2.jpg', '/img/tests/change-image-3.jpg' ];
+        var data = [
+            'http://' + document.location.host + '/img/tests/change-image.jpg',
+            'http://' + document.location.host + '/img/tests/change-image-2.jpg',
+            'http://' + document.location.host + '/img/tests/change-image-3.jpg'
+        ];
         var _this = this;
         setTimeout(function() {
             _this.reset(_this.parse(data));

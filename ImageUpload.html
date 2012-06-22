@@ -38,7 +38,7 @@
                     var urls = [ '/img/tests/change-image.jpg', '/img/tests/change-image-2.jpg', '/img/tests/change-image-3.jpg' ];
                     var min = 0, max = urls.length - 1;
                     var i = Math.floor(Math.random() * (max - min + 1)) + min;
-                    onFileUploaded(urls[i]);
+                    onFileUploaded('http://' + document.location.host + urls[i]);
                 }, 3000);
             }
         }
