@@ -27,6 +27,7 @@ var EditorMenuItem = Backbone.Model.extend({
                 isVisible = tagName == 'IMG';
                 break;
             case 'changeBackgroundImage':
+            case 'editBackgroundImage':
                 isVisible = targetElement.css('background-image') != 'none'
                     && targetElement.css('background-image') != 'inherit'
                     && targetElement.css('background-image').match(/url\(/g);

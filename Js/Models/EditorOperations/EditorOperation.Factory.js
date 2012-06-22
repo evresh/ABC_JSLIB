@@ -9,7 +9,7 @@ EditorOperation.createMain = function(type, target) {
         changeImage: ChangeImageOperation,
         editImage: EditImageOperation,
         changeBackgroundImage: ChangeBackgroundImageOperation,
-        //editBackgroundImage: notImplementedYet,
+        editBackgroundImage: EditBackgroundImageOperation,
         //rearrange: notImplementedYet,
         move: MoveOperation,
         resize: ResizeOperation

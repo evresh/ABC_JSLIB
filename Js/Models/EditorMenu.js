@@ -16,8 +16,8 @@ var EditorMenu = Backbone.Model.extend({
             ,new EditorMenuItem({ name: 'Change Image', type: 'changeImage' })
             ,new EditorMenuItem({ name: 'Edit Image', type: 'editImage' })
             ,new EditorMenuItem({ name: 'Change Background Image', type: 'changeBackgroundImage' })
-            /*,new EditorMenuItem({ name: 'Edit Background Image', type: 'editBackgroundImage' })
-            ,new EditorMenuItem({ name: 'Rearrange', type: 'rearrange' })*/
+            ,new EditorMenuItem({ name: 'Edit Background Image', type: 'editBackgroundImage' })
+            //,new EditorMenuItem({ name: 'Rearrange', type: 'rearrange' })
             ,new EditorMenuItem({ name: 'Move', type: 'move' })
             ,new EditorMenuItem({ name: 'Resize', type: 'resize' })
             //,new EditorMenuItem({ name: 'Change URL', type: EditorOperation })

@@ -31,7 +31,7 @@ var EditorView = Backbone.View.extend({
             var body = doc.find('body');
 
             $('<link>').attr({
-                href: 'css/editor.css',
+                href: 'css/TestPage.css',
                 rel: 'stylesheet'
             }).prependTo(body);
 
@@ -50,7 +50,7 @@ var EditorView = Backbone.View.extend({
         $('.testPage').height($(window).height() - $('.testPage').offset().top);
     },
     _iframeMouseover: function(e) {
-        if (!this.model.get('target'))
+        if (e.target.tagName != 'BODY' && !this.model.get('target'))
             TargetHighlighter.highlight($(e.target));
     },
     _iframeMousedown: function(e) {
@@ -79,8 +79,12 @@ var EditorView = Backbone.View.extend({
     _currentOperationChanged: function() {
         var operation = this.model.get('currentOperation');
         if (operation) {
-            var type = operation.get('type');
-            var viewName = type.substr(0, 1).toUpperCase() + type.substr(1) + 'View';
+            var viewPrefix = operation.get('type');
+
+            if (viewPrefix == 'editBackgroundImage')
+                viewPrefix = 'editImage';
+
+            var viewName = viewPrefix.substr(0, 1).toUpperCase() + viewPrefix.substr(1) + 'View';
             var viewCtor = window[viewName];
             if (viewCtor) {
                 var view = this._operationViews[viewName];

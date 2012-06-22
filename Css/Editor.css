@@ -2,6 +2,7 @@ body {
     padding: 0px;
     margin: 0px;
     font: 62.5% DroidSansRegular,Arial,Helvetica,sans-serif;
+    overflow: hidden;
 }
 
 /* Common styles */
@@ -74,116 +75,6 @@ iframe.testPage {
     margin: 0px;
     padding: 0px;
     background: #fff;
-}
-
-/* Inner test page elements */
-.elementOutline {
-    position: absolute;
-    background: #5D83C0;
-    z-index: 10000;
-    display: none;
-    width: 2px;
-    height: 2px;
-}
-.elementOutlineBackground {
-    background: #000;
-    opacity: 0.30;
-    -moz-opacity: 0.30;
-    filter: alpha(opacity=0.30);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10000;
-}
-.elementGlassBackground {
-    background: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2147483001;
-}
-.bottomOutline {
-    -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
-    -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
-    box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
-}
-.rightOutline {
-    -webkit-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
-    -moz-box-shadow: 2px 2px 7px rgba(60, 60, 60, 0.7);
-    box-shadow: 2px 2px 5px rgba(60, 60, 60, 0.7);
-}
-.hiddenByOptimizer {
-    visibility: visible !important;
-    opacity: 0;
-    -moz-opacity: 0;
-    filter: alpha(opacity = 0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-}
-.hiddenByOptimizer:hover {
-    opacity: 0.2;
-    -moz-opacity: 0.2;
-    filter: alpha(opacity = 20);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-}
-.resizeHandle {
-    position: absolute;
-    height: 7px;
-    width: 7px;
-    border: 1px solid #89B;
-    background: #9AC;
-}
-.resizeGlassLayer,
-.moveGlassLayer{
-    position: absolute;
-    z-index: 2147483002;
-    background: transparent;
-    opacity: 1 !important;
-    -moz-opacity: 1 !important;
-    filter: alpha(opacity=1) !important;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)" !important;
-}
-.moveGlassLayer { cursor: move; }
-.NE {
-    cursor: ne-resize;
-}
-.NN {
-    cursor: n-resize;
-}
-.NW {
-    cursor: nw-resize;
-}
-.WW {
-    cursor: w-resize;
-}
-.SW {
-    cursor: sw-resize;
-}
-.SS {
-    cursor: s-resize;
-}
-.SE {
-    cursor: se-resize;
-}
-.NE, .EE, .SE {
-    right: -5px;
-}
-.NW, .NN, .NE {
-    top: -5px;
-}
-.NN, .SS {
-    left: 50%;
-    margin-left: -4px;
-}
-.NW, .WW, .SW {
-    left: -5px;
-}
-.EE, .WW {
-    top: 50%;
-    margin-top: -4px;
-}
-.SW, .SS, .SE {
-    bottom: -5px;
 }
 
 /* Editor overlay */
@@ -764,11 +655,13 @@ table.jPicker {
 }
 
 /* Edit Image operation */
-.editImageOperation .overlayContentPaddings {
-    width: 542px;
-    height: 245px;
+.editImageOperation .overlayContentPaddings,
+.editBackgroundImageOperation .overlayContentPaddings {
+    min-width: 542px;
+    min-height: 245px;
 }
-.editImageOperation .imageEditorLoading {
+.editImageOperation .imageEditorLoading,
+.editBackgroundImageOperation .imageEditorLoading{
     text-align: center;
     font-size: 18px;
     padding-top: 70px;
