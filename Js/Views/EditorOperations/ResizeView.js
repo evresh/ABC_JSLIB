@@ -3,7 +3,7 @@ var ResizeView = OperationView.extend({
         this._overlay.setTitle('Resize');
         this._overlay.setContent($('#resizeOperation').html());
     },
-    _reset: function() {
+    _showInternal: function() {
         this._views = [
             new InputStyleView({ model: this.model.getItem('width'), attrs: { size: '5' } }),
             new InputStyleView({ model: this.model.getItem('height'), attrs: { size: '5' } }),
@@ -17,10 +17,8 @@ var ResizeView = OperationView.extend({
 
         this.model.get('target').on('edited', this._overlay.attachToTarget, this._overlay);
     },
-    _clear: function() {
-        $.each(this._views, function(i, view) {
-            view.remove();
-        });
+    _removeListeners: function() {
+        OperationView.prototype._removeListeners.apply(this);
 
         this.model.get('target').off('edited', this._overlay.attachToTarget, this._overlay);
     }

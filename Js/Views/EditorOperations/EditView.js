@@ -50,7 +50,7 @@ var EditView = OperationView.extend({
             setup: function(editor) {
                 editor.onInit.add(function(e) {
                     _this._editor = e;
-                    _this._reset();
+                    _this._showInternal();
                 });
                 editor.onKeyUp.add(function(e) {
                     _this.model.apply(_this._editor.getContent());
@@ -62,7 +62,7 @@ var EditView = OperationView.extend({
         };
         tinymce.execCommand('mceAddControl', true, "editOp");
     },
-    _reset: function() {
+    _showInternal: function() {
         if (this._editor) {
             this._editor.setContent(this.model.getValue());
             this._editor.focus();

@@ -9,7 +9,7 @@ var ChangeTextView = OperationView.extend({
         this._overlay.setTitle('Change Text');
         this._overlay.setContent($('#changeTextOperation').html());
     },
-    _reset: function() {
+    _showInternal: function() {
         this.$('textarea').val(this.model.getValue());
     },
     _textChanged: function() {

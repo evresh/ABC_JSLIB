@@ -14,8 +14,7 @@ var CheckboxStyleView = Backbone.View.extend({
 
         return this;
     },
-    remove: function() {
-        this.$el.remove();
+    removeListeners: function() {
         this.model.off('change:changedState', this.render, this);
     },
     _changed: function() {

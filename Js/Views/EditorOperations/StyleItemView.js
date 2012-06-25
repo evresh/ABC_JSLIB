@@ -69,8 +69,7 @@ var StyleItemView = Backbone.View.extend({
             this._save();
         }
     },
-    remove: function() {
-        this.$el.remove();
+    removeListeners: function() {
         this.model.off('change:isEditing', this._onEditing, this);
         this.model.off('change:changedState', this._onChangedState, this);
     }

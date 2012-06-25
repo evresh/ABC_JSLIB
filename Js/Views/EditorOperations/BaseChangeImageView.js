@@ -15,7 +15,7 @@ var BaseChangeImageView = OperationView.extend({
     _srcChanged: function() {
         this.$('.previewContainer img').attr('src', this._getSrcModel().getValue());
     },
-    _reset: function() {
+    _showInternal: function() {
         this.$('.uploadedImages')
             .find('.loadUploadedImages').show().end()
             .find('.loadingImage, .warningMessage').hide().end()
@@ -38,8 +38,8 @@ var BaseChangeImageView = OperationView.extend({
 
         this._srcChanged();
     },
-    _clear: function() {
-        this._srcView.remove();
+    _removeListeners: function() {
+        OperationView.prototype._removeListeners.apply(this);
 
         this._getSrcModel().off('change:changedState', this._srcChanged, this);
         this._getUploadedImages()
@@ -50,6 +50,11 @@ var BaseChangeImageView = OperationView.extend({
             .off('imageUploadCompleted', this._imageUploadCompleted, this)
             .off('imageUploadStarted', this._imageUploadStarted, this)
             .off('imageUploadError', this._imageUploadError, this);
+    },
+    _clear: function() {
+        OperationView.prototype._clear.apply(this);
+
+        this._srcView.remove();
 
         this._srcView = window.ImageUploadListener = null;
     },

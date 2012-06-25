@@ -9,7 +9,7 @@ var ChangeCSSView = OperationView.extend({
         this._overlay.setTitle('Change CSS');
         this._overlay.setContent($('<div>').addClass('cssList'));
     },
-    _reset: function() {
+    _showInternal: function() {
         var cssList = this.$('.cssList');
         cssList.empty();
         this._views = [];
@@ -64,10 +64,5 @@ var ChangeCSSView = OperationView.extend({
         view.render().$el.insertBefore(this.$('.addCustomCss'));
         this._views.push(view);
         model.edit();
-    },
-    _clear: function() {
-        $.each(this._views, function(i, view) {
-            view.remove();
-        });
     }
 });

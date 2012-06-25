@@ -6,8 +6,8 @@ var ChangeImageView = BaseChangeImageView.extend({
         this._overlay.setTitle('Change Image');
         this._overlay.setContent($('#changeImageOperation').html());
     },
-    _reset: function() {
-        BaseChangeImageView.prototype._reset.apply(this);
+    _showInternal: function() {
+        BaseChangeImageView.prototype._showInternal.apply(this);
 
         this._views = [
             new InputStyleView({ model: this.model.getItem('title') }),
@@ -20,14 +20,5 @@ var ChangeImageView = BaseChangeImageView.extend({
         $.each(this._views, function(i, view) {
             view.render().$el.appendTo(_this.$('.' + view.model.get('property') + 'Field').empty());
         });
-    },
-    _clear: function() {
-        BaseChangeImageView.prototype._clear.apply(this);
-
-        $.each(this._views, function(i, view) {
-            view.remove();
-        });
-
-        this._views = null;
     }
 });

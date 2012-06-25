@@ -33,7 +33,7 @@ var EditImageView = OperationView.extend({
         this.model.apply(newSrc);
         this.model.complete();
     },
-    _reset: function() {
+    _showInternal: function() {
         this.$('#imageEditor').hide();
         this.$('.imageEditorLoading').show();
         if (this._loadingDeferred)

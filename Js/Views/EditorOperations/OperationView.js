@@ -43,7 +43,7 @@ var OperationView = Backbone.View.extend({
         this._overlay.model = this.model.get('target');
         this._overlay.show();
         this._toggleButtons(false);
-        this._reset();
+        this._showInternal();
     },
     close: function(skipEvent) {
         return this._overlay.close(skipEvent);
@@ -56,8 +56,22 @@ var OperationView = Backbone.View.extend({
     },
     _getExtendedEvents: function() { },
     _afterRender: function() { },
-    _reset: function() { },
-    _clear: function() { },
+    _showInternal: function() { },
+    _removeListeners: function() {
+        if (this._views) {
+            $.each(this._views, function(i, view) {
+                view.removeListeners();
+            });
+        }
+    },
+    _clear: function() {
+        if (this._views) {
+            $.each(this._views, function(i, view) {
+                view.remove();
+            });
+            this._views = null;
+        }
+    },
     _overlayClosed: function() {
         if (this.model.get('lastAction') == EditorOperationAction.none)
             this.model.cancel();
@@ -65,6 +79,7 @@ var OperationView = Backbone.View.extend({
         if (this.maximizable)
             this.maximized(false);
 
+        this._removeListeners();
         this._clear();
     },
     _changeVisibility: function() {
@@ -77,10 +92,12 @@ var OperationView = Backbone.View.extend({
         }
     },
     _cancel: function() {
+        this._removeListeners();
         this.model.cancel();
     },
     _done: function() {
         this._toggleButtons(true);
+        this._removeListeners();
         this.model.complete();
     },
     _updateOverlayPosition: function() {
