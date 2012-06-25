@@ -102,5 +102,5 @@ test('ChangeCSSOperation tests', function() {
     customItem.remove();
     changeCSS.complete();
     equal(getItem('text-transform').getValue(), 'lowercase', 'Completed item was handled correctly when the same custom item was removed');
-    equal(targetElement.css('text-transform'), 'lowercase', 'Completed item was handled correctly when the same custom item was removed');
+    equal(targetElement.css('text-transform'), 'lowercase', 'Completed item was handled correctly when the same custom item was removed (targetElement state)');
 });

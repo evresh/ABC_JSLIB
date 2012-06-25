@@ -30,9 +30,6 @@ var EditorTarget = Backbone.Model.extend({
     edited: function(sender) {
         this.trigger('edited', sender);
     },
-    updated: function(sender) {
-        this.trigger('updated', sender);
-    },
     edit: function(mode) {
         this.set('editMode', mode || EditorTargetMode.editing);
     },

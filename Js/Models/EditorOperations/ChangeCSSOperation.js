@@ -95,9 +95,9 @@ var ChangeCSSOperation = Backbone.Model.extend({
                         sourceItem.remove();
                         delete items[tempItem.get('property')];
                     } else if (!isRemoved) {
-                        sourceItem.set('changedState', changedState);
-                        sourceItem.complete();
                         tempItem.remove();
+                        sourceItem.apply(changedState);
+                        sourceItem.complete();
                     }
                 } else if (!isRemoved) {
                     items[tempItem.get('property')] = tempItem.unset('isTemp');

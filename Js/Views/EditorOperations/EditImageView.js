@@ -7,7 +7,7 @@ var EditImageView = OperationView.extend({
 
         this._loadingDeferred = $.Deferred();
         this._imageEditor = new Aviary.Feather({
-            apiKey: '4c7c79bb4',
+            apiKey: 'e44aacfed',
             openType: 'inject',
             theme: 'darkblue',
             tools: 'rotate,flip,crop,blemish,colors,saturation,brightness,contrast,drawing,text,blur,sharpen',

@@ -1,4 +1,4 @@
-var AttributeItemOperation = EditorOperation.extend({
+var AttributeItemOperation = SynchronizedOperation.extend({
     _getInitialState: function() {
         return this.getTargetElement().attr(this.get('property'));
     },
