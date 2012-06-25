@@ -103,4 +103,20 @@ test('ChangeCSSOperation tests', function() {
     changeCSS.complete();
     equal(getItem('text-transform').getValue(), 'lowercase', 'Completed item was handled correctly when the same custom item was removed');
     equal(targetElement.css('text-transform'), 'lowercase', 'Completed item was handled correctly when the same custom item was removed (targetElement state)');
+
+    targetElement.remove();
+
+    targetElement = $('<div>').hide().appendTo('body');
+    changeCSS = new ChangeCSSOperation({ target: new EditorTarget({ element: targetElement }) });
+    changeCSS.edit();
+    customItem = changeCSS.createCustomItem();
+    customItem.set('property', 'text-decoration');
+    customItem.apply('underline');
+    customItem.complete();
+    changeCSS.complete();
+    var item = getItem();
+    ok(item.getValue() == 'underline' && !item.isCustom(), 'If custom item has the same property as a regular item, it should not remain custom after completion');
+    equal(targetElement.css('text-decoration'), 'underline', 'If custom item has the same property as a regular item, it should not remain custom after completion (targetElement state)');
+
+    targetElement.remove();
 });

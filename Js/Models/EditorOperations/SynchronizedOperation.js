@@ -17,6 +17,9 @@ var SynchronizedOperation = EditorOperation.extend({
         this._raiseTargetUpdatedEvent();
     },
     remove: function() {
+        if (this.get('lastAction') == EditorOperationAction.remove)
+            return;
+
         this._resetInitialStateIfNeed();
 
         var wasNew = this.get('isNew');
@@ -59,7 +62,7 @@ var SynchronizedOperation = EditorOperation.extend({
                         this.set('overridedBy', sender.get('overridedBy'));
                     } else {
                         this.unset('overridedBy');
-                        $.extend(this.attributes, this.get('originalStates'));
+                        this.set(this.get('originalStates'));
                         if (!this.get('isNew'))
                             this.complete();
                     }

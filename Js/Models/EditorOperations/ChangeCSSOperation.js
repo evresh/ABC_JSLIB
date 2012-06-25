@@ -85,6 +85,7 @@ var ChangeCSSOperation = Backbone.Model.extend({
     },
     complete: function() {
         var items = this.get('items');
+        var _this = this;
         this.get('tempItems').each(function(tempItem) {
             if (!tempItem.get('isNew')) {
                 var sourceItem = items[tempItem.get('property')];
@@ -101,6 +102,21 @@ var ChangeCSSOperation = Backbone.Model.extend({
                     }
                 } else if (!isRemoved) {
                     items[tempItem.get('property')] = tempItem.unset('isTemp');
+
+                    var itemRegularGroup;
+                    $.each(_this._groups, function(group, properties) {
+                        $.each(properties, function(i, property) {
+                            if (property == tempItem.get('property')) {
+                                itemRegularGroup = group;
+                                return false;
+                            }
+                        });
+                        if (itemRegularGroup)
+                            return false;
+                    });
+                    if (itemRegularGroup)
+                        tempItem.set('group', itemRegularGroup);
+
                     tempItem.complete(); // to notify about changes other external operations
                 }
             } else {

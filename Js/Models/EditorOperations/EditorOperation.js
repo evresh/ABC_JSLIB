@@ -70,6 +70,9 @@ var EditorOperation = Backbone.Model.extend({
         this.trigger('action', this);
     },
     remove: function() {
+        if (this.get('lastAction') == EditorOperationAction.remove)
+            return;
+
         this._deleteChanges();
         this.unset('changedState');
         this.unset('previousState');
